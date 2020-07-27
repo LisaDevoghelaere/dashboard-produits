@@ -19,7 +19,7 @@
   --pink: #e83e8c;
   --red: #E74C3C;
   --orange: #fd7e14;
-  --yellow: #F39C12;
+  --yellow: #050505;
   --green: #00bc8c;
   --teal: #20c997;
   --cyan: #3498DB;
@@ -375,7 +375,7 @@ h1, .h1 {
 }
 
 h2, .h2 {
-  font-size: 2.5rem;
+  font-size: 1.5rem;
 }
 
 h3, .h3 {
