@@ -1,22 +1,19 @@
 {
-  "name": "integration-4",
+  "name": "dashboard-produits",
   "version": "1.0.0",
-  "description": "Portfolio",
+  "description": "dashboard-produits",
   "main": "index.js",
   "scripts": {
     "sass": "sass --watch style/style.scss:css/style.css"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/g3raphacs/portfolio.git"
+    "url": "git+https://github.com/g3raphacs/dashboard-produits.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/g3raphacs/portfolio/issues"
+    "url": "https://github.com/g3raphacs/dashboard-produits/issues"
   },
-  "homepage": "https://github.com/g3raphacs/portfolio#readme",
-  "dependencies": {
-    "scrollreveal": "^4.0.6"
-  }
+  "homepage": "https://github.com/g3raphacs/dashboard-produits#readme"
 }
