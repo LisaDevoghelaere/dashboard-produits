@@ -7,6 +7,8 @@ $twig = new \Twig\Environment($loader, [
 ]);
 $twig->addExtension(new \Twig\Extension\DebugExtension());
 
+require_once 'bdd.php';
+
 $template = $twig->load('base.html.twig');
 echo $template->render(array(
     'user' => 'Admin',
