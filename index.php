@@ -8,4 +8,7 @@ $twig = new \Twig\Environment($loader, [
 $twig->addExtension(new \Twig\Extension\DebugExtension());
 
 $template = $twig->load('base.html.twig');
-echo $template->render(array('maVariable' => 'salut!'));
+echo $template->render(array(
+    'user' => 'Admin',
+    'categorieTitle' => 'Titre de la catégorie',
+));

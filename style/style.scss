@@ -1,0 +1,24 @@
+#title{
+    padding: 20px 0px 10px 0px;
+    background: linear-gradient(-45deg,rgb(0,188,140), rgb(177, 219, 209)); 
+    a{
+        color:#303030;
+        text-decoration: none;
+    }
+}
+
+#menu{
+    padding: 20px 0px;
+    .container{
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    #searchInput{
+        margin-right: 10px;
+    }
+    #btnOrder{
+        margin-right: 10px;
+    }
+    ul{margin-right: 30px;}
+}
