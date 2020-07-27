@@ -1,4 +1,4 @@
 vendor/
 composer.lock
 css/style.css
-css/style.map
+css/style.css.map
