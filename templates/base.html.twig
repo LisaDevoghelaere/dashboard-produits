@@ -20,8 +20,17 @@
     </nav>
     {# Categorie  #}
     {% block title %}
-    <div id="title"><div class="container text-center text-secondary text-uppercase"><a href="#"><h1>{{ categorieTitle }}</h1><span class="fas fa-angle-down"></span></a></div></div>
+    <div id="title">
+      <div class="container text-center text-secondary text-uppercase">
+        <h1 class="text-white">{{ categorieTitle }}</h1>
+        <div><span class="fas fa-angle-down text-white"></span></div>
+      </div>
+    </div>
     {% endblock title%}
+
+    <div id="categorieList">
+        <p>Tout</p><p>Electroménager</p><p>TV-HIFI</p><p>Bricolage</p><p>Voiture</p><p>Hi-tech</p><p>Bijoux</p><p>Informatique</p><p>Jardinnage</p>
+    </div>
 
     <div id="menu" class="bg-secondary">
       <div class="container">
