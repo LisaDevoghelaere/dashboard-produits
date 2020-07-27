@@ -1,0 +1,22 @@
+{
+  "name": "integration-4",
+  "version": "1.0.0",
+  "description": "Portfolio",
+  "main": "index.js",
+  "scripts": {
+    "sass": "sass --watch style/style.scss:css/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/g3raphacs/portfolio.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/g3raphacs/portfolio/issues"
+  },
+  "homepage": "https://github.com/g3raphacs/portfolio#readme",
+  "dependencies": {
+    "scrollreveal": "^4.0.6"
+  }
+}
