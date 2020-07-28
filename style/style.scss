@@ -2,7 +2,7 @@
     padding: 20px 0px 10px 0px;
     background-color: #fd7e14;
     &:hover{
-        background-color: #b65a0e;
+        background-color: #ffa600;
         cursor: pointer;
     }
 }
@@ -49,14 +49,29 @@
 .product-card{
     box-sizing: border-box;
     padding-top: 16px;
+    position: relative;
+
     .product-card-in{
         display: flex;
         background-color: #ced4d8;
-        box-shadow: 0px 5px 3px rgba(0, 0, 0, 0.05);
+        box-shadow: 5px 5px 3px rgba(0, 0, 0, 0.05);
+        opacity: 0.8;
+        &:hover{
+            cursor: pointer;
+            opacity: 1;
+            background-color: #edf4ff;
+            box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.1);
+        }
         img{
         max-width: 200px;
         height: 100%;
         object-fit: cover;
+        }
+        button{
+            position: absolute;
+            right: 25px;
+            bottom: 10px;
+            border-radius: 0;
         }
         .product-card-text{
             padding: 10px;
