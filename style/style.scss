@@ -136,6 +136,7 @@ $orange: #fd7e14;
         transition: ease-in-out 0.5s;
         #modal-close{display: block;}
     }
+    .hide{display: none;}
 }
 #product-modal-left{
     height: 100%;
@@ -155,6 +156,7 @@ $orange: #fd7e14;
         font-weight: 600;
     }
     button:nth-child(1){
+        border-radius: 0;
         font-size: 2rem;
         position: absolute;
         right:10px;
@@ -162,6 +164,16 @@ $orange: #fd7e14;
         span{
             position: relative;
             left: 3px;
+        }
+    }
+    button:nth-child(2){
+        border-radius: 0;
+        font-size: 2rem;
+        position: absolute;
+        right:10px;
+        top: 200px;
+        span{
+            position: relative;
         }
     }
 }

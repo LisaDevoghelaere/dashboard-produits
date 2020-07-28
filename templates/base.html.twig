@@ -94,30 +94,31 @@
       {# modale static  #}
       <div class="container">
         <div id="product-modal-left">
-          <button type="button" class="btn btn-secondary"><span class="far fa-edit"></span></button>
+          <button id="edit-btn" type="button" class="btn btn-secondary m-static" onclick="modifActivate()"><span class="far fa-edit"></span></button>
+          <button id="validate-btn" type="button" class="btn btn-success m-modif" onclick="modifValidate()"><span class="fas fa-check"></span></button>
           <img src="images/product-main/placeholder.jpg" alt="">
-          <h2>Nom du produit</h2>
-          <em>Ref. 0564131</em>
-          <p class="product-cat">Catégorie</p>
-          <div><p>39€</p></div>
-          <p>Date d'achat: <strong class="text-success">DATE</strong></p>
-          <p>Fin de garantie: <strong class="text-success">DATE</strong></p>
+          <h2 class="m-static">Nom du produit</h2>
+          <em class="m-static">Ref. 0564131</em>
+          <p class="product-cat m-static">Catégorie</p>
+          <div class="m-static"><p>39€</p></div>
+          <p>Date d'achat: <strong class="text-success m-static">DATE</strong></p>
+          <p>Fin de garantie: <strong class="text-success m-static">DATE</strong></p>
           <p>Ticket d'achat:</p>
           <img src="images/product-ticket/placeholder.jpg" alt="">
         </div>
         <div id="product-modal-right">
-          <div id="vente-direct">
+          <div id="vente-direct" class="m-static">
             <h3><strong>Vente directe</strong></h3>
-            <p class="text-success">Nom du point de vente</p>
+            <p class="text-success" class="m-static">Nom du point de vente</p>
             <p><span>5, avenue de machin</span> - <span>25000</span> - <span>Besançon</span></p>
           </div>
-          <div id="vente-ecommerce">
+          <div id="vente-ecommerce" class="m-static">
             <h3><strong>E-commerce</strong></h3>
-            <p class="text-success"><a href="www.amazon.fr">www.amazon.fr</a></p>
+            <p class="text-success"><a target="_blank" rel="noopener noreferrer" href="http://www.amazon.fr">http://www.amazon.fr</a></p>
           </div>
           <h3>Conseils d'utilisation:</h3>
-          <button type="button" class="btn btn-success"><span class="fas fa-book-open"></span> Manuel d'utilisation</button>
-          <p class="text-justify mt-2">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus id, ex, eaque fugit placeat non tempore quasi sequi delectus omnis exercitationem nesciunt aliquam beatae aspernatur magnam quidem est nisi corrupti reprehenderit repellendus. Id voluptas natus autem nisi necessitatibus minus est, cum nam hic ipsum dolorem quo harum adipisci culpa eius alias cupiditate magni non distinctio neque ullam consequuntur quod cumque. Asperiores suscipit quas praesentium consequatur vel quaerat, laboriosam magnam est adipisci aperiam ut officiis, enim unde, quam temporibus. Rerum enim magni, suscipit velit at quam voluptas in cupiditate excepturi ipsum amet doloribus omnis, illum ut molestias voluptatibus perferendis. Asperiores, sed.</p>
+          <button type="button" class="btn btn-success m-static"><span class="fas fa-book-open"></span> Manuel d'utilisation</button>
+          <p class="text-justify mt-2 m-static">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus id, ex, eaque fugit placeat non tempore quasi sequi delectus omnis exercitationem nesciunt aliquam beatae aspernatur magnam quidem est nisi corrupti reprehenderit repellendus. Id voluptas natus autem nisi necessitatibus minus est, cum nam hic ipsum dolorem quo harum adipisci culpa eius alias cupiditate magni non distinctio neque ullam consequuntur quod cumque. Asperiores suscipit quas praesentium consequatur vel quaerat, laboriosam magnam est adipisci aperiam ut officiis, enim unde, quam temporibus. Rerum enim magni, suscipit velit at quam voluptas in cupiditate excepturi ipsum amet doloribus omnis, illum ut molestias voluptatibus perferendis. Asperiores, sed.</p>
 
         </div>
       </div>
