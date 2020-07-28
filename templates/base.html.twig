@@ -6,7 +6,6 @@
     <title>Dashboard-Produits</title>
     {% block style %}
     <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/fontawesome.css">
     <link rel="stylesheet" href="css/style.css">
     {% endblock style %}
 </head>
@@ -28,7 +27,7 @@
     </div>
     {% endblock title%}
 
-    <div id="categorieList">
+    <div id="categorieList" class="hidden">
       {% for categorie in categories %}
         <p>{{ categorie.categorie }}</p>
       {% endfor %}
@@ -87,73 +86,12 @@
             <button type="button" class="btn btn-outline-danger"><span class="far fa-trash-alt"></span></button>
           </div>
         </div>
-        <div class="product-card col-sm-12 col-md-6">
-          <div class="product-card-in">
-            <div class="product-left">
-                <img src="images/product-main/placeholder.jpg" alt="">
-            </div>
-            <div class="product-card-text">
-                <div class="card-text-up">
-                  <div>
-                    <h2>Nom du produit</h2>
-                    <em>Ref. 0564131</em>
-                    <p class="product-cat">Catégorie</p>
-                  </div>
-                  <div><p>39€</p></div>
-                </div>
-                <div class="card-text-down">
-                  <p>Date d'achat: <strong>DATE</strong></p>
-                  <p>Fin de garantie: <strong>DATE</strong></p>
-                </div>
-            </div>
-            <button type="button" class="btn btn-outline-danger"><span class="far fa-trash-alt"></span></button>
-          </div>
-        </div>
-        <div class="product-card col-sm-12 col-md-6">
-          <div class="product-card-in">
-            <div class="product-left">
-                <img src="images/product-main/placeholder.jpg" alt="">
-            </div>
-            <div class="product-card-text">
-                <div class="card-text-up">
-                  <div>
-                    <h2>Nom du produit</h2>
-                    <em>Ref. 0564131</em>
-                    <p class="product-cat">Catégorie</p>
-                  </div>
-                  <div><p>39€</p></div>
-                </div>
-                <div class="card-text-down">
-                  <p>Date d'achat: <strong>DATE</strong></p>
-                  <p>Fin de garantie: <strong>DATE</strong></p>
-                </div>
-            </div>
-            <button type="button" class="btn btn-outline-danger"><span class="far fa-trash-alt"></span></button>
-          </div>
-        </div>
-        <div class="product-card col-sm-12 col-md-6">
-          <div class="product-card-in">
-            <div class="product-left">
-                <img src="images/product-main/placeholder.jpg" alt="">
-            </div>
-            <div class="product-card-text">
-                <div class="card-text-up">
-                  <div>
-                    <h2>Nom du produit</h2>
-                    <em>Ref. 0564131</em>
-                    <p class="product-cat">Catégorie</p>
-                  </div>
-                  <div><p>39€</p></div>
-                </div>
-                <div class="card-text-down">
-                  <p>Date d'achat: <strong>DATE</strong></p>
-                  <p>Fin de garantie: <strong>DATE</strong></p>
-                </div>
-            </div>
-            <button type="button" class="btn btn-outline-danger"><span class="far fa-trash-alt"></span></button>
-          </div>
-        </div>
+      </div>
+    </div>
 
+    <div id="product-modal">
+      <div class="container">
+        <h1>TEST</h1>
       </div>
     </div>
 
@@ -165,6 +103,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 {# Fontawesome  #}
 <script src="https://kit.fontawesome.com/eee80a1a35.js" crossorigin="anonymous"></script>
+{# Custom #}
+<script src="js/script.js" crossorigin="anonymous"></script>
 {% endblock script %}
 </body>
 </html>
