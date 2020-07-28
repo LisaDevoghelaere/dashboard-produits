@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : mar. 28 juil. 2020 à 07:32
+-- Généré le : mar. 28 juil. 2020 à 17:55
 -- Version du serveur :  10.5.4-MariaDB-1:10.5.4+maria~focal
 -- Version de PHP : 7.4.8
 
@@ -85,6 +85,18 @@ CREATE TABLE `produits` (
   `ticket_achat` varchar(500) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+--
+-- Déchargement des données de la table `produits`
+--
+
+INSERT INTO `produits` (`id`, `nom`, `reference`, `prix`, `date_achat`, `date_fin_garantie`, `id_categorie`, `conseil`, `manuel_utilisation`, `ticket_achat`) VALUES
+(1, 'ordinateur', 3662466, '299.99', '2020-07-27', '2021-03-30', 2, 'test', 'Appuyer sur \"POWER\" pour allumer', ''),
+(2, 'Lancia', 6990807, '500.00', '2019-04-14', '2020-07-31', 4, 'Mettre les clé dans le trou pour démarrer', '', ''),
+(3, 'Lava-vaisselle', 35666743, '100.00', '2018-08-12', '2020-01-13', 1, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, provident et perferendis debitis neque voluptatibus culpa earum vel dignissimos, distinctio iusto laudantium maxime aliquid vero aliquam officia? Aperiam, debitis alias.\r\n', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, provident et perferendis debitis neque voluptatibus culpa earum vel dignissimos, distinctio iusto laudantium maxime aliquid vero aliquam officia? Aperiam, debitis alias.\r\n', ''),
+(4, 'Collier', 23543632, '199.99', '2020-07-21', '2020-09-21', 5, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, provident et perferendis debitis neque voluptatibus culpa earum vel dignissimos, distinctio iusto laudantium maxime aliquid vero aliquam officia? Aperiam, debitis alias.\r\n', '', ''),
+(5, 'Marteau', 697956, '5.00', '2020-05-11', '2020-09-25', 3, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, provident et perferendis debitis neque voluptatibus culpa earum vel dignissimos, distinctio iusto laudantium maxime aliquid vero aliquam officia? Aperiam, debitis alias.\r\n', '', ''),
+(6, 'TV', 23253253, '299.99', '2020-07-03', '2020-08-03', 1, '', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, provident et perferendis debitis neque voluptatibus culpa earum vel dignissimos, distinctio iusto laudantium maxime aliquid vero aliquam officia? Aperiam, debitis alias.\r\n', '');
+
 -- --------------------------------------------------------
 
 --
@@ -147,7 +159,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT pour la table `produits`
 --
 ALTER TABLE `produits`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Contraintes pour les tables déchargées
