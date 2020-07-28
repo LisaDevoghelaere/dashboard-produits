@@ -65,6 +65,7 @@
 
     <div id="content" class="container">
       <div class="row">
+        {% for produit in produits_list %}
         <div class="product-card col-sm-12 col-md-6">
           <div class="product-card-in">
             <div class="product-left">
@@ -73,87 +74,21 @@
             <div class="product-card-text">
                 <div class="card-text-up">
                   <div>
-                    <h2>Nom du produit</h2>
-                    <em>Ref. 0564131</em>
-                    <p class="product-cat">Catégorie</p>
+                    <h2>{{ produit.nom }}</h2>
+                    <em>Ref. {{ produit.reference }}</em>
+                    <p class="product-cat">{{ produit.categorie }}</p>
                   </div>
-                  <div><p>39€</p></div>
+                  <div><p>{{ produit.prix }}€</p></div>
                 </div>
                 <div class="card-text-down">
-                  <p>Date d'achat: <strong>DATE</strong></p>
-                  <p>Fin de garantie: <strong>DATE</strong></p>
+                  <p>Date d'achat: <strong>{{ produit.date_achat }}</strong></p>
+                  <p>Fin de garantie: <strong>{{ produit.date_fin_garantie }}</strong></p>
                 </div>
             </div>
             <button type="button" class="btn btn-outline-danger"><span class="far fa-trash-alt"></span></button>
           </div>
         </div>
-        <div class="product-card col-sm-12 col-md-6">
-          <div class="product-card-in">
-            <div class="product-left">
-                <img src="images/product-main/placeholder.jpg" alt="">
-            </div>
-            <div class="product-card-text">
-                <div class="card-text-up">
-                  <div>
-                    <h2>Nom du produit</h2>
-                    <em>Ref. 0564131</em>
-                    <p class="product-cat">Catégorie</p>
-                  </div>
-                  <div><p>39€</p></div>
-                </div>
-                <div class="card-text-down">
-                  <p>Date d'achat: <strong>DATE</strong></p>
-                  <p>Fin de garantie: <strong>DATE</strong></p>
-                </div>
-            </div>
-            <button type="button" class="btn btn-outline-danger"><span class="far fa-trash-alt"></span></button>
-          </div>
-        </div>
-        <div class="product-card col-sm-12 col-md-6">
-          <div class="product-card-in">
-            <div class="product-left">
-                <img src="images/product-main/placeholder.jpg" alt="">
-            </div>
-            <div class="product-card-text">
-                <div class="card-text-up">
-                  <div>
-                    <h2>Nom du produit</h2>
-                    <em>Ref. 0564131</em>
-                    <p class="product-cat">Catégorie</p>
-                  </div>
-                  <div><p>39€</p></div>
-                </div>
-                <div class="card-text-down">
-                  <p>Date d'achat: <strong>DATE</strong></p>
-                  <p>Fin de garantie: <strong>DATE</strong></p>
-                </div>
-            </div>
-            <button type="button" class="btn btn-outline-danger"><span class="far fa-trash-alt"></span></button>
-          </div>
-        </div>
-        <div class="product-card col-sm-12 col-md-6">
-          <div class="product-card-in">
-            <div class="product-left">
-                <img src="images/product-main/placeholder.jpg" alt="">
-            </div>
-            <div class="product-card-text">
-                <div class="card-text-up">
-                  <div>
-                    <h2>Nom du produit</h2>
-                    <em>Ref. 0564131</em>
-                    <p class="product-cat">Catégorie</p>
-                  </div>
-                  <div><p>39€</p></div>
-                </div>
-                <div class="card-text-down">
-                  <p>Date d'achat: <strong>DATE</strong></p>
-                  <p>Fin de garantie: <strong>DATE</strong></p>
-                </div>
-            </div>
-            <button type="button" class="btn btn-outline-danger"><span class="far fa-trash-alt"></span></button>
-          </div>
-        </div>
-
+        {% endfor %}
       </div>
     </div>
 
