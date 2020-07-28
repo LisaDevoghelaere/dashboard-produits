@@ -14,7 +14,7 @@ function categories(){
     $sql = 'SELECT categorie FROM categories';
     $req = $bdd -> query($sql);
     return $req;
-} 
+}
 
 $template = $twig->load('base.html.twig');
 echo $template->render(array(
