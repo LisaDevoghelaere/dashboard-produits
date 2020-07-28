@@ -65,7 +65,8 @@
     <div id="content" class="container">
       <div class="row">
         <div class="product-card col-sm-12 col-md-6">
-          <div class="product-card-in">
+          <button type="button" class="btn btn-outline-danger" onclick="clickDelete(1)"><span class="far fa-trash-alt"></span></button>
+          <div class="product-card-in" onclick="loadModal(1)">
             <div class="product-left">
                 <img src="images/product-main/placeholder.jpg" alt="">
             </div>
@@ -83,15 +84,42 @@
                   <p>Fin de garantie: <strong>DATE</strong></p>
                 </div>
             </div>
-            <button type="button" class="btn btn-outline-danger"><span class="far fa-trash-alt"></span></button>
           </div>
         </div>
       </div>
     </div>
 
     <div id="product-modal">
+      <div id="modal-close"><span class="far fa-times-circle"></span></div>
+      {# modale static  #}
       <div class="container">
-        <h1>TEST</h1>
+        <div id="product-modal-left">
+          <button type="button" class="btn btn-secondary"><span class="far fa-edit"></span></button>
+          <img src="images/product-main/placeholder.jpg" alt="">
+          <h2>Nom du produit</h2>
+          <em>Ref. 0564131</em>
+          <p class="product-cat">Catégorie</p>
+          <div><p>39€</p></div>
+          <p>Date d'achat: <strong class="text-success">DATE</strong></p>
+          <p>Fin de garantie: <strong class="text-success">DATE</strong></p>
+          <p>Ticket d'achat:</p>
+          <img src="images/product-ticket/placeholder.jpg" alt="">
+        </div>
+        <div id="product-modal-right">
+          <div id="vente-direct">
+            <h3><strong>Vente directe</strong></h3>
+            <p class="text-success">Nom du point de vente</p>
+            <p><span>5, avenue de machin</span> - <span>25000</span> - <span>Besançon</span></p>
+          </div>
+          <div id="vente-ecommerce">
+            <h3><strong>E-commerce</strong></h3>
+            <p class="text-success"><a href="www.amazon.fr">www.amazon.fr</a></p>
+          </div>
+          <h3>Conseils d'utilisation:</h3>
+          <button type="button" class="btn btn-success"><span class="fas fa-book-open"></span> Manuel d'utilisation</button>
+          <p class="text-justify mt-2">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus id, ex, eaque fugit placeat non tempore quasi sequi delectus omnis exercitationem nesciunt aliquam beatae aspernatur magnam quidem est nisi corrupti reprehenderit repellendus. Id voluptas natus autem nisi necessitatibus minus est, cum nam hic ipsum dolorem quo harum adipisci culpa eius alias cupiditate magni non distinctio neque ullam consequuntur quod cumque. Asperiores suscipit quas praesentium consequatur vel quaerat, laboriosam magnam est adipisci aperiam ut officiis, enim unde, quam temporibus. Rerum enim magni, suscipit velit at quam voluptas in cupiditate excepturi ipsum amet doloribus omnis, illum ut molestias voluptatibus perferendis. Asperiores, sed.</p>
+
+        </div>
       </div>
     </div>
 
