@@ -52,11 +52,12 @@
           {# Pagination  #}
           <nav aria-label="Page navigation">
             <ul class="pagination mb-0">
-              <li class="page-item"><a class="page-link" href="#"><span class="fas fa-angle-left"></span></a></li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#"><span class="fas fa-angle-right"></span></a></li>
+              <li class="page-item"><a class="page-link" href="?page={{ page_courante - 1 }}"><span class="fas fa-angle-left"></span></a></li>
+              {% for page in nombre_page %}
+              <li class="page-item"><a href="?page={{ page }}" class="page-link">{{ page }}</a></li>
+              {% endfor %}
+
+              <li class="page-item"><a class="page-link" href="?page={{ page_courante + 1 }}"><span class="fas fa-angle-right"></span></a></li>
             </ul>
           </nav>
       </div>
@@ -87,16 +88,13 @@
             <button type="button" class="btn btn-outline-danger"><span class="far fa-trash-alt"></span></button>
           </div>
         </div>
-<<<<<<< HEAD
         {% endfor %}
-=======
       </div>
     </div>
 
     <div id="product-modal">
       <div class="container">
         <h1>TEST</h1>
->>>>>>> 81ab0072354df57a7f7c9e80ce5b7e4176db5490
       </div>
     </div>
 
