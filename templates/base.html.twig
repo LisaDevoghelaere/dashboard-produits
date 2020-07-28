@@ -72,7 +72,8 @@
       <div class="row">
         {% for produit in produits_list %}
         <div class="product-card col-sm-12 col-md-6">
-          <div class="product-card-in">
+          <button type="button" class="btn btn-outline-danger" onclick="clickDelete(1)"><span class="far fa-trash-alt"></span></button>
+          <div class="product-card-in" onclick="loadModal(1)">
             <div class="product-left">
                 <img src="images/product-main/placeholder.jpg" alt="">
             </div>
@@ -90,7 +91,6 @@
                   <p>Fin de garantie: <strong>{{ produit.date_fin_garantie }}</strong></p>
                 </div>
             </div>
-            <button type="button" class="btn btn-outline-danger"><span class="far fa-trash-alt"></span></button>
           </div>
         </div>
         {% endfor %}
@@ -98,8 +98,98 @@
     </div>
 
     <div id="product-modal">
+      <div id="modal-btns">
+        <div id="modal-validate"><span class="far fa-check-circle mr-3 m-modif" onclick="modifValidate(1)"></span></div>
+        <div id="modal-close"><span class="far fa-times-circle"></span></div>
+      </div>
       <div class="container">
-        <h1>TEST</h1>
+        <form id="product-form">
+          <div id="product-modal-left">
+            <button id="edit-btn" type="button" class="btn btn-secondary m-static" onclick="modifActivate(1)"><span class="far fa-edit"></span></button>
+            <img src="images/product-main/placeholder.jpg" alt="">
+            <div class="form-group m-modif">
+              <label for="form-pic">Image</label>
+              <button type="button" class="btn btn-success m-modif upload-btn" onclick="uploadPictureClick(1)"><span class="fa fa-upload"></span> Charger une image</button>
+              <input type="hidden" name="picture" value="">
+            </div>
+            <h2 class="m-static">Nom du produit</h2>
+            <div class="form-group m-modif">
+              <label for="form-name">Nom du produit</label>
+              <input id="form-name" name="name" class="form-control form-control-sm" type="text" placeholder="Entrez un nom">
+            </div>
+            <em class="m-static">Ref. 0564131</em>
+            <div class="form-group m-modif">
+              <label for="form-serial">Numero de serie</label>
+              <input id="form-serial" name="serial" class="form-control form-control-sm" type="text" placeholder="Entrez un numero de serie">
+            </div>
+            <p class="product-cat m-static">Catégorie</p>
+            <div class="form-group m-modif">
+              <label for="form-categorie">Catégorie</label>
+              <select id="form-categorie" name="categorie" class="form-control form-control-sm">
+                <option value="1">Catégorie 1</option>
+                <option value="2">Catégorie 2</option>
+                <option value="3">Catégorie 3</option>
+              </select>
+              <button type="button" class="btn btn-success m-modif mt-1 upload-btn" onclick="newCategorieClick(1)"><span class="fa fa-plus"></span> Nouvelle catégorie</button>
+            </div>
+            <div class="price m-static"><p>39€</p></div>
+            <div class="form-group m-modif">
+              <label for="form-price">Prix</label>
+              <input id="form-price" name="price" class="form-control form-control-sm" type="number" step="0.1" placeholder="Entrez un prix">
+            </div>
+            <p class="m-static">Date d'achat: <strong class="text-success">DATE</strong></p>
+            <div class="form-group m-modif">
+              <label for="form-date">Date d'achat</label>
+              <input id="form-date" name="date" class="form-control form-control-sm" type="date">
+            </div>
+            <p class="m-static">Fin de garantie: <strong class="text-success m-static">DATE</strong></p>
+            <div class="form-group m-modif">
+              <label for="form-warranty">Date d'achat</label>
+              <input id="form-warranty" name="warranty" class="form-control form-control-sm" type="date">
+            </div>
+            <p class="m-static">Ticket d'achat:</p>
+            <div class="form-group m-modif">
+              <label for="form-pic">Ticket d'achat</label>
+              <button type="button" class="btn btn-success m-modif upload-btn" onclick="uploadTicketClick(1)"><span class="fa fa-upload"></span> Charger un ticket</button>
+              <input type="hidden" name="ticket" value="">
+            </div>
+            <img src="images/product-ticket/placeholder.jpg" alt="">
+          </div>
+          <div id="product-modal-right">
+            <div class="form-group m-modif">
+              <h3 class="m-modif">Vendeur:</h3>
+              <select id="form-vendor" name="vendorType" class="form-control form-control-sm" onChange="vendorTypeChange()">
+                <option value="1">Vente directe</option>
+                <option value="2">E-commerce</option>
+              </select>
+              <label for="form-vendor-url" class="vendor2 mt-2">Url</label>
+              <input id="form-vendor-url" name="vendorUrl" class="vendor2 form-control form-control-sm" type="text" placeholder="Entrez une adresse web">
+              <label for="form-vendor-name" class="vendor1 mt-2">Nom</label>
+              <input id="form-vendor-name" name="vendorName" class="vendor1 form-control form-control-sm" type="text" placeholder="Entrez un nom de vendeur">
+              <label for="form-vendor-street" class="vendor1 mt-2">Rue</label>
+              <input id="form-vendor-street" name="vendorStreet" class="vendor1 form-control form-control-sm" type="text" placeholder="Entrez une rue">
+              <label for="form-vendor-code" class="vendor1 mt-2">Code postal</label>
+              <input id="form-vendor-code" name="vendorCode" class="vendor1 form-control form-control-sm" type="text" placeholder="Entrez un code postal">
+              <label for="form-vendor-city" class="vendor1 mt-2">Ville</label>
+              <input id="form-vendor-city" name="vendorCity" class="vendor1 form-control form-control-sm" type="text" placeholder="Entrez une ville">
+            </div>
+            <div id="vente-direct" class="m-static">
+              <h3><strong>Vente directe</strong></h3>
+              <p class="text-success" class="m-static">Nom du point de vente</p>
+              <p><span>5, avenue de machin</span> - <span>25000</span> - <span>Besançon</span></p>
+            </div>
+            <div id="vente-ecommerce" class="m-static">
+              <h3><strong>E-commerce</strong></h3>
+              <p class="text-success"><a target="_blank" rel="noopener noreferrer" href="http://www.amazon.fr">http://www.amazon.fr</a></p>
+            </div>
+            <h3>Conseils d'utilisation:</h3>
+            <textarea class="form-control m-modif" id="form-utilisation" name="utilisation" rows="6"></textarea>
+            <button type="button" class="btn btn-success m-modif upload-btn" onclick="uploadManualClick(1)"><span class="fa fa-upload"></span> Charger le manuel d'utilisation</button>
+            <p class="text-justify mt-2 m-static">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus id, ex, eaque fugit placeat non tempore quasi sequi delectus omnis exercitationem nesciunt aliquam beatae aspernatur magnam quidem est nisi corrupti reprehenderit repellendus. Id voluptas natus autem nisi necessitatibus minus est, cum nam hic ipsum dolorem quo harum adipisci culpa eius alias cupiditate magni non distinctio neque ullam consequuntur quod cumque. Asperiores suscipit quas praesentium consequatur vel quaerat, laboriosam magnam est adipisci aperiam ut officiis, enim unde, quam temporibus. Rerum enim magni, suscipit velit at quam voluptas in cupiditate excepturi ipsum amet doloribus omnis, illum ut molestias voluptatibus perferendis. Asperiores, sed.</p>
+            <button type="button" class="btn btn-success m-static" onclick="openManual(1)"><span class="fas fa-book-open"></span> Manuel d'utilisation</button>
+            <input type="hidden" name="manual" value="">
+          </div>
+        </form>
       </div>
     </div>
 
