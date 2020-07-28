@@ -49,6 +49,7 @@ $orange: #fd7e14;
     }
     ul{margin-right: 30px;}
     box-shadow: 0px 5px 3px rgba(0, 0, 0, 0.096);
+    input{background-color: black; color: white;}
 }
 
 .product-card{
@@ -113,7 +114,11 @@ $orange: #fd7e14;
     border-radius: 4px;
     font-weight: 600;
 }
-
+.price{
+    color: $orange;
+    font-size: 3rem;
+    font-weight: 600;
+}
 
 #product-modal{
     z-index: 3;
@@ -125,8 +130,8 @@ $orange: #fd7e14;
     background-color: black;
     overflow-y: scroll;
     transition: ease-in-out 0.5s;
-    #modal-close{display:none;}
-    .container{
+    #modal-btns{display:none;}
+    .container form{
         padding: 11vh 6vw 0 6vw;
         display: flex;
         justify-content: center;
@@ -134,7 +139,7 @@ $orange: #fd7e14;
     &.active{
         left:0;
         transition: ease-in-out 0.5s;
-        #modal-close{display: block;}
+        #modal-btns{display: flex;}
     }
     .hide{display: none;}
 }
@@ -150,34 +155,25 @@ $orange: #fd7e14;
         object-fit: cover;
         margin-bottom: 15px;
         }
-    div:nth-child(6){
-        color: $orange;
-        font-size: 3rem;
-        font-weight: 600;
-    }
-    button:nth-child(1){
-        border-radius: 0;
-        font-size: 2rem;
-        position: absolute;
-        right:10px;
-        top: 200px;
-        span{
-            position: relative;
-            left: 3px;
-        }
-    }
-    button:nth-child(2){
-        border-radius: 0;
-        font-size: 2rem;
-        position: absolute;
-        right:10px;
-        top: 200px;
-        span{
-            position: relative;
-        }
+}
+#product-modal-left>button:nth-child(1){
+    border-radius: 0;
+    font-size: 2rem;
+    position: absolute;
+    right:10px;
+    top: 200px;
+    span{
+        position: relative;
+        left: 3px;
     }
 }
+.upload-btn{
+    display: block;
+    width: 100%;
+}
+
 #product-modal-right{
+    flex: 0 100%;
     background-color: #444;
     padding: 20px;
     div:nth-child(5){
@@ -185,22 +181,31 @@ $orange: #fd7e14;
         font-size: 3rem;
         font-weight: 600;
     }
+    textarea,#form-vendor{background-color: rgb(19, 19, 19); color: white;}
+    .transp{opacity:0.4;}
 }
 
-#modal-close{
+#modal-btns{
+    display: flex;
     font-size: 2rem;
     position: fixed;
     top: 5vh;
     right: 5vw;
-    background-color: black;
+    div{
+        background-color: black;
     border-radius: 50%;
     height: 32px;
     span{
         position: relative;
         top:-8px;
     }
-    &:hover{
+    &:hover:nth-child(1){
+        cursor: pointer;
+        color:rgb(0,188,140);
+    }
+    &:hover:nth-child(2){
         cursor: pointer;
         color:$orange
+    }
     }
 }
