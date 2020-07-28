@@ -1,6 +1,10 @@
 <?php
 require 'bdd.php';
 
+// Récupère la valeur de $select_categorie
+require 'back/filtre.php';
+
+
 // Si $_GET['page'] n'existe pas vaut 1
 if(!isset($_GET['page']) || empty($_GET['page'])){
     $current_page = 1;
@@ -10,8 +14,16 @@ else{
 }
 
 // Compte nombre d'élément pour pagination 
-$sql = 'SELECT COUNT(id) FROM produits';
-$count = $bdd -> query($sql);
+if(empty($select_categorie)){
+    $sql = 'SELECT COUNT(id) FROM produits';
+    $count = $bdd -> query($sql);
+} else{
+    $sql = 'SELECT COUNT(p.id) FROM produits AS p INNER JOIN categories AS c ON p.id_categorie = c.id WHERE c.categorie = :categorie';
+    $count = $bdd -> prepare($sql);
+    $count -> bindValue('categorie', $select_categorie, PDO::PARAM_STR);
+    $count -> execute();
+}
+
 $total = $count -> fetch();
 
 // Défini le début du compte des éléments dans excursion selon la page
