@@ -28,8 +28,9 @@
     {% endblock title%}
 
     <div id="categorieList" class="hidden">
+      <a href="?categorie="><p>Tout</p></a>
       {% for categorie in categories %}
-        <p>{{ categorie.categorie }}</p>
+        <a href="?categorie={{ categorie.categorie }}"><p>{{ categorie.categorie }}</p></a>
       {% endfor %}
     </div>
 
