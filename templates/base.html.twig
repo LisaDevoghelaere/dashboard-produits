@@ -240,6 +240,20 @@
       </div>
     </div>
 
+    <div id="upmanual-modal">
+      <div class="modal-btns">
+        <div id="modal-upmanual-validate"><span class="far fa-check-circle m-modif" onclick="upmanualValidate(1)"></span></div>
+        <div id="modal-upmanual-close"><span class="far fa-times-circle"></span></div>
+      </div>
+      <div class="container">
+          <div class="modal-in">
+            <p class="title-mod"><span class="fas fa-upload icon"></span>Charger le manuel d'utilisation</p>
+            <p class="text-center text-light mb-1"><em>Aucun fichier chargé</em></p>
+            <button id="upmanual-btn" type="button" class="btn btn-success m-static" onclick="upmanualClick(1)"><span class="far fa-folder icon"></span>Parcourir</button>
+          </div>
+      </div>
+    </div>
+
 
 {% block script %}
 {# Bootstrap  #}

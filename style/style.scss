@@ -250,9 +250,7 @@ $green: rgb(0,188,140);
     textarea,#form-vendor{background-color: rgb(19, 19, 19); color: white;}
     .transp{opacity:0.4;}
 }
-
-
-#delete-modal{
+.modalSec{
     left: +100vw;
     z-index: 4;
     @extend .modal;
@@ -264,29 +262,9 @@ $green: rgb(0,188,140);
         min-height:100vh;
     }
 }
-#uppic-modal{
-    left: +100vw;
-    z-index: 4;
-    @extend .modal;
-    .container{
-        display:flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        min-height:100vh;
-    }
-}
-#upticket-modal{
-    left: +100vw;
-    z-index: 4;
-    @extend .modal;
-    .container{
-        display:flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        min-height:100vh;
-    }
+
+#delete-modal , #uppic-modal , #upticket-modal , #upmanual-modal{
+    @extend .modalSec;
 }
 
 

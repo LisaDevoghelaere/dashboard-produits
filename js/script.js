@@ -140,3 +140,19 @@ function upticketValidate(index){
 function uploadTicketClick(index){
     upTicketModal.classList.add('active');
 }
+
+
+//upload manual modale
+const upManualModal = document.getElementById('upmanual-modal');
+const modalUpManualClose = document.getElementById('modal-upmanual-close');
+
+modalUpManualClose.addEventListener('click' , function(){
+    upManualModal.classList.remove('active');
+})
+
+function upmanualValidate(index){
+    upManualModal.classList.remove('active');
+}
+function uploadManualClick(index){
+    upManualModal.classList.add('active');
+}
