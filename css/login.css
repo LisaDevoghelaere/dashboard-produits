@@ -1,0 +1,28 @@
+.container{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height:100vh;
+}
+form{
+    background-color: #303030;
+    width: 100%;
+    padding: 40px;
+    box-shadow: 5px 5px 3px rgba(0, 0, 0, 0.05);
+    max-width: 550px;
+
+}
+
+h1{
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 600;
+}
+input.form-control{
+    background-color: black;
+    color: white;
+}
+label{margin-top: 30px;margin-bottom: 12px;}
+button{width:100%; margin-top:30px;}
+p{margin-top: 8px;}
