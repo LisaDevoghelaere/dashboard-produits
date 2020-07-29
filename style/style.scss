@@ -263,7 +263,7 @@ $green: rgb(0,188,140);
     }
 }
 
-#delete-modal , #uppic-modal , #upticket-modal , #upmanual-modal{
+#delete-modal , #uppic-modal , #upticket-modal , #upmanual-modal , #newcat-modal{
     @extend .modalSec;
 }
 
@@ -279,7 +279,7 @@ $green: rgb(0,188,140);
         text-align: center;
         margin-bottom: 30px;
     }
-    button{width: 100%;margin:6px;}
+    button{width: 100%;margin:6px; position: relative;left:-6px}
     .icon{margin-right: 10px;}
 }
 

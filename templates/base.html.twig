@@ -254,6 +254,22 @@
       </div>
     </div>
 
+    <div id="newcat-modal">
+      <div class="modal-btn">
+        <div id="modal-newcat-close"><span class="far fa-times-circle"></span></div>
+      </div>
+      <div class="container">
+          <div class="modal-in">
+            <p class="title-mod"><span class="fas fa-boxes icon"></span>Créer une nouvelle catégorie</p>
+            <form id="newcat-form">
+              <input id="newcat-input" name="newCategorie" class="form-control form-control-sm mb-2" type="text" placeholder="Entrez un nom de catégorie">
+              <p class="text-center text-warning mb-3"><em>Message d'avertissement !</em></p>
+              <button id="newcat-btn" type="button" class="btn btn-success m-static" onclick="newcatClick(1)"><span class="fas fa-plus icon"></span>Ajouter</button>
+            </form>
+          </div>
+      </div>
+    </div>
+
 
 {% block script %}
 {# Bootstrap  #}

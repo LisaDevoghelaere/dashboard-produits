@@ -156,3 +156,19 @@ function upmanualValidate(index){
 function uploadManualClick(index){
     upManualModal.classList.add('active');
 }
+
+
+//new categorie modale
+const newCatModal = document.getElementById('newcat-modal');
+const newCatClose = document.getElementById('modal-newcat-close');
+
+newCatClose.addEventListener('click' , function(){
+    newCatModal.classList.remove('active');
+})
+
+function newcatClick(index){
+    newCatModal.classList.remove('active');
+}
+function newCategorieClick(index){
+    newCatModal.classList.add('active');
+}
