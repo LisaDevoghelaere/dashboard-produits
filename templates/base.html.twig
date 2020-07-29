@@ -40,6 +40,8 @@
 
     <div id="menu" class="bg-secondary">
       <div class="container">
+          <!-- Bouton nouveau produit -->
+          <button id="create-btn" type="button" class="btn btn-success m-static" onclick="createActivate()"><span class="fas fa-plus"></span></button>
           {# Recherche  #}
           <input id="searchInput" type="text" class="form-control" placeholder="Rechercher">
           {# Classement  #}
@@ -76,7 +78,7 @@
       <div class="row">
         {% for produit in produits_list %}
         <div class="product-card col-sm-12 col-md-6">
-          <button type="button" class="btn btn-outline-danger" onclick="clickDelete(1)"><span class="fas fa-minus"></span></button>
+          <button type="button" class="btn btn-outline-danger" onclick={{'clickDelete(' ~ produit.id ~ ')' }}><span class="fas fa-minus"></span></button>
           <div class="product-card-in" onclick="loadModal(1)">
             <div class="product-left">
                 <img src="images/product-main/placeholder.jpg" alt="">
@@ -85,14 +87,14 @@
                 <div class="card-text-up">
                   <div>
                     <h2>{{ produit.nom }}</h2>
-                    <em>Ref. {{ produit.reference }}</em>
+                    <em class="text-secondary">Ref. {{ produit.reference }}</em>
                     <p class="product-cat">{{ produit.categorie }}</p>
                   </div>
                   <div><p>{{ produit.prix }}€</p></div>
                 </div>
                 <div class="card-text-down">
-                  <p>Date d'achat: <strong class="text-success">{{ produit.date_achat }}</strong></p>
-                  <p>Fin de garantie: <strong strong class="text-success">{{ produit.date_fin_garantie }}</strong></p>
+                  <p class="text-secondary">Date d'achat: <strong class="text-dark">{{ produit.date_achat }}</strong></p>
+                  <p class="text-secondary">Fin de garantie: <strong class="text-dark">{{ produit.date_fin_garantie }}</strong></p>
                 </div>
             </div>
           </div>
@@ -160,6 +162,7 @@
             <img src="images/product-ticket/placeholder.jpg" alt="">
           </div>
           <div id="product-modal-right">
+            <p id="product-modal-title">Modifier le produit</p>
             <div class="form-group m-modif">
               <h3 class="m-modif">Vendeur:</h3>
               <select id="form-vendor" name="vendorType" class="form-control form-control-sm" onChange="vendorTypeChange()">

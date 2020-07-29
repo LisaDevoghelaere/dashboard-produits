@@ -44,6 +44,11 @@ function showStatic(){
     }
 }
 
+function createActivate(){
+    showModif();
+    loadModal();
+}
+
 window.onload=function(){
     showStatic();
 }
@@ -64,7 +69,7 @@ function vendorTypeChange(){
 }
 
 function vendorType(){
-    
+
     let type = vendorTypeInput.value;
     const vendorElements1 = document.getElementsByClassName('vendor1')
     const vendorElements2 = document.getElementsByClassName('vendor2')
