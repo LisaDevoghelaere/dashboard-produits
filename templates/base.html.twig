@@ -212,6 +212,20 @@
       </div>
     </div>
 
+    <div id="uppic-modal">
+      <div class="modal-btns">
+        <div id="modal-uppic-validate"><span class="far fa-check-circle mr-3 m-modif" onclick="uppicValidate(1)"></span></div>
+        <div id="modal-uppic-close"><span class="far fa-times-circle"></span></div>
+      </div>
+      <div class="container">
+          <div class="modal-in">
+            <p class="title-mod"><span class="fas fa-upload icon"></span>Charger un image</p>
+            <p class="text-center text-light mb-1"><em>Aucun fichier chargé</em></p>
+            <button id="uppic-btn" type="button" class="btn btn-success m-static" onclick="upPictureClick(1)"><span class="far fa-folder icon"></span>Parcourir</button>
+          </div>
+      </div>
+    </div>
+
 
 {% block script %}
 {# Bootstrap  #}

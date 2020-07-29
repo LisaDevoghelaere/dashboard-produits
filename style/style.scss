@@ -139,6 +139,7 @@ $green: rgb(0,188,140);
 }
 
 #product-modal{
+    // left: +100vw;
     z-index: 3;
     @extend .modal;
     .container form{
@@ -237,6 +238,19 @@ $green: rgb(0,188,140);
 
 
 #delete-modal{
+    // left: +100vw;
+    z-index: 4;
+    @extend .modal;
+    .container{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height:100vh;
+    }
+}
+#uppic-modal{
+    // left: +100vw;
     z-index: 4;
     @extend .modal;
     .container{

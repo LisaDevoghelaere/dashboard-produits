@@ -109,3 +109,22 @@ deleteNo.addEventListener('click' , function(){
 function deleteProduct(index){
     deleteModal.classList.remove('active');
 }
+
+
+//upload picture modale
+const uppicModal = document.getElementById('uppic-modal');
+const modalUppicClose = document.getElementById('modal-uppic-close');
+
+function clickDelete(id){
+    uppicModal.classList.add('active')
+}
+modalUppicClose.addEventListener('click' , function(){
+    uppicModal.classList.remove('active');
+})
+
+function uppicValidate(index){
+    uppicModal.classList.remove('active');
+}
+function uploadPictureClick(index){
+    uppicModal.classList.add('active');
+}
