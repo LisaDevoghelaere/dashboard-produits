@@ -103,7 +103,7 @@
 
     <div id="product-modal">
       <div class="modal-btns">
-        <div id="modal-validate"><span class="far fa-check-circle mr-3 m-modif" onclick="modifValidate(1)"></span></div>
+        <div id="modal-validate"><span class="far fa-check-circle m-modif" onclick="modifValidate(1)"></span></div>
         <div id="modal-close"><span class="far fa-times-circle"></span></div>
       </div>
       <div class="container">
@@ -151,7 +151,7 @@
               <label for="form-warranty">Date d'achat</label>
               <input id="form-warranty" name="warranty" class="form-control form-control-sm" type="date">
             </div>
-            <p class="m-static">Ticket d'achat:</p>
+            <p class="m-static">Facture d'achat:</p>
             <div class="form-group m-modif">
               <label for="form-pic">Ticket d'achat</label>
               <button type="button" class="btn btn-success m-modif upload-btn" onclick="uploadTicketClick(1)"><span class="fa fa-upload"></span> Charger un ticket</button>
@@ -214,7 +214,7 @@
 
     <div id="uppic-modal">
       <div class="modal-btns">
-        <div id="modal-uppic-validate"><span class="far fa-check-circle mr-3 m-modif" onclick="uppicValidate(1)"></span></div>
+        <div id="modal-uppic-validate"><span class="far fa-check-circle m-modif" onclick="uppicValidate(1)"></span></div>
         <div id="modal-uppic-close"><span class="far fa-times-circle"></span></div>
       </div>
       <div class="container">
@@ -222,6 +222,20 @@
             <p class="title-mod"><span class="fas fa-upload icon"></span>Charger un image</p>
             <p class="text-center text-light mb-1"><em>Aucun fichier chargé</em></p>
             <button id="uppic-btn" type="button" class="btn btn-success m-static" onclick="upPictureClick(1)"><span class="far fa-folder icon"></span>Parcourir</button>
+          </div>
+      </div>
+    </div>
+
+    <div id="upticket-modal">
+      <div class="modal-btns">
+        <div id="modal-upticket-validate"><span class="far fa-check-circle m-modif" onclick="upticketValidate(1)"></span></div>
+        <div id="modal-upticket-close"><span class="far fa-times-circle"></span></div>
+      </div>
+      <div class="container">
+          <div class="modal-in">
+            <p class="title-mod"><span class="fas fa-upload icon"></span>Charger une facture</p>
+            <p class="text-center text-light mb-1"><em>Aucun fichier chargé</em></p>
+            <button id="upticket-btn" type="button" class="btn btn-success m-static" onclick="upticketClick(1)"><span class="far fa-folder icon"></span>Parcourir</button>
           </div>
       </div>
     </div>

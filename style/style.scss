@@ -126,20 +126,80 @@ $green: rgb(0,188,140);
 .modal{
     position: fixed;
     top: 0;
-    left: +100vw;
+    // left: +100vw;
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.83);
     overflow-y: scroll;
     transition: ease-in-out 0.5s;
+
+    .modal-btns{
+        display: flex;
+        justify-content: space-between;
+        font-size: 2rem;
+        position: fixed;
+        top: 5vh;
+        right: -100vw;
+        transition: ease-in-out 0.8s;
+        width: 85px;
+        div{
+            background-color: black;
+            border-radius: 50%;
+            height: 32px;
+        span{
+            position: relative;
+            top:-8px;
+        }
+        &:hover:nth-child(1){
+            cursor: pointer;
+            color:$green;
+        }
+        &:hover:nth-child(2){
+            cursor: pointer;
+            color:$orange
+        }
+        }
+    }
+    .modal-btn{
+        display: flex;
+        font-size: 2rem;
+        position: fixed;
+        top: 5vh;
+        right: -100vw;
+        transition: ease-in-out 0.8s;
+        div{
+            background-color: black;
+            border-radius: 50%;
+            height: 32px;
+        span{
+            position: relative;
+            top:-8px;
+        }
+        &:hover:nth-child(1){
+            cursor: pointer;
+            color:$orange;
+        }
+        }
+    }
+
     &.active{
         left:0;
         transition: ease-in-out 0.5s;
+        .modal-btns{
+            transition: ease-in-out 0.8s;
+            top: 5vh;
+            right: 5vw;
+        }
+        .modal-btn{
+            transition: ease-in-out 0.8s;
+            top: 5vh;
+            right: 5vw;
+        }
     }
 }
 
 #product-modal{
-    // left: +100vw;
+    left: +100vw;
     z-index: 3;
     @extend .modal;
     .container form{
@@ -191,54 +251,9 @@ $green: rgb(0,188,140);
     .transp{opacity:0.4;}
 }
 
-.modal-btns{
-    display: flex;
-    font-size: 2rem;
-    position: absolute;
-    top: 5vh;
-    right: 5vw;
-    div{
-        background-color: black;
-        border-radius: 50%;
-        height: 32px;
-    span{
-        position: relative;
-        top:-8px;
-    }
-    &:hover:nth-child(1){
-        cursor: pointer;
-        color:$green;
-    }
-    &:hover:nth-child(2){
-        cursor: pointer;
-        color:$orange
-    }
-    }
-}
-.modal-btn{
-    display: flex;
-    font-size: 2rem;
-    position: absolute;
-    top: 5vh;
-    right: 5vw;
-    div{
-        background-color: black;
-        border-radius: 50%;
-        height: 32px;
-    span{
-        position: relative;
-        top:-8px;
-    }
-    &:hover:nth-child(1){
-        cursor: pointer;
-        color:$orange;
-    }
-    }
-}
-
 
 #delete-modal{
-    // left: +100vw;
+    left: +100vw;
     z-index: 4;
     @extend .modal;
     .container{
@@ -250,7 +265,19 @@ $green: rgb(0,188,140);
     }
 }
 #uppic-modal{
-    // left: +100vw;
+    left: +100vw;
+    z-index: 4;
+    @extend .modal;
+    .container{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height:100vh;
+    }
+}
+#upticket-modal{
+    left: +100vw;
     z-index: 4;
     @extend .modal;
     .container{

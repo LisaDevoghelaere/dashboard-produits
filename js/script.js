@@ -115,9 +115,6 @@ function deleteProduct(index){
 const uppicModal = document.getElementById('uppic-modal');
 const modalUppicClose = document.getElementById('modal-uppic-close');
 
-function clickDelete(id){
-    uppicModal.classList.add('active')
-}
 modalUppicClose.addEventListener('click' , function(){
     uppicModal.classList.remove('active');
 })
@@ -127,4 +124,19 @@ function uppicValidate(index){
 }
 function uploadPictureClick(index){
     uppicModal.classList.add('active');
+}
+
+//upload ticket modale
+const upTicketModal = document.getElementById('upticket-modal');
+const modalUpTicketClose = document.getElementById('modal-upticket-close');
+
+modalUpTicketClose.addEventListener('click' , function(){
+    upTicketModal.classList.remove('active');
+})
+
+function upticketValidate(index){
+    upTicketModal.classList.remove('active');
+}
+function uploadTicketClick(index){
+    upTicketModal.classList.add('active');
 }
