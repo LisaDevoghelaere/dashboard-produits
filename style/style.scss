@@ -62,13 +62,18 @@ $green: rgb(0,188,140);
     button{
         border: none;
         position: absolute;
-        right: 25px;
-        bottom: 10px;
+        left: 25px;
+        top: 25px;
         border-radius: 0;
-        padding: 18px 24px;
+        padding: 6px 10px;
         z-index: 1;
-        color: black;
-        border: 1px solid black;
+        color: white;
+        background-color: rgb(36, 36, 36);
+        display: none;
+        border-radius: 50%;
+    }
+    &:hover{
+        button{display: block;}
     }
 
     .product-card-in{
