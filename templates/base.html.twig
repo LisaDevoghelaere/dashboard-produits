@@ -91,8 +91,8 @@
                   <div><p>{{ produit.prix }}€</p></div>
                 </div>
                 <div class="card-text-down">
-                  <p>Date d'achat: <strong>{{ produit.date_achat }}</strong></p>
-                  <p>Fin de garantie: <strong>{{ produit.date_fin_garantie }}</strong></p>
+                  <p>Date d'achat: <strong class="text-success">{{ produit.date_achat }}</strong></p>
+                  <p>Fin de garantie: <strong strong class="text-success">{{ produit.date_fin_garantie }}</strong></p>
                 </div>
             </div>
           </div>
@@ -102,7 +102,7 @@
     </div>
 
     <div id="product-modal">
-      <div id="modal-btns">
+      <div class="modal-btns">
         <div id="modal-validate"><span class="far fa-check-circle mr-3 m-modif" onclick="modifValidate(1)"></span></div>
         <div id="modal-close"><span class="far fa-times-circle"></span></div>
       </div>
@@ -194,6 +194,21 @@
             <input type="hidden" name="manual" value="">
           </div>
         </form>
+      </div>
+    </div>
+
+    <div id="delete-modal">
+      <div class="modal-btn">
+        <div id="modal-delete-close"><span class="far fa-times-circle"></span></div>
+      </div>
+      <div class="container">
+          <div class="modal-in">
+            <p class="title-mod"><span class="fas fa-exclamation-triangle icon"></span>Supprimer ce produit?</p>
+            <div id="delete-yesno">
+              <button type="button" class="btn btn-danger m-static" onclick="deleteProduct(1)"><span class="fas fa-check icon"></span>Oui</button>
+              <button id="delete-no" type="button" class="btn btn-success m-static"><span class="fas fa-times icon"></span>Non</button>
+            </div>
+          </div>
       </div>
     </div>
 

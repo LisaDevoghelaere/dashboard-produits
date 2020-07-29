@@ -27,7 +27,7 @@ if(empty($select_categorie)){
 $total = $count -> fetch();
 
 // Défini le début du compte des éléments dans excursion selon la page
-$limit = 1;
+$limit = 10;
 $debut = $current_page * $limit - $limit;
 
 $nombre_page = [];

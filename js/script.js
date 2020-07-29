@@ -66,11 +66,8 @@ function vendorTypeChange(){
 function vendorType(){
     
     let type = vendorTypeInput.value;
-    console.log('type'+type)
     const vendorElements1 = document.getElementsByClassName('vendor1')
-    console.log(vendorElements1);
     const vendorElements2 = document.getElementsByClassName('vendor2')
-    console.log(vendorElements2);
     if(type==1){
         for(let i = 0 ; i<vendorElements1.length ; i++){
             vendorElements1[i].removeAttribute('disabled');
@@ -90,4 +87,25 @@ function vendorType(){
             vendorElements2[i].classList.remove('transp');
         }
     }
+}
+
+
+//delete modale
+const deleteModal = document.getElementById('delete-modal');
+const modalDeleteClose = document.getElementById('modal-delete-close');
+const deleteNo = document.getElementById('delete-no');
+
+function clickDelete(id){
+    catList.classList.add('hidden')
+    deleteModal.classList.add('active')
+}
+modalDeleteClose.addEventListener('click' , function(){
+    deleteModal.classList.remove('active');
+})
+deleteNo.addEventListener('click' , function(){
+    deleteModal.classList.remove('active');
+})
+
+function deleteProduct(index){
+    deleteModal.classList.remove('active');
 }
