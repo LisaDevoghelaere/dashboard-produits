@@ -17,7 +17,7 @@ function produits_list(){
     // Récupère la valeur de $select_categorie et de $order
     require 'filtre.php';
 
-    if($order == ''){
+    if($order == NULL){
         $order_req = 'p.id ASC';
     }elseif($order == 'date_croissant'){
         $order_req = 'p.date_achat ASC';
@@ -46,4 +46,24 @@ function produits_list(){
     $req -> execute();
 
     return $req;
+}
+
+// Finction modal détail des produits _________________________________________________
+function detail_modal($id){
+    require 'bdd.php';
+
+    if(isset($_GET['id'])){
+        $id = $_GET['id'];
+    } else{
+        $id = "";
+    }
+
+    $sql = 'SELECT p.id, p.nom,	p.reference, p.prix, p.date_achat, p.date_fin_garantie, p.conseil, p.manuel_utilisation, p.ticket_achat, c.categorie, v.ville, v.code_postal, v.rue, e.url, ph.nom_photo FROM produits AS p JOIN categories AS c ON p.id_categorie = c.id JOIN vente_direct AS v ON p.id = v.id_produit JOIN ecommerce AS e ON p.id = e.id_produit JOIN photos AS ph ON p.id = ph.id_produit WHERE p.id = :id';
+    $req = $bdd -> prepare($sql);
+
+    $req -> bindValue('id', $id, PDO::PARAM_INT);
+    $req -> execute();
+
+    // var_dump($req -> fetch());
+    return json_encode($req -> fetch());
 }
