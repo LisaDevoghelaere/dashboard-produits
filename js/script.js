@@ -43,6 +43,7 @@ function loadModal(id){
     const prod_Vendor_URL_input = document.getElementById('prod_Vendor_URL_input');
     const prod_Tips = document.getElementById('prod_Tips');
     const prod_Tips_input = document.getElementById('prod_Tips_input');
+    const prod_Manual_btn = document.getElementById('prod_Tips_input');
 
     const formData = new FormData();
     formData.append('id', JSON.stringify(id));
@@ -51,65 +52,85 @@ function loadModal(id){
         .then( res => res.json() ).then( data =>{
 
         // image
-            if(data.picture[0]!=false){
-                prod_Picture.setAttribute('src' , data.picture[0]);
+            if(data[2].nom_photo!=false){
+                prod_Picture.setAttribute('src' , data[2].nom_photo);
             }
             else{
                 prod_Picture.setAttribute('src' , 'images/product-main/placeholder.jpg');
             }
 
         // ticket
-            if(data.ticket!=""){
-                prod_Picture.setAttribute('src' , data.ticket);
+            if(data.ticket_achat!=""){
+                prod_Picture.setAttribute('src' , data[0].ticket_achat);
             }
             else{
                 prod_Picture.setAttribute('src' , 'images/product-ticket/placeholder.jpg');
             }
 
         //nom produit
-            prod_Name.innerText = data.name;
-            prod_Name_input.value = data.name;
+            prod_Name.innerText = data[0].nom;
+            prod_Name_input.value = data[0].nom;
 
         //numero de serie
-            prod_Serial.innerText = data.serial;
-            prod_Serial_input.value = data.serial;
+            prod_Serial.innerText = data[0].reference;
+            prod_Serial_input.value = data[0].reference;
 
         //categorie
-            prod_Categorie.innerText = data.categorie;
-            prod_Categorie_input.value = data.categorie_id;
+            prod_Categorie.innerText = data[0].categorie;
+            prod_Categorie_input.value = data[0].id_categorie;
 
         //prix
-            prod_Price.innerText = data.price;
-            prod_Price_input.value = data.price;
+            prod_Price.innerText = data[0].prix;
+            prod_Price_input.value = data[0].prix;
 
         //prix
-            prod_Date.innerText = data.date;
-            prod_Date_input.value = data.date;
+            prod_Date.innerText = data[0].date_achat;
+            prod_Date_input.value = data[0].date_achat;
 
         //garantie
-            prod_Warranty.innerText = data.warranty;
-            prod_Warranty_input.value = data.warranty;
+            prod_Warranty.innerText = data[0].date_fin_garantie;
+            prod_Warranty_input.value = data[0].date_fin_garantie;
 
         //vendeur nom
-            prod_Vendor_Name.innerText = data.vendor_name;
-            prod_Vendor_Name_input.value = data.vendor_name;
+            // prod_Vendor_Name.innerText = data.vendor_name;
+            // prod_Vendor_Name_input.value = data.vendor_name;
 
+            if(data.id_categorie == 2){
         // vendeur adresse
-            prod_Vendor_Address.innerText = data.vendor_street+" - "+data.vendor.code+" - "+data.vendor.city;
-            prod_Vendor_Name_input.value = data.vendor_name;
-            prod_Vendor_Street_input.value = data.vendor_street;
-            prod_Vendor_Code_input.value = data.vendor_code;
-            prod_Vendor_City_input.value = data.vendor_city;
+            prod_Vendor_Address.innerText = data[1].rue+" - "+data.code_postal+" - "+data.ville;
+            prod_Vendor_Name_input.value = data[1].vendor_name;
+            prod_Vendor_Street_input.value = data[1].rue;
+            prod_Vendor_Code_input.value = data[1].code_postal;
+            prod_Vendor_City_input.value = data[1].ville;
 
         //vendeur url
-            prod_Vendor_URL.innerText = data.vendor_url;
-            prod_Vendor_URL_input.value = data.vendor_url;
+            prod_Vendor_URL.innerText = "";
+            prod_Vendor_URL_input.value = "";
+            }
+            else{
+        // vendeur adresse
+            prod_Vendor_Address.innerText = "";
+            prod_Vendor_Name_input.value = "";
+            prod_Vendor_Street_input.value = "";
+            prod_Vendor_Code_input.value = "";
+            prod_Vendor_City_input.value = "";
+
+        //vendeur url
+            prod_Vendor_URL.innerText = data[1].url;
+            prod_Vendor_URL_input.value = data[1].url;
+            }
+
+
 
         //conseils
-            prod_Tips.innerText = data.vendor_url;
-            prod_Tips_input.value = data.vendor_url;
+            prod_Tips.innerText = data[0].conseil;
+            prod_Tips_input.value = data[0].conseil;
 
+        //Manuel
+            prod_Manual_btn.setAttribute('href', data[0].manuel_utilisation);
         })
+
+
 
 }
 function clickDelete(){
