@@ -1,3 +1,13 @@
+<?php session_start();
+    // deconnection du dashboard lors du chargement
+    if(isset($_SESSION['admin'])){
+        unset($_SESSION['admin']);
+    }
+    if(isset($_SESSION['user'])){
+        unset($_SESSION['user']);
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

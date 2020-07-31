@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (($_SESSION['admin'] = false) || (!isset($_SESSION['user']))) {
+    header('Location: login.php');
+}
 
 require_once 'vendor/autoload.php';
 $loader = new \Twig\Loader\FilesystemLoader('templates');
