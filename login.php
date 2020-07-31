@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-        <form>
+        <form action="back/authentification.php" method="POST">
             <h1 class="text-success">Dashboard Produits</h1>
             <div class="form-group">
               <label for="user"><span class="far fa-user"></span> Utilisateur :</label>
