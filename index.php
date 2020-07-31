@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once 'vendor/autoload.php';
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment($loader, [
@@ -6,7 +8,6 @@ $twig = new \Twig\Environment($loader, [
     'debug' => true,
     ]);
     $twig->addExtension(new \Twig\Extension\DebugExtension());
-
     
 // Pagination
 require 'back/pagination.php';
@@ -19,7 +20,8 @@ require 'back/function.php';
 
 $template = $twig->load('base.html.twig');
 echo $template->render(array(
-    'user' => 'Admin',
+    'admin' => $_SESSION['admin'], // Si true authentification réussi, si false mauvaise authentification
+    'user' => $_SESSION['user'], // Nom du l'utilisateur
     'categorieTitle' => $select_categorie,
     'order' => $order,
     'categories' => categories(),
