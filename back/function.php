@@ -84,7 +84,7 @@ function detail_modal($id){
     if($id_lieu_achat[0] == 1){
         $sql = 'SELECT e.url FROM ecommerce AS e INNER JOIN lieu_achat AS l ON e.id_lieu_achat = l.id WHERE e.id_produit = :id AND e.id_lieu_achat = :id_lieu_achat';
     } elseif($id_lieu_achat[0] == 2){
-        $sql = 'SELECT v.ville, v.code_postal, v.rue FROM vente_direct AS v INNER JOIN lieu_achat AS l ON v.id_lieu_achat = l.id WHERE v.id_produit = :id AND v.id_lieu_achat = :id_lieu_achat';
+        $sql = 'SELECT v.nom_vendeur, v.ville, v.code_postal, v.rue FROM vente_direct AS v INNER JOIN lieu_achat AS l ON v.id_lieu_achat = l.id WHERE v.id_produit = :id AND v.id_lieu_achat = :id_lieu_achat';
     }
 
     $adresse_lieu_achat = $bdd -> prepare($sql);
