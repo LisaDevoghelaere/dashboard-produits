@@ -2,6 +2,9 @@
 const title =document.getElementById('title');
 const catList =document.getElementById('categorieList');
 const prod_Vendor_Type_input = document.getElementById('prod_Vendor_Type_input');
+const prod_Vendor_Title_direct = document.getElementById('title-vente-directe');
+const prod_Vendor_Title_ecom = document.getElementById('title-ecom');
+console.log(prod_Vendor_Title_ecom);
 let type = 0;
 let product_id = 0;
 
@@ -12,7 +15,6 @@ title.addEventListener('click' , function(){
 //modale
 const modal = document.getElementById('product-modal');
 const modalClose = document.getElementById('modal-close');
-let idProduit = 0;
 
 function loadModal(id){
     product_id=id;
@@ -98,7 +100,8 @@ function loadModal(id){
 
             if(data[1].url == undefined){
                 type=0;
-                console.log('undefined');
+                console.log('vente directe');
+                console.log('type = ' +  type);
         // vendeur adresse
             prod_Vendor_Type_input.selectedIndex = 0;
             prod_Vendor_Address.innerText = data[1].rue+" - "+data.code_postal+" - "+data.ville;
@@ -113,8 +116,9 @@ function loadModal(id){
             prod_Vendor_URL_input.value = "";
             }
             else{
-                type=1
-                console.log('defined');
+                type=1;
+                console.log('e-commerce');
+                console.log('type = ' +  type);
         // vendeur adresse
             prod_Vendor_Type_input.selectedIndex = 1;
             prod_Vendor_Address.innerText = "";
@@ -136,9 +140,9 @@ function loadModal(id){
 
         //Manuel
             prod_Manual_btn.setAttribute('href', data[0].manuel_utilisation);
-        })
 
         vendorType();
+        })
 }
 function clickDelete(){
     modal.classList.remove('active');
@@ -188,41 +192,47 @@ function modifValidate(){
 
 //vendor type
 function vendorTypeChange(){
+    type=prod_Vendor_Type_input.selectedIndex;
     vendorType();
 }
 
 
 function vendorType(){
-    // for(let i = 0 ; i<vendorElements1.length ; i++){
-    //     vendorElements1[i].removeAttribute('disabled');
-    //     vendorElements1[i].classList.remove('transp');
-    // }
-    // for(let i = 0 ; i<vendorElements2.length ; i++){
-    //     vendorElements2[i].removeAttribute('disabled');
-    //     vendorElements2[i].classList.remove('transp');
-    // }
-    console.log("vendorType");
+    console.log("update");
+    console.log(type);
     const vendorElements1 = document.getElementsByClassName('vendor1')
     const vendorElements2 = document.getElementsByClassName('vendor2')
-    console.log(type);
+        //vente directe
         if(type==0){
         for(let i = 0 ; i<vendorElements1.length ; i++){
             vendorElements1[i].removeAttribute('disabled');
-            vendorElements1[i].classList.remove('transp');
+            vendorElements1[i].classList.remove('hideRight');
         }
         for(let i = 0 ; i<vendorElements2.length ; i++){
             vendorElements2[i].setAttribute('disabled',"true");
-            vendorElements2[i].classList.add('transp');
+            vendorElements2[i].classList.add('hideRight');
         }
-    }else{
+        prod_Vendor_Name.classList.remove('hideRight');
+        prod_Vendor_Address.classList.remove('hideRight');
+        prod_Vendor_Title_direct.classList.remove('hideRight');
+        prod_Vendor_URL.classList.add('hideRight');
+        prod_Vendor_Title_ecom.classList.add('hideRight');
+    }
+    //ecommerce
+    else{
         for(let i = 0 ; i<vendorElements1.length ; i++){
             vendorElements1[i].setAttribute('disabled',"true");
-            vendorElements1[i].classList.add('transp');
+            vendorElements1[i].classList.add('hideRight');
         }
         for(let i = 0 ; i<vendorElements2.length ; i++){
             vendorElements2[i].removeAttribute('disabled');
-            vendorElements2[i].classList.remove('transp');
+            vendorElements2[i].classList.remove('hideRight');
         }
+        prod_Vendor_Name.classList.add('hideRight');
+        prod_Vendor_Address.classList.add('hideRight');
+        prod_Vendor_Title_direct.classList.add('hideRight');
+        prod_Vendor_URL.classList.remove('hideRight');
+        prod_Vendor_Title_ecom.classList.remove('hideRight');
     }
 }
 

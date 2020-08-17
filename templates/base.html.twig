@@ -165,7 +165,7 @@
             <p id="product-modal-title">Modifier le produit</p>
             <div class="form-group m-modif">
               <h3 class="m-modif">Vendeur:</h3>
-              <select id="prod_Vendor_Type_input" name="vendorType" class="form-control form-control-sm" onChange="vendorTypeChange()">
+              <select id="prod_Vendor_Type_input" name="vendorType" class="form-control form-control-sm" onchange="vendorTypeChange()">
                 <option value="1">Vente directe</option>
                 <option value="2">E-commerce</option>
               </select>
@@ -181,12 +181,12 @@
               <input id="prod_Vendor_City_input" name="vendorCity" class="vendor1 form-control form-control-sm" type="text" placeholder="Entrez une ville">
             </div>
             <div id="vente-direct" class="m-static">
-              <h3><strong>Vente directe</strong></h3>
+              <h3 id="title-vente-directe"><strong>Vente directe</strong></h3>
               <p id="prod_Vendor_Name" class="text-success" class="m-static">Nom du point de vente</p>
               <p id="prod_Vendor_Address"><span>5, avenue de machin</span> - <span>25000</span> - <span>Besançon</span></p>
             </div>
             <div id="vente-ecommerce" class="m-static">
-              <h3><strong>E-commerce</strong></h3>
+              <h3 id="title-ecom"><strong>E-commerce</strong></h3>
               <p id="prod_Vendor_URL" class="text-success"><a target="_blank" rel="noopener noreferrer" href="http://www.amazon.fr">http://www.amazon.fr</a></p>
             </div>
             <h3>Conseils d'utilisation:</h3>
