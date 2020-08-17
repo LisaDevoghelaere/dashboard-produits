@@ -108,6 +108,13 @@ function detail_modal($id){
     array_push($array, $array_photo);
     $photo -> closeCursor();
 
+    // liste des catégories
+    $sql = 'SELECT categorie FROM categories';
+    $categorie = $bdd -> query($sql);
+    $categories = $categorie -> fetchAll();
+
+    array_push($array, $categories);
+
     return json_encode($array);
 }
 
@@ -229,10 +236,48 @@ function add_product(){
 
 // Fonction suppression d'un produit _________________________________________________
 function delete_product($id){
+    require 'bdd.php';
+
+    // Récupère l'id du lieu d'achat pour suppresion dans la table correspondant
+    $sql = 'SELECT id_lieu_achat FROM produits WHERE id = :id';
+    $req = $bdd->prepare($sql);
+    $req->bindValue(':id', $id, PDO::PARAM_INT);
+    $req->execute();
+    $id_lieu_achat = $req -> fetch();
+
+    $req->closeCursor();
+
+    // Suppression du produit dans table produits
     $sql = 'DELETE FROM produits WHERE id = :id';
 
-    $delete = $bdd->prepare($sql);
-    $delete->bindValue(':id', $id, PDO::PARAM_INT);
-    $delete->execute();
-    $delete->closeCursor();
+    $delete_product = $bdd->prepare($sql);
+    $delete_product->bindValue(':id', $id, PDO::PARAM_INT);
+    $delete_product->execute();
+    $delete_product->closeCursor();
+
+    // Suppression du poduit dans la table du lieu d'achat correspondant 
+    if($id_lieu_achat == 1){
+        $sql = 'DELETE FROM ecommerce WHERE id_produit = :id_produit';
+    
+        $delete_ecommerce = $bdd->prepare($sql);
+        $delete_ecommerce->bindValue(':id_produit', $id, PDO::PARAM_INT);
+        $delete_ecommerce->execute();
+        $delete_ecommerce->closeCursor();
+    } elseif($id_lieu_achat == 2){
+        $sql = 'DELETE FROM vente_direct WHERE id_produit = :id_produit';
+    
+        $delete_vente_direct = $bdd->prepare($sql);
+        $delete_vente_direct->bindValue(':id_produit', $id, PDO::PARAM_INT);
+        $delete_vente_direct->execute();
+        $delete_vente_direct->closeCursor();
+    }
+
+    // Suppression des photos selon id du produit
+    $sql = 'DELETE FROM photos WHERE id_produit = :id';
+
+    $delete_photo = $bdd->prepare($sql);
+    $delete_photo->bindValue(':id_produit', $id, PDO::PARAM_INT);
+    $delete_photo->execute();
+    $delete_photo->closeCursor();
 }
+
