@@ -112,8 +112,10 @@ function detail_modal($id){
     $sql = 'SELECT categorie FROM categories';
     $categorie = $bdd -> query($sql);
     $array_categories = array();
+    $i = 1;
     while($donnees = $categorie->fetchColumn()){
-        array_push($array_categories, $donnees);
+        array_push($array_categories, [$i => $donnees]);
+        $i++;
     }
 
     array_push($array, $array_categories);
@@ -146,7 +148,7 @@ function add_product(){
     $code_postal = '';
     $rue = '';
 
-    $array_photos = '';
+    $array_photos = array();
 
     // Récupère l'id de la catégorie
     $sql = 'SELECT id FROM categories WHERE categorie = :categorie';
@@ -225,7 +227,7 @@ function add_product(){
     }
 
     // insertion des photos selon id du produit
-    foreach($photo as $array_photos){
+    foreach($array_photos as $photo){
         $sql = 'INSERT INTO photos(id_produit, nom_photo) VALUES(:id_produit, :nom_photo)';
 
         $insert_photo = $bdd->prepare($sql);
@@ -285,3 +287,119 @@ function delete_product($id){
     $delete_photo->closeCursor();
 }
 
+// Fonction update de produits _____________________________________________________
+function update_product(){
+    require 'bdd.php';
+
+    $id_produit = '';
+    $nom_produit = '';
+    $reference_produit = '';
+    $prix_produit = '';
+    $date_achat_produit = '';
+    $date_garantie_produit = '';
+    $conseil_produit = '';
+    $manuel_utilisation_produit = '';
+    $ticket_achat_produit = '';
+
+    $id_lieu_achat = '';
+    $id_categorie = '';
+
+    // $categorie = '';
+    $url = '';
+    $nom_vendeur = '';
+    $ville = '';
+    $code_postal = '';
+    $rue = '';
+
+    $array_photos = array();
+
+    // // Récupère l'id de la catégorie
+    // $sql = 'SELECT id FROM categories WHERE categorie = :categorie';
+    // $req_categorie = $bdd -> prepare($sql);
+
+    // $req_categorie -> bindParam('categorie', $categorie, PDO::PARAM_STR);
+    // $req_categorie -> execute();
+    // $id_categorie = $req_categorie -> fetch();
+
+    // $req_categorie -> closeCursor();
+
+    // Insère le nouveau produit
+    $sql = 'UPDATE produits SET nomm = :nom, reference = :reference, prix = :prix, date_achat = :date_achat, date_fin_garanti = :date_fin_garantie, id_categorie = :id_categorie, conseil = :conseil, naluel_utilisation = :manuel_utilisation, ticket_achat = :ticket_achat, id_lieu_achat = :id_lieu_achat WHERE id = :id';
+
+    // Change le lieu d'achat selon l'id
+    if($url !== '' && $ville == '' && $code_postal == '' && $nom_vendeur == '' && $rue == ''){
+        $id_lieu_achat = 1;
+
+        $update_product = $bdd -> prepare($sql);
+        $update_product -> bindValue('id_lieu achat', $id_lieu_achat, PDO::PARAM_STR);
+    }elseif($url == '' && $ville !== '' && $code_postal !== '' && $nom_vendeur !== '' && $rue !== ''){
+        $id_lieu_achat = 2;
+
+        $update_product = $bdd -> prepare($sql);
+        $update_product -> bindValue('id_lieu achat', $id_lieu_achat, PDO::PARAM_STR);        
+    }
+
+    $update_product -> bindParam('nom', $nom_produit, PDO::PARAM_STR);
+    $update_product -> bindValue('reference', $reference_produit, PDO::PARAM_STR);
+    $update_product -> bindValue('prix', $prix_produit, PDO::PARAM_STR);
+    $update_product -> bindValue('date_achat', $date_achat_produit, PDO::PARAM_STR);
+    $update_product -> bindValue('date_fin_garantie', $date_garantie_produit, PDO::PARAM_STR);
+    $update_product -> bindValue('id_categorie', $id_categorie, PDO::PARAM_STR);
+    $update_product -> bindParam('conseil', $conseil_produit, PDO::PARAM_STR);
+    $update_product -> bindParam('manuel_utilisation', $manuel_utilisation_produit, PDO::PARAM_STR);
+    $update_product -> bindParam('ticket_achat', $ticket_achat_produit, PDO::PARAM_STR);
+    $update_product -> bindValue(':id', $id_produit, PDO::PARAM_INT);
+    $update_product -> execute();
+
+    $update_product -> closeCursor();
+
+    // Récupère l'id du dernier produit
+    // $sql = 'SELECT LAST(id) FROM produits';
+
+    // $id_last_product = $bdd -> query($sql);
+    // $id_produit = $id_last_product -> fetch();
+
+    // $id_last_product -> closeCursor();
+
+    // Insertion table e-commerce ou vente direct selon id du lieu d'achat
+    if($id_lieu_achat == 1){
+        $qsl = 'UPDATE ecommerce SET id_lieu_achat = :id_lieu_achat, url = :url WHERE id_produit = :id_produit';
+
+        $update_ecommerce = $bdd->prepare($sql);
+        
+        $update_ecommerce->bindValue(':id_lieu_achat', $id_lieu_achat, PDO::PARAM_INT);
+        $update_ecommerce->bindParam(':url', $url, PDO::PARAM_STR);
+        $update_ecommerce->bindValue(':id_produit', $id_produit, PDO::PARAM_INT);
+        $update_ecommerce->execute();
+
+        $update_ecommerce->closeCursor();
+
+    } elseif($id_lieu_achat == 2){
+        $qsl = 'UPDATE vente_direct SET nom_vendeur = :nom_vendeur, id_lieu_achat = :id_lieu_achat, :ville, code_postal = :code_postal, rue = :rue WHERE id_produit = :id_produit';
+
+        $update_vente_direct = $bdd->prepare($sql);
+        
+        $update_vente_direct->bindParam(':nom_vendeur', $nom_vendeur, PDO::PARAM_STR);
+        $update_vente_direct->bindValue(':id_lieu_achat', $id_lieu_achat, PDO::PARAM_INT);
+        $update_vente_direct->bindParam(':ville', $ville, PDO::PARAM_STR);
+        $update_vente_direct->bindValue(':code_postal', $code_postal, PDO::PARAM_INT);
+        $update_vente_direct->bindParam(':rue', $rue, PDO::PARAM_STR);
+        $update_vente_direct->bindValue(':id_produit', $id_produit, PDO::PARAM_INT);
+        $update_vente_direct->execute();
+
+        $update_vente_direct->closeCursor();
+    }
+
+    // insertion des photos selon id du produit
+    foreach($array_photos as $photo){
+        $sql = 'UPDATE photos SEt non_photo = :nom_photo WHERE id_produit = :id_produit';
+
+        $insert_photo = $bdd->prepare($sql);
+
+        $insert_photo->bindParam(':nom_photo', $photo, PDO::PARAM_STR);
+        $insert_photo->bindValue(':id_produit', $id_produit, PDO::PARAM_INT);
+        $insert_photo->execute();
+
+        $insert_photo->closeCursor();
+    }
+}
