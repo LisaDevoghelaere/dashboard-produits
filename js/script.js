@@ -4,8 +4,10 @@ const catList =document.getElementById('categorieList');
 const prod_Vendor_Type_input = document.getElementById('prod_Vendor_Type_input');
 const prod_Vendor_Title_direct = document.getElementById('title-vente-directe');
 const prod_Vendor_Title_ecom = document.getElementById('title-ecom');
+const modalTitle = document.getElementById('product-modal-title');
 let type = 0;
 let product_id = 0;
+let mode = "";
 
 title.addEventListener('click' , function(){
     catList.classList.toggle('hidden');
@@ -64,6 +66,14 @@ function loadModal(id){
                 prod_Picture.setAttribute('src' , photo);
             }
 
+            const phototicket = data[0].ticket_achat;
+            if((phototicket == undefined) || (phototicket == "")){
+                prod_Ticket.setAttribute('src' , 'images/product-ticket/placeholder.jpg');
+            }
+            else{
+                prod_Ticket.setAttribute('src' , phototicket);
+            }
+
         //Categories
         prod_Categorie_input.innerHTML = '';
         for (let i = 0 ; i<data[3].categories.length ; i++){
@@ -91,10 +101,10 @@ function loadModal(id){
             prod_Categorie_input.value = data[0].id_categorie;
 
         //prix
-            prod_Price.innerText = data[0].prix;
+            prod_Price.innerText = data[0].prix + "€";
             prod_Price_input.value = data[0].prix;
 
-        //prix
+        //date achat
             prod_Date.innerText = data[0].date_achat;
             prod_Date_input.value = data[0].date_achat;
 
@@ -161,23 +171,31 @@ const staticElements = document.getElementsByClassName('m-static');
 const modifElements = document.getElementsByClassName('m-modif');
 
 function showModif(){
+
     for(let i = 0 ; i<staticElements.length ; i++){
         staticElements[i].classList.add('hide');
     }
     for(let i = 0 ; i<modifElements.length ; i++){
         modifElements[i].classList.remove('hide');
     }
+    modalTitle.classList.remove('hideRight');
 }
 function showStatic(){
+    mode=""
+    console.log("mode = "+mode);
     for(let i = 0 ; i<staticElements.length ; i++){
         staticElements[i].classList.remove('hide');
     }
     for(let i = 0 ; i<modifElements.length ; i++){
         modifElements[i].classList.add('hide');
     }
+    modalTitle.classList.add('hideRight');
 }
 
 function createActivate(){
+    mode="create"
+    console.log("mode = "+mode);
+    modalTitle.innerText='Ajouter un produit';
     showModif();
     loadModal();
 }
@@ -187,6 +205,9 @@ window.onload=function(){
 }
 
 function modifActivate(){
+    mode="edit"
+    console.log("mode = "+mode);
+    modalTitle.innerText='Modifier le produit';
     showModif();
 
 }
