@@ -53,8 +53,8 @@ function detail_modal($id){
     require 'bdd.php';
 
     $array = array();
-    if(isset($_POST['id'])){
-        $id = $_POST['id'];
+    if(isset($_GET['id'])){
+        $id = $_GET['id'];
     } else{
         $id = "";
     }
@@ -111,9 +111,13 @@ function detail_modal($id){
     // liste des catégories
     $sql = 'SELECT categorie FROM categories';
     $categorie = $bdd -> query($sql);
-    $categories = $categorie -> fetchAll();
+    $array_categories = array();
+    while($donnees = $categorie->fetchColumn()){
+        array_push($array_categories, $donnees);
+    }
 
-    array_push($array, $categories);
+    array_push($array, $array_categories);
+
 
     return json_encode($array);
 }
