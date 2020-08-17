@@ -111,7 +111,7 @@ function detail_modal($id){
     return json_encode($array);
 }
 
-// Fonction ajout de produits
+// Fonction ajout de produits _____________________________________________________
 function add_product(){
     require 'bdd.php';
 
@@ -213,6 +213,7 @@ function add_product(){
         $insert_vente_direct->closeCursor();
     }
 
+    // insertion des photos selon id du produit
     foreach($photo as $array_photos){
         $sql = 'INSERT INTO photos(id_produit, nom_photo) VALUES(:id_produit, :nom_photo)';
 
@@ -224,4 +225,14 @@ function add_product(){
 
         $insert_photo->closeCursor();
     }
+}
+
+// Fonction suppression d'un produit _________________________________________________
+function delete_product($id){
+    $sql = 'DELETE FROM produits WHERE id = :id';
+
+    $delete = $bdd->prepare($sql);
+    $delete->bindValue(':id', $id, PDO::PARAM_INT);
+    $delete->execute();
+    $delete->closeCursor();
 }
