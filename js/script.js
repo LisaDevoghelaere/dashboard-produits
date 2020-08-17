@@ -2,6 +2,9 @@
 const title =document.getElementById('title');
 const catList =document.getElementById('categorieList');
 const prod_Vendor_Type_input = document.getElementById('prod_Vendor_Type_input');
+const prod_Vendor_Title_direct = document.getElementById('title-vente-directe');
+const prod_Vendor_Title_ecom = document.getElementById('title-ecom');
+let type = 0;
 let product_id = 0;
 
 title.addEventListener('click' , function(){
@@ -11,13 +14,12 @@ title.addEventListener('click' , function(){
 //modale
 const modal = document.getElementById('product-modal');
 const modalClose = document.getElementById('modal-close');
-let idProduit = 0;
 
 function loadModal(id){
     product_id=id;
     catList.classList.add('hidden')
     modal.classList.add('active')
-    vendorType();
+
 
     const prod_Picture = document.getElementById('prod_Picture');
     const prod_Ticket = document.getElementById('prod_Ticket');
@@ -43,6 +45,7 @@ function loadModal(id){
     const prod_Vendor_URL_input = document.getElementById('prod_Vendor_URL_input');
     const prod_Tips = document.getElementById('prod_Tips');
     const prod_Tips_input = document.getElementById('prod_Tips_input');
+    const prod_Manual_btn = document.getElementById('prod_Tips_input');
 
     const formData = new FormData();
     formData.append('id', JSON.stringify(id));
@@ -50,67 +53,84 @@ function loadModal(id){
     fetch( 'back/ajax_produit_by_id.php', { method : "post" , body : formData } )
         .then( res => res.json() ).then( data =>{
 
-        // image
-            if(data.picture[0]!=false){
-                prod_Picture.setAttribute('src' , data.picture[0]);
-            }
-            else{
+            const photo = data[2].nom_photo;
+            if(photo == undefined){
                 prod_Picture.setAttribute('src' , 'images/product-main/placeholder.jpg');
             }
-
-        // ticket
-            if(data.ticket!=""){
-                prod_Picture.setAttribute('src' , data.ticket);
-            }
             else{
-                prod_Picture.setAttribute('src' , 'images/product-ticket/placeholder.jpg');
+                prod_Picture.setAttribute('src' , photo);
             }
+
 
         //nom produit
-            prod_Name.innerText = data.name;
-            prod_Name_input.value = data.name;
+            prod_Name.innerText = data[0].nom;
+            prod_Name_input.value = data[0].nom;
 
         //numero de serie
-            prod_Serial.innerText = data.serial;
-            prod_Serial_input.value = data.serial;
+            prod_Serial.innerText = data[0].reference;
+            prod_Serial_input.value = data[0].reference;
 
         //categorie
-            prod_Categorie.innerText = data.categorie;
-            prod_Categorie_input.value = data.categorie_id;
+            prod_Categorie.innerText = data[0].categorie;
+            prod_Categorie_input.value = data[0].id_categorie;
 
         //prix
-            prod_Price.innerText = data.price;
-            prod_Price_input.value = data.price;
+            prod_Price.innerText = data[0].prix;
+            prod_Price_input.value = data[0].prix;
 
         //prix
-            prod_Date.innerText = data.date;
-            prod_Date_input.value = data.date;
+            prod_Date.innerText = data[0].date_achat;
+            prod_Date_input.value = data[0].date_achat;
 
         //garantie
-            prod_Warranty.innerText = data.warranty;
-            prod_Warranty_input.value = data.warranty;
+            prod_Warranty.innerText = data[0].date_fin_garantie;
+            prod_Warranty_input.value = data[0].date_fin_garantie;
 
         //vendeur nom
-            prod_Vendor_Name.innerText = data.vendor_name;
-            prod_Vendor_Name_input.value = data.vendor_name;
+            prod_Vendor_Name.innerText = data[1].nom_vendeur;
+            prod_Vendor_Name_input.value = data[1].nom_vendeur;
 
+            if(data[1].url == undefined){
+                type=0;
         // vendeur adresse
-            prod_Vendor_Address.innerText = data.vendor_street+" - "+data.vendor.code+" - "+data.vendor.city;
-            prod_Vendor_Name_input.value = data.vendor_name;
-            prod_Vendor_Street_input.value = data.vendor_street;
-            prod_Vendor_Code_input.value = data.vendor_code;
-            prod_Vendor_City_input.value = data.vendor_city;
+            prod_Vendor_Type_input.selectedIndex = 0;
+            prod_Vendor_Address.innerText = data[1].rue+" - "+data[1].code_postal+" - "+data[1].ville;
+            prod_Vendor_Name_input.value = data[1].nom_vendeur;
+            prod_Vendor_Street_input.value = data[1].rue;
+            prod_Vendor_Code_input.value = data[1].code_postal;
+            prod_Vendor_City_input.value = data[1].ville;
+
 
         //vendeur url
-            prod_Vendor_URL.innerText = data.vendor_url;
-            prod_Vendor_URL_input.value = data.vendor_url;
+            prod_Vendor_URL.innerText = "";
+            prod_Vendor_URL_input.value = "";
+            }
+            else{
+                type=1;
+        // vendeur adresse
+            prod_Vendor_Type_input.selectedIndex = 1;
+            prod_Vendor_Address.innerText = "";
+            prod_Vendor_Name_input.value = "";
+            prod_Vendor_Street_input.value = "";
+            prod_Vendor_Code_input.value = "";
+            prod_Vendor_City_input.value = "";
+
+        //vendeur url
+            prod_Vendor_URL.innerText = data[1].url;
+            prod_Vendor_URL_input.value = data[1].url;
+            }
+
+
 
         //conseils
-            prod_Tips.innerText = data.vendor_url;
-            prod_Tips_input.value = data.vendor_url;
+            prod_Tips.innerText = data[0].conseil;
+            prod_Tips_input.value = data[0].conseil;
 
+        //Manuel
+            prod_Manual_btn.setAttribute('href', data[0].manuel_utilisation);
+
+        vendorType();
         })
-
 }
 function clickDelete(){
     modal.classList.remove('active');
@@ -160,32 +180,45 @@ function modifValidate(){
 
 //vendor type
 function vendorTypeChange(){
+    type=prod_Vendor_Type_input.selectedIndex;
     vendorType();
 }
 
-function vendorType(){
 
-    let type = prod_Vendor_Type_input.value;
+function vendorType(){
     const vendorElements1 = document.getElementsByClassName('vendor1')
     const vendorElements2 = document.getElementsByClassName('vendor2')
-    if(type==1){
+        //vente directe
+        if(type==0){
         for(let i = 0 ; i<vendorElements1.length ; i++){
             vendorElements1[i].removeAttribute('disabled');
-            vendorElements1[i].classList.remove('transp');
+            vendorElements1[i].classList.remove('hideRight');
         }
         for(let i = 0 ; i<vendorElements2.length ; i++){
             vendorElements2[i].setAttribute('disabled',"true");
-            vendorElements2[i].classList.add('transp');
+            vendorElements2[i].classList.add('hideRight');
         }
-    }else{
+        prod_Vendor_Name.classList.remove('hideRight');
+        prod_Vendor_Address.classList.remove('hideRight');
+        prod_Vendor_Title_direct.classList.remove('hideRight');
+        prod_Vendor_URL.classList.add('hideRight');
+        prod_Vendor_Title_ecom.classList.add('hideRight');
+    }
+    //ecommerce
+    else{
         for(let i = 0 ; i<vendorElements1.length ; i++){
             vendorElements1[i].setAttribute('disabled',"true");
-            vendorElements1[i].classList.add('transp');
+            vendorElements1[i].classList.add('hideRight');
         }
         for(let i = 0 ; i<vendorElements2.length ; i++){
             vendorElements2[i].removeAttribute('disabled');
-            vendorElements2[i].classList.remove('transp');
+            vendorElements2[i].classList.remove('hideRight');
         }
+        prod_Vendor_Name.classList.add('hideRight');
+        prod_Vendor_Address.classList.add('hideRight');
+        prod_Vendor_Title_direct.classList.add('hideRight');
+        prod_Vendor_URL.classList.remove('hideRight');
+        prod_Vendor_Title_ecom.classList.remove('hideRight');
     }
 }
 

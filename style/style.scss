@@ -273,7 +273,6 @@ $green: rgb(0,188,140);
         font-weight: 600;
     }
     textarea,#form-vendor{background-color: rgb(19, 19, 19); color: white;}
-    .transp{opacity:0.4;}
 }
 .modalSec{
     left: +100vw;
@@ -312,7 +311,10 @@ $green: rgb(0,188,140);
     display: flex;
 }
 
-
+.hideRight{
+    position:absolute;
+    right:150vw;
+}
 
 
 
