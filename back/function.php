@@ -119,7 +119,7 @@ function detail_modal($id){
     array_push($array, $array_categories);
 
 
-    return json_encode($array);
+    return json_encode(array($array));
 }
 
 // Fonction ajout de produits _____________________________________________________

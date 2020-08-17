@@ -1,6 +1,6 @@
 <?php
 require 'function.php';
 
-if(isset($_POST['id'])){
-    echo detail_modal($_POST['id']);
+if(isset($_GET['id'])){
+    echo detail_modal($_GET['id']);
 }
