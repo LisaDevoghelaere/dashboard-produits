@@ -15,6 +15,8 @@ title.addEventListener('click' , function(){
 const modal = document.getElementById('product-modal');
 const modalClose = document.getElementById('modal-close');
 
+
+
 function loadModal(id){
     product_id=id;
     catList.classList.add('hidden')
@@ -47,6 +49,7 @@ function loadModal(id){
     const prod_Tips_input = document.getElementById('prod_Tips_input');
     const prod_Manual_btn = document.getElementById('prod_Tips_input');
 
+
     const formData = new FormData();
     formData.append('id', JSON.stringify(id));
 
@@ -60,6 +63,19 @@ function loadModal(id){
             else{
                 prod_Picture.setAttribute('src' , photo);
             }
+
+        //Categories
+        prod_Categorie_input.innerHTML = '';
+        for (let i = 0 ; i<data[3].categories.length ; i++){
+            let option = document.createElement('option');
+            option.innerText = data[3].categories[i];
+            option.setAttribute('value',i+1)
+            prod_Categorie_input.appendChild(option);
+            if(data[0].categorie === data[3].categories[i]){
+                console.log("categorie = " + data[3].categories[i])
+                prod_Categorie_input.value=i+1;
+            }
+        }
 
 
         //nom produit
