@@ -4,7 +4,6 @@ const catList =document.getElementById('categorieList');
 const prod_Vendor_Type_input = document.getElementById('prod_Vendor_Type_input');
 const prod_Vendor_Title_direct = document.getElementById('title-vente-directe');
 const prod_Vendor_Title_ecom = document.getElementById('title-ecom');
-console.log(prod_Vendor_Title_ecom);
 let type = 0;
 let product_id = 0;
 
@@ -54,21 +53,14 @@ function loadModal(id){
     fetch( 'back/ajax_produit_by_id.php', { method : "post" , body : formData } )
         .then( res => res.json() ).then( data =>{
 
-        // image
-            if(data[2].nom_photo!=false){
-                prod_Picture.setAttribute('src' , data[2].nom_photo);
-            }
-            else{
+            const photo = data[2].nom_photo;
+            if(photo == undefined){
                 prod_Picture.setAttribute('src' , 'images/product-main/placeholder.jpg');
             }
-
-        // ticket
-            if(data.ticket_achat!=""){
-                prod_Picture.setAttribute('src' , data[0].ticket_achat);
-            }
             else{
-                prod_Picture.setAttribute('src' , 'images/product-ticket/placeholder.jpg');
+                prod_Picture.setAttribute('src' , photo);
             }
+
 
         //nom produit
             prod_Name.innerText = data[0].nom;
@@ -100,11 +92,9 @@ function loadModal(id){
 
             if(data[1].url == undefined){
                 type=0;
-                console.log('vente directe');
-                console.log('type = ' +  type);
         // vendeur adresse
             prod_Vendor_Type_input.selectedIndex = 0;
-            prod_Vendor_Address.innerText = data[1].rue+" - "+data.code_postal+" - "+data.ville;
+            prod_Vendor_Address.innerText = data[1].rue+" - "+data[1].code_postal+" - "+data[1].ville;
             prod_Vendor_Name_input.value = data[1].nom_vendeur;
             prod_Vendor_Street_input.value = data[1].rue;
             prod_Vendor_Code_input.value = data[1].code_postal;
@@ -117,8 +107,6 @@ function loadModal(id){
             }
             else{
                 type=1;
-                console.log('e-commerce');
-                console.log('type = ' +  type);
         // vendeur adresse
             prod_Vendor_Type_input.selectedIndex = 1;
             prod_Vendor_Address.innerText = "";
@@ -198,8 +186,6 @@ function vendorTypeChange(){
 
 
 function vendorType(){
-    console.log("update");
-    console.log(type);
     const vendorElements1 = document.getElementsByClassName('vendor1')
     const vendorElements2 = document.getElementsByClassName('vendor2')
         //vente directe

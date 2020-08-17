@@ -11,7 +11,7 @@ $twig = new \Twig\Environment($loader, [
     'debug' => true,
     ]);
     $twig->addExtension(new \Twig\Extension\DebugExtension());
-    
+
 // Pagination
 require 'back/pagination.php';
 
