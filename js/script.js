@@ -1,54 +1,124 @@
-// liste categories
+const form = document.getElementById('product-form');
 const title =document.getElementById('title');
 const catList =document.getElementById('categorieList');
 const prod_Vendor_Type_input = document.getElementById('prod_Vendor_Type_input');
 const prod_Vendor_Title_direct = document.getElementById('title-vente-directe');
 const prod_Vendor_Title_ecom = document.getElementById('title-ecom');
+const modalTitle = document.getElementById('product-modal-title');
+const prod_Picture = document.getElementById('prod_Picture');
+const prod_Ticket = document.getElementById('prod_Ticket');
+const prod_Name = document.getElementById('prod_Name');
+const prod_Name_input = document.getElementById('prod_Name_input');
+const prod_Serial = document.getElementById('prod_Serial');
+const prod_Serial_input = document.getElementById('prod_Serial_input');
+const prod_Categorie = document.getElementById('prod_Categorie');
+const prod_Categorie_input = document.getElementById('prod_Categorie_input');
+const prod_Price = document.getElementById('prod_Price');
+const prod_Price_input = document.getElementById('prod_Price_input');
+const prod_Date = document.getElementById('prod_Date');
+const prod_Date_input = document.getElementById('prod_Date_input');
+const prod_Warranty = document.getElementById('prod_Warranty');
+const prod_Warranty_input = document.getElementById('prod_Warranty_input');
+const prod_Vendor_Name = document.getElementById('prod_Vendor_Name');
+const prod_Vendor_Name_input = document.getElementById('prod_Vendor_Name_input');
+const prod_Vendor_Address = document.getElementById('prod_Vendor_Address');
+const prod_Vendor_Street_input = document.getElementById('prod_Vendor_Street_input');
+const prod_Vendor_Code_input = document.getElementById('prod_Vendor_Code_input');
+const prod_Vendor_City_input = document.getElementById('prod_Vendor_City_input');
+const prod_Vendor_URL = document.getElementById('prod_Vendor_URL');
+const prod_Vendor_URL_input = document.getElementById('prod_Vendor_URL_input');
+const prod_Tips = document.getElementById('prod_Tips');
+const prod_Tips_input = document.getElementById('prod_Tips_input');
+const prod_Manual_btn = document.getElementById('prod_Manual_btn');
+const pictureHidden = document.getElementById('pictureHidden');
+const ticketHidden = document.getElementById('ticketHidden');
+const manualHidden = document.getElementById('manualHidden');
 let type = 0;
 let product_id = 0;
+let mode = "";
 
 title.addEventListener('click' , function(){
     catList.classList.toggle('hidden');
 })
 
+function blankValues(){
+    prod_Picture.setAttribute('src' , 'images/product-main/placeholder.jpg');
+    prod_Ticket.setAttribute('src' , 'images/product-ticket/placeholder.jpg');
+
+    //nom produit
+        prod_Name_input.value = "";
+    //numero de serie
+        prod_Serial_input.value = "";
+    //categorie
+        prod_Categorie_input.value = "";
+    //prix
+        prod_Price_input.value = "";
+    //date achat
+        prod_Date_input.value = "";
+    //garantie
+        prod_Warranty_input.value = "";
+    //vendeur nom
+        prod_Vendor_Name_input.value = "";
+
+    // vendeur adresse
+        prod_Vendor_Type_input.selectedIndex = 0;
+        prod_Vendor_Name_input.value = "";
+        prod_Vendor_Street_input.value = "";
+        prod_Vendor_Code_input.value = "";
+        prod_Vendor_City_input.value = "";
+    //vendeur url
+        prod_Vendor_URL_input.value = "";
+
+    //conseils
+        prod_Tips_input.value = "";
+
+    //links
+        pictureHidden.value = 'images/product-main/placeholder.jpg';
+        ticketHidden.value = 'images/product-ticket/placeholder.jpg';
+        manualHidden.value = "";
+
+
+    //Categories
+    const formData = new FormData();
+    formData.append('id', JSON.stringify(0));
+
+    fetch( 'back/get_categories.php', { method : "post" , body : formData } )
+        .then( res => res.json() ).then( data =>{
+            prod_Categorie_input.innerHTML = '';
+            for (let i = 0 ; i<data[0].categories.length ; i++){
+                let option = document.createElement('option');
+                option.innerText = data[0].categories[i];
+                option.setAttribute('value',i+1)
+                prod_Categorie_input.appendChild(option);
+                if(data[0].categorie === data[0].categories[i]){
+                    console.log("categorie = " + data[3].categories[i])
+                    prod_Categorie_input.value=i+1;
+                }
+        }
+        })
+    prod_Categorie_input.value=1;
+}
+
+
 //modale
 const modal = document.getElementById('product-modal');
 const modalClose = document.getElementById('modal-close');
+
+
 
 function loadModal(id){
     product_id=id;
     catList.classList.add('hidden')
     modal.classList.add('active')
 
-
-    const prod_Picture = document.getElementById('prod_Picture');
-    const prod_Ticket = document.getElementById('prod_Ticket');
-    const prod_Name = document.getElementById('prod_Name');
-    const prod_Name_input = document.getElementById('prod_Name_input');
-    const prod_Serial = document.getElementById('prod_Serial');
-    const prod_Serial_input = document.getElementById('prod_Serial_input');
-    const prod_Categorie = document.getElementById('prod_Categorie');
-    const prod_Categorie_input = document.getElementById('prod_Categorie_input');
-    const prod_Price = document.getElementById('prod_Price');
-    const prod_Price_input = document.getElementById('prod_Price_input');
-    const prod_Date = document.getElementById('prod_Date');
-    const prod_Date_input = document.getElementById('prod_Date_input');
-    const prod_Warranty = document.getElementById('prod_Warranty');
-    const prod_Warranty_input = document.getElementById('prod_Warranty_input');
-    const prod_Vendor_Name = document.getElementById('prod_Vendor_Name');
-    const prod_Vendor_Name_input = document.getElementById('prod_Vendor_Name_input');
-    const prod_Vendor_Address = document.getElementById('prod_Vendor_Address');
-    const prod_Vendor_Street_input = document.getElementById('prod_Vendor_Street_input');
-    const prod_Vendor_Code_input = document.getElementById('prod_Vendor_Code_input');
-    const prod_Vendor_City_input = document.getElementById('prod_Vendor_City_input');
-    const prod_Vendor_URL = document.getElementById('prod_Vendor_URL');
-    const prod_Vendor_URL_input = document.getElementById('prod_Vendor_URL_input');
-    const prod_Tips = document.getElementById('prod_Tips');
-    const prod_Tips_input = document.getElementById('prod_Tips_input');
-    const prod_Manual_btn = document.getElementById('prod_Tips_input');
+    if(mode==="create"){
+        blankValues();
+        return;
+    }
 
     const formData = new FormData();
     formData.append('id', JSON.stringify(id));
+    formData.append('mode', JSON.stringify(mode));
 
     fetch( 'back/ajax_produit_by_id.php', { method : "post" , body : formData } )
         .then( res => res.json() ).then( data =>{
@@ -56,10 +126,35 @@ function loadModal(id){
             const photo = data[2].nom_photo;
             if(photo == undefined){
                 prod_Picture.setAttribute('src' , 'images/product-main/placeholder.jpg');
+                pictureHidden.value = 'images/product-main/placeholder.jpg';
             }
             else{
                 prod_Picture.setAttribute('src' , photo);
+                pictureHidden.value = photo;
             }
+
+            const phototicket = data[0].ticket_achat;
+            if((phototicket == undefined) || (phototicket == "")){
+                prod_Ticket.setAttribute('src' , 'images/product-ticket/placeholder.jpg');
+                ticketHidden.value = 'images/product-ticket/placeholder.jpg';
+            }
+            else{
+                prod_Ticket.setAttribute('src' , phototicket);
+                ticketHidden.value = phototicket;
+            }
+
+        //Categories
+        prod_Categorie_input.innerHTML = '';
+        for (let i = 0 ; i<data[3].categories.length ; i++){
+            let option = document.createElement('option');
+            option.innerText = data[3].categories[i];
+            option.setAttribute('value',i+1)
+            prod_Categorie_input.appendChild(option);
+            if(data[0].categorie === data[3].categories[i]){
+                console.log("categorie = " + data[3].categories[i])
+                prod_Categorie_input.value=i+1;
+            }
+        }
 
 
         //nom produit
@@ -75,10 +170,10 @@ function loadModal(id){
             prod_Categorie_input.value = data[0].id_categorie;
 
         //prix
-            prod_Price.innerText = data[0].prix;
+            prod_Price.innerText = data[0].prix + "€";
             prod_Price_input.value = data[0].prix;
 
-        //prix
+        //date achat
             prod_Date.innerText = data[0].date_achat;
             prod_Date_input.value = data[0].date_achat;
 
@@ -120,14 +215,13 @@ function loadModal(id){
             prod_Vendor_URL_input.value = data[1].url;
             }
 
-
-
         //conseils
             prod_Tips.innerText = data[0].conseil;
             prod_Tips_input.value = data[0].conseil;
 
         //Manuel
             prod_Manual_btn.setAttribute('href', data[0].manuel_utilisation);
+            manualHidden.value = data[0].manuel_utilisation;
 
         vendorType();
         })
@@ -145,23 +239,31 @@ const staticElements = document.getElementsByClassName('m-static');
 const modifElements = document.getElementsByClassName('m-modif');
 
 function showModif(){
+
     for(let i = 0 ; i<staticElements.length ; i++){
         staticElements[i].classList.add('hide');
     }
     for(let i = 0 ; i<modifElements.length ; i++){
         modifElements[i].classList.remove('hide');
     }
+    modalTitle.classList.remove('hideRight');
 }
 function showStatic(){
+    mode=""
+    console.log("mode = "+mode);
     for(let i = 0 ; i<staticElements.length ; i++){
         staticElements[i].classList.remove('hide');
     }
     for(let i = 0 ; i<modifElements.length ; i++){
         modifElements[i].classList.add('hide');
     }
+    modalTitle.classList.add('hideRight');
 }
 
 function createActivate(){
+    mode="create"
+    console.log("mode = "+mode);
+    modalTitle.innerText='Ajouter un produit';
     showModif();
     loadModal();
 }
@@ -171,11 +273,26 @@ window.onload=function(){
 }
 
 function modifActivate(){
+    mode="edit"
+    console.log("mode = "+mode);
+    modalTitle.innerText='Modifier le produit';
     showModif();
-
 }
+
 function modifValidate(){
+    if(mode==="create"){
+        createProduct();
+    }else{
+        editProduct(product_id);
+    }
     showStatic();
+}
+
+function createProduct(){
+    const formData = new FormData(form);
+    fetch('new.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
+        console.log('new product added')
+    })
 }
 
 //vendor type
