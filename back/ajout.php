@@ -21,7 +21,7 @@
  * $_POST['code_postal']
  * $_POST['rue']
  * 
- * $_POST['photos'] sous form de tableau pour le cas ou plusieurs photos envoyé
+ * $_POST['photo']
  */
 
 require 'function.php';
