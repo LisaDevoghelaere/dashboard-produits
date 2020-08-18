@@ -156,7 +156,7 @@ function add_product(){
 
     $categorie = $_POST['categorie'];
 
-    $array_photos = $_POST['photos'];
+    $photo = $_POST['photo'];
 
     // Récupère l'id de la catégorie
     $sql = 'SELECT id FROM categories WHERE categorie = :categorie';
@@ -235,17 +235,15 @@ function add_product(){
     }
 
     // insertion des photos selon id du produit
-    foreach($array_photos as $photo){
-        $sql = 'INSERT INTO photos(id_produit, nom_photo) VALUES(:id_produit, :nom_photo)';
+    $sql = 'INSERT INTO photos(id_produit, nom_photo) VALUES(:id_produit, :nom_photo)';
 
-        $insert_photo = $bdd->prepare($sql);
+    $insert_photo = $bdd->prepare($sql);
 
-        $insert_photo->bindValue(':id_produit', $id_produit, PDO::PARAM_INT);
-        $insert_photo->bindParam(':nom_photo', $photo, PDO::PARAM_STR);
-        $insert_photo->execute();
+    $insert_photo->bindValue(':id_produit', $id_produit, PDO::PARAM_INT);
+    $insert_photo->bindParam(':nom_photo', $photo, PDO::PARAM_STR);
+    $insert_photo->execute();
 
-        $insert_photo->closeCursor();
-    }
+    $insert_photo->closeCursor();
 
     return json_encode('Nouveau produit ajouté : ' . $nom_produit);
 }
