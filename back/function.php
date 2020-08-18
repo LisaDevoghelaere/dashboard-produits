@@ -181,7 +181,7 @@ function add_product(){
         $id_lieu_achat = 2;
 
         $insert_product = $bdd -> prepare($sql);
-        $insert_product -> bindValue('id_lieu_achat', $id_lieu_achat, PDO::PARAM_INT);        
+        $insert_product -> bindValue('id_lieu_achat', $id_lieu_achat, PDO::PARAM_INT);
     }
 
     $insert_product -> bindParam('nom', $nom_produit, PDO::PARAM_STR);

@@ -91,7 +91,6 @@ function blankValues(){
                 option.setAttribute('value',i+1)
                 prod_Categorie_input.appendChild(option);
                 if(data[0].categorie === data[0].categories[i]){
-                    console.log("categorie = " + data[3].categories[i])
                     prod_Categorie_input.value=i+1;
                 }
         }
@@ -151,7 +150,6 @@ function loadModal(id){
             option.setAttribute('value',i+1)
             prod_Categorie_input.appendChild(option);
             if(data[0].categorie === data[3].categories[i]){
-                console.log("categorie = " + data[3].categories[i])
                 prod_Categorie_input.value=i+1;
             }
         }
@@ -250,7 +248,6 @@ function showModif(){
 }
 function showStatic(){
     mode=""
-    console.log("mode = "+mode);
     for(let i = 0 ; i<staticElements.length ; i++){
         staticElements[i].classList.remove('hide');
     }
@@ -262,7 +259,6 @@ function showStatic(){
 
 function createActivate(){
     mode="create"
-    console.log("mode = "+mode);
     modalTitle.innerText='Ajouter un produit';
     showModif();
     loadModal();
@@ -275,7 +271,6 @@ window.onload=function(){
 
 function modifActivate(){
     mode="edit"
-    console.log("mode = "+mode);
     modalTitle.innerText='Modifier le produit';
     showModif();
 }
@@ -290,12 +285,15 @@ function modifValidate(){
 }
 
 function createProduct(){
+    const selectedCategorie = prod_Categorie_input.options[prod_Categorie_input.selectedIndex].text
+    console.log(selectedCategorie);
     const formData = new FormData(form);
+    formData.append('categorie', JSON.stringify(selectedCategorie));
     fetch('back/ajout.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
         console.log('new product added')
     })
 }
-function editProduct(){
+function editProduct(id){
     const formData = new FormData(form);
     fetch('back/ajout.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
         console.log('new product added')
