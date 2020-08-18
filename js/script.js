@@ -1,10 +1,34 @@
-// liste categories
 const title =document.getElementById('title');
 const catList =document.getElementById('categorieList');
 const prod_Vendor_Type_input = document.getElementById('prod_Vendor_Type_input');
 const prod_Vendor_Title_direct = document.getElementById('title-vente-directe');
 const prod_Vendor_Title_ecom = document.getElementById('title-ecom');
 const modalTitle = document.getElementById('product-modal-title');
+const prod_Picture = document.getElementById('prod_Picture');
+const prod_Ticket = document.getElementById('prod_Ticket');
+const prod_Name = document.getElementById('prod_Name');
+const prod_Name_input = document.getElementById('prod_Name_input');
+const prod_Serial = document.getElementById('prod_Serial');
+const prod_Serial_input = document.getElementById('prod_Serial_input');
+const prod_Categorie = document.getElementById('prod_Categorie');
+const prod_Categorie_input = document.getElementById('prod_Categorie_input');
+const prod_Price = document.getElementById('prod_Price');
+const prod_Price_input = document.getElementById('prod_Price_input');
+const prod_Date = document.getElementById('prod_Date');
+const prod_Date_input = document.getElementById('prod_Date_input');
+const prod_Warranty = document.getElementById('prod_Warranty');
+const prod_Warranty_input = document.getElementById('prod_Warranty_input');
+const prod_Vendor_Name = document.getElementById('prod_Vendor_Name');
+const prod_Vendor_Name_input = document.getElementById('prod_Vendor_Name_input');
+const prod_Vendor_Address = document.getElementById('prod_Vendor_Address');
+const prod_Vendor_Street_input = document.getElementById('prod_Vendor_Street_input');
+const prod_Vendor_Code_input = document.getElementById('prod_Vendor_Code_input');
+const prod_Vendor_City_input = document.getElementById('prod_Vendor_City_input');
+const prod_Vendor_URL = document.getElementById('prod_Vendor_URL');
+const prod_Vendor_URL_input = document.getElementById('prod_Vendor_URL_input');
+const prod_Tips = document.getElementById('prod_Tips');
+const prod_Tips_input = document.getElementById('prod_Tips_input');
+const prod_Manual_btn = document.getElementById('prod_Tips_input');
 let type = 0;
 let product_id = 0;
 let mode = "";
@@ -12,6 +36,60 @@ let mode = "";
 title.addEventListener('click' , function(){
     catList.classList.toggle('hidden');
 })
+
+function blankValues(){
+    prod_Picture.setAttribute('src' , 'images/product-main/placeholder.jpg');
+    prod_Ticket.setAttribute('src' , 'images/product-ticket/placeholder.jpg');
+
+    //nom produit
+        prod_Name_input.value = "";
+    //numero de serie
+        prod_Serial_input.value = "";
+    //categorie
+        prod_Categorie_input.value = "";
+    //prix
+        prod_Price_input.value = "";
+    //date achat
+        prod_Date_input.value = "";
+    //garantie
+        prod_Warranty_input.value = "";
+    //vendeur nom
+        prod_Vendor_Name_input.value = "";
+
+    // vendeur adresse
+        prod_Vendor_Type_input.selectedIndex = 0;
+        prod_Vendor_Name_input.value = "";
+        prod_Vendor_Street_input.value = "";
+        prod_Vendor_Code_input.value = "";
+        prod_Vendor_City_input.value = "";
+    //vendeur url
+        prod_Vendor_URL_input.value = "";
+
+    //conseils
+        prod_Tips_input.value = "";
+
+
+    //Categories
+    const formData = new FormData();
+    formData.append('id', JSON.stringify(0));
+
+    fetch( 'back/get_categories.php', { method : "post" , body : formData } )
+        .then( res => res.json() ).then( data =>{
+            prod_Categorie_input.innerHTML = '';
+            for (let i = 0 ; i<data[0].categories.length ; i++){
+                let option = document.createElement('option');
+                option.innerText = data[0].categories[i];
+                option.setAttribute('value',i+1)
+                prod_Categorie_input.appendChild(option);
+                if(data[0].categorie === data[0].categories[i]){
+                    console.log("categorie = " + data[3].categories[i])
+                    prod_Categorie_input.value=i+1;
+                }
+        }
+        })
+    prod_Categorie_input.value=1;
+}
+
 
 //modale
 const modal = document.getElementById('product-modal');
@@ -24,36 +102,14 @@ function loadModal(id){
     catList.classList.add('hidden')
     modal.classList.add('active')
 
-
-    const prod_Picture = document.getElementById('prod_Picture');
-    const prod_Ticket = document.getElementById('prod_Ticket');
-    const prod_Name = document.getElementById('prod_Name');
-    const prod_Name_input = document.getElementById('prod_Name_input');
-    const prod_Serial = document.getElementById('prod_Serial');
-    const prod_Serial_input = document.getElementById('prod_Serial_input');
-    const prod_Categorie = document.getElementById('prod_Categorie');
-    const prod_Categorie_input = document.getElementById('prod_Categorie_input');
-    const prod_Price = document.getElementById('prod_Price');
-    const prod_Price_input = document.getElementById('prod_Price_input');
-    const prod_Date = document.getElementById('prod_Date');
-    const prod_Date_input = document.getElementById('prod_Date_input');
-    const prod_Warranty = document.getElementById('prod_Warranty');
-    const prod_Warranty_input = document.getElementById('prod_Warranty_input');
-    const prod_Vendor_Name = document.getElementById('prod_Vendor_Name');
-    const prod_Vendor_Name_input = document.getElementById('prod_Vendor_Name_input');
-    const prod_Vendor_Address = document.getElementById('prod_Vendor_Address');
-    const prod_Vendor_Street_input = document.getElementById('prod_Vendor_Street_input');
-    const prod_Vendor_Code_input = document.getElementById('prod_Vendor_Code_input');
-    const prod_Vendor_City_input = document.getElementById('prod_Vendor_City_input');
-    const prod_Vendor_URL = document.getElementById('prod_Vendor_URL');
-    const prod_Vendor_URL_input = document.getElementById('prod_Vendor_URL_input');
-    const prod_Tips = document.getElementById('prod_Tips');
-    const prod_Tips_input = document.getElementById('prod_Tips_input');
-    const prod_Manual_btn = document.getElementById('prod_Tips_input');
-
+    if(mode==="create"){
+        blankValues();
+        return;
+    }
 
     const formData = new FormData();
     formData.append('id', JSON.stringify(id));
+    formData.append('mode', JSON.stringify(mode));
 
     fetch( 'back/ajax_produit_by_id.php', { method : "post" , body : formData } )
         .then( res => res.json() ).then( data =>{
@@ -145,8 +201,6 @@ function loadModal(id){
             prod_Vendor_URL.innerText = data[1].url;
             prod_Vendor_URL_input.value = data[1].url;
             }
-
-
 
         //conseils
             prod_Tips.innerText = data[0].conseil;
