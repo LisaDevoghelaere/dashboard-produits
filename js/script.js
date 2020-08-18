@@ -263,10 +263,20 @@ function modifActivate(){
     console.log("mode = "+mode);
     modalTitle.innerText='Modifier le produit';
     showModif();
-
 }
+
 function modifValidate(){
+    if(mode==="create"){
+        createProduct();
+    }else{
+        editProduct(product_id);
+    }
     showStatic();
+}
+
+function createProduct(){
+    const formData = new FormData();
+    formData.append('photo', JSON.stringify(id));
 }
 
 //vendor type
