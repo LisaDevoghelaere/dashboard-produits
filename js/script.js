@@ -224,9 +224,7 @@ function loadModal(id){
         vendorType();
         })
 }
-function clickDelete(){
-    modal.classList.remove('active');
-}
+
 modalClose.addEventListener('click' , function(){
     modal.classList.remove('active');
     showStatic();
@@ -276,6 +274,8 @@ function modifActivate(){
 }
 
 function modifValidate(){
+    console.log("produit id = "+product_id)
+    console.log("mode = "+mode)
     if(mode==="create"){
         createProduct();
     }else{
@@ -294,8 +294,12 @@ function createProduct(){
     })
 }
 function editProduct(id){
+    const selectedCategorie = prod_Categorie_input.options[prod_Categorie_input.selectedIndex].text
+    console.log(selectedCategorie);
     const formData = new FormData(form);
-    fetch('back/ajout.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
+    formData.append('categorie', JSON.stringify(selectedCategorie));
+    formData.append('id', JSON.stringify(product_id));
+    fetch('back/update.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
         console.log('new product added')
     })
 }
@@ -351,6 +355,8 @@ const modalDeleteClose = document.getElementById('modal-delete-close');
 const deleteNo = document.getElementById('delete-no');
 
 function clickDelete(id){
+    product_id = id;
+    console.log("id produit ->" + product_id)
     catList.classList.add('hidden')
     deleteModal.classList.add('active')
 }
@@ -363,6 +369,11 @@ deleteNo.addEventListener('click' , function(){
 
 function deleteProduct(){
     deleteModal.classList.remove('active');
+    const formData = new FormData(form);
+    formData.append('id', JSON.stringify(product_id));
+    fetch('back/delete.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
+        console.log('product deleted:')
+    })
 }
 
 
