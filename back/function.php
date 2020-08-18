@@ -128,26 +128,35 @@ function add_product(){
     require 'bdd.php';
 
     $id_produit = '';
-    $nom_produit = '';
-    $reference_produit = '';
-    $prix_produit = '';
-    $date_achat_produit = '';
-    $date_garantie_produit = '';
-    $conseil_produit = '';
-    $manuel_utilisation_produit = '';
-    $ticket_achat_produit = '';
+    $nom_produit = $_POST['nom'];
+    $reference_produit = $_POST['reference'];
+    $prix_produit = $_POST['prix'];
+    $date_achat_produit = $_POST['date_achat'];
+    $date_garantie_produit = $_POST['date_garanti'];
+    $conseil_produit = $_POST['conseil'];
+    $manuel_utilisation_produit = $_POST['manuel'];
+    $ticket_achat_produit = $_POST['ticket'];
+
+    if(isset($_POST['url']) && !isset($_POST['vendeur']) && !isset($_POST['ville']) && !isset($_POST['code_postal']) && !isset($_POST['rue'])){
+        $url = $_POST['url'];
+        $nom_vendeur = '';
+        $ville = '';
+        $code_postal = '';
+        $rue = '';  
+    } elseif(!isset($_POST['url']) && isset($_POST['vendeur']) && isset($_POST['ville']) && isset($_POST['code_postal']) && isset($_POST['rue'])){
+        $url = '';
+        $nom_vendeur = $_POST['vendeur'];
+        $ville = $_POST['ville'];
+        $code_postal = $_POST['code_postal'];
+        $rue = $_POST['rue'];
+    }
 
     $id_lieu_achat = '';
     $id_categorie = '';
 
-    $categorie = '';
-    $url = '';
-    $nom_vendeur = '';
-    $ville = '';
-    $code_postal = '';
-    $rue = '';
+    $categorie = $_POST['categorie'];
 
-    $array_photos = '';
+    $array_photos = $_POST['photos'];
 
     // Récupère l'id de la catégorie
     $sql = 'SELECT id FROM categories WHERE categorie = :categorie';
@@ -167,20 +176,20 @@ function add_product(){
         $id_lieu_achat = 1;
 
         $insert_product = $bdd -> prepare($sql);
-        $insert_product -> bindValue('id_lieu achat', $id_lieu_achat, PDO::PARAM_STR);
+        $insert_product -> bindValue('id_lieu_achat', $id_lieu_achat, PDO::PARAM_INT);
     }elseif($url == '' && $ville !== '' && $code_postal !== '' && $nom_vendeur !== '' && $rue !== ''){
         $id_lieu_achat = 2;
 
         $insert_product = $bdd -> prepare($sql);
-        $insert_product -> bindValue('id_lieu achat', $id_lieu_achat, PDO::PARAM_STR);        
+        $insert_product -> bindValue('id_lieu_achat', $id_lieu_achat, PDO::PARAM_INT);        
     }
 
     $insert_product -> bindParam('nom', $nom_produit, PDO::PARAM_STR);
-    $insert_product -> bindValue('reference', $reference_produit, PDO::PARAM_STR);
+    $insert_product -> bindValue('reference', $reference_produit, PDO::PARAM_INT);
     $insert_product -> bindValue('prix', $prix_produit, PDO::PARAM_STR);
     $insert_product -> bindValue('date_achat', $date_achat_produit, PDO::PARAM_STR);
     $insert_product -> bindValue('date_fin_garantie', $date_garantie_produit, PDO::PARAM_STR);
-    $insert_product -> bindValue('id_categorie', $id_categorie, PDO::PARAM_STR);
+    $insert_product -> bindValue('id_categorie', $id_categorie, PDO::PARAM_INT);
     $insert_product -> bindParam('conseil', $conseil_produit, PDO::PARAM_STR);
     $insert_product -> bindParam('manuel_utilisation', $manuel_utilisation_produit, PDO::PARAM_STR);
     $insert_product -> bindParam('ticket_achat', $ticket_achat_produit, PDO::PARAM_STR);
@@ -189,10 +198,10 @@ function add_product(){
     $insert_product -> closeCursor();
 
     // Récupère l'id du dernier produit
-    $sql = 'SELECT LAST(id) FROM produits';
+    $sql = 'SELECT LAST_INSERT_ID() FROM produits';
 
     $id_last_product = $bdd -> query($sql);
-    $id_produit = $id_last_product -> fetch();
+    $id_produit = $id_last_product -> fetchColumn();
 
     $id_last_product -> closeCursor();
 
@@ -226,7 +235,7 @@ function add_product(){
     }
 
     // insertion des photos selon id du produit
-    foreach($photo as $array_photos){
+    foreach($array_photos as $photo){
         $sql = 'INSERT INTO photos(id_produit, nom_photo) VALUES(:id_produit, :nom_photo)';
 
         $insert_photo = $bdd->prepare($sql);
@@ -237,6 +246,8 @@ function add_product(){
 
         $insert_photo->closeCursor();
     }
+
+    return json_encode('Nouveau produit ajouté : ' . $nom_produit);
 }
 
 // Fonction suppression d'un produit _________________________________________________
