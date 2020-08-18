@@ -1,3 +1,4 @@
+const form = document.getElementById('product-form');
 const title =document.getElementById('title');
 const catList =document.getElementById('categorieList');
 const prod_Vendor_Type_input = document.getElementById('prod_Vendor_Type_input');
@@ -28,7 +29,10 @@ const prod_Vendor_URL = document.getElementById('prod_Vendor_URL');
 const prod_Vendor_URL_input = document.getElementById('prod_Vendor_URL_input');
 const prod_Tips = document.getElementById('prod_Tips');
 const prod_Tips_input = document.getElementById('prod_Tips_input');
-const prod_Manual_btn = document.getElementById('prod_Tips_input');
+const prod_Manual_btn = document.getElementById('prod_Manual_btn');
+const pictureHidden = document.getElementById('pictureHidden');
+const ticketHidden = document.getElementById('ticketHidden');
+const manualHidden = document.getElementById('manualHidden');
 let type = 0;
 let product_id = 0;
 let mode = "";
@@ -67,6 +71,11 @@ function blankValues(){
 
     //conseils
         prod_Tips_input.value = "";
+
+    //links
+        pictureHidden.value = 'images/product-main/placeholder.jpg';
+        ticketHidden.value = 'images/product-ticket/placeholder.jpg';
+        manualHidden.value = "";
 
 
     //Categories
@@ -117,17 +126,21 @@ function loadModal(id){
             const photo = data[2].nom_photo;
             if(photo == undefined){
                 prod_Picture.setAttribute('src' , 'images/product-main/placeholder.jpg');
+                pictureHidden.value = 'images/product-main/placeholder.jpg';
             }
             else{
                 prod_Picture.setAttribute('src' , photo);
+                pictureHidden.value = photo;
             }
 
             const phototicket = data[0].ticket_achat;
             if((phototicket == undefined) || (phototicket == "")){
                 prod_Ticket.setAttribute('src' , 'images/product-ticket/placeholder.jpg');
+                ticketHidden.value = 'images/product-ticket/placeholder.jpg';
             }
             else{
                 prod_Ticket.setAttribute('src' , phototicket);
+                ticketHidden.value = phototicket;
             }
 
         //Categories
@@ -208,6 +221,7 @@ function loadModal(id){
 
         //Manuel
             prod_Manual_btn.setAttribute('href', data[0].manuel_utilisation);
+            manualHidden.value = data[0].manuel_utilisation;
 
         vendorType();
         })
@@ -275,8 +289,10 @@ function modifValidate(){
 }
 
 function createProduct(){
-    const formData = new FormData();
-    formData.append('photo', JSON.stringify(id));
+    const formData = new FormData(form);
+    fetch('new.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
+        console.log('new product added')
+    })
 }
 
 //vendor type

@@ -116,7 +116,7 @@
             <div class="form-group m-modif">
               <label for="form-pic">Image</label>
               <button type="button" class="btn btn-success m-modif upload-btn" onclick="uploadPictureClick()"><span class="fa fa-upload"></span> Charger une image</button>
-              <input type="hidden" name="picture" value="">
+              <input id ="pictureHidden" type="hidden" name="picture" value="">
             </div>
             <h2 id="prod_Name" class="m-static">Nom du produit</h2>
             <div class="form-group m-modif">
@@ -157,7 +157,7 @@
             <div class="form-group m-modif">
               <label for="form-pic">Ticket d'achat</label>
               <button type="button" class="btn btn-success m-modif upload-btn" onclick="uploadTicketClick()"><span class="fa fa-upload"></span> Charger un ticket</button>
-              <input type="hidden" name="ticket" value="">
+              <input id ="ticketHidden" type="hidden" name="ticket" value="">
             </div>
             <img id="prod_Ticket" src="images/product-ticket/placeholder.jpg" alt="">
           </div>
@@ -194,7 +194,7 @@
             <button type="button" class="btn btn-success m-modif upload-btn" onclick="uploadManualClick()"><span class="fa fa-upload"></span> Charger le manuel d'utilisation</button>
             <p id="prod_Tips" class="text-justify mt-2 m-static">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus id, ex, eaque fugit placeat non tempore quasi sequi delectus omnis exercitationem nesciunt aliquam beatae aspernatur magnam quidem est nisi corrupti reprehenderit repellendus. Id voluptas natus autem nisi necessitatibus minus est, cum nam hic ipsum dolorem quo harum adipisci culpa eius alias cupiditate magni non distinctio neque ullam consequuntur quod cumque. Asperiores suscipit quas praesentium consequatur vel quaerat, laboriosam magnam est adipisci aperiam ut officiis, enim unde, quam temporibus. Rerum enim magni, suscipit velit at quam voluptas in cupiditate excepturi ipsum amet doloribus omnis, illum ut molestias voluptatibus perferendis. Asperiores, sed.</p>
             <a id="prod_Manual_btn" href="#" target="_blank" rel="noopener noreferrer" type="button" class="btn btn-success m-static"><span class="fas fa-book-open"></span> Manuel d'utilisation</a>
-            <input type="hidden" name="manual" value="">
+            <input id ="manualHidden" type="hidden" name="manual" value="">
           </div>
         </form>
       </div>
