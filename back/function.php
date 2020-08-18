@@ -159,7 +159,8 @@ function add_product(){
     $photo = $_POST['photo'];
 
     // Récupère l'id de la catégorie
-    $sql = 'SELECT id FROM categories WHERE categorie = ' . $categorie;
+    var_dump($categorie);
+    $sql = 'SELECT id FROM categories WHERE categorie = \'' . $categorie . '\'';
     $req_categorie = $bdd -> query($sql);
 
     $id_categorie = $req_categorie -> fetchColumn();
@@ -284,11 +285,13 @@ function delete_product($id){
     }
 
     // Suppression des photos selon id du produit
-    $sql = 'DELETE FROM photos WHERE id_produit = :id';
+    $sql = 'DELETE FROM photos WHERE id_produit = :id_produit';
 
     $delete_photo = $bdd->prepare($sql);
     $delete_photo->bindValue(':id_produit', $id, PDO::PARAM_INT);
     $delete_photo->execute();
     $delete_photo->closeCursor();
+
+    return json_encode('Produit supprimer !');
 }
 
