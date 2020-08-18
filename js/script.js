@@ -266,6 +266,7 @@ function createActivate(){
     modalTitle.innerText='Ajouter un produit';
     showModif();
     loadModal();
+    vendorType();
 }
 
 window.onload=function(){
@@ -290,7 +291,13 @@ function modifValidate(){
 
 function createProduct(){
     const formData = new FormData(form);
-    fetch('new.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
+    fetch('back/ajout.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
+        console.log('new product added')
+    })
+}
+function editProduct(){
+    const formData = new FormData(form);
+    fetch('back/ajout.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
         console.log('new product added')
     })
 }
