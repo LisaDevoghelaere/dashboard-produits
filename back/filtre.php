@@ -20,5 +20,5 @@ if(isset($_GET['order']) || !empty($_GET['order'])){
         $order = 'prix_decroissant';
     }
 }else{
-    $order = '';
+    $order = 'date_croissant';
 }
