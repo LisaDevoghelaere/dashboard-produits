@@ -424,3 +424,14 @@ function add_categories($categorie){
     $insert_categorie -> closeCursor();
     return json_encode('Nouvelle catégorie : ' . $categorie);
 }
+
+// Fonction upload d'images _____________________________________________________
+function upload_images(){
+    $files_name = $_FILES['file']['name'];
+    $files_tmp = $_FILES['file']['tmp_name'];
+    $url = '..' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'product-main';
+    var_dump($files_name);
+    var_dump($url);
+
+    move_uploaded_file($files_tmp, "$url" . DIRECTORY_SEPARATOR . "$files_name");
+}
