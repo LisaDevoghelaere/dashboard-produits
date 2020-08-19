@@ -26,6 +26,6 @@
 
 require 'function.php';
 
-if(isset($_POST['nom']) && isset($_POST['reference']) && isset($_POST['prix']) && isset($_POST['date_achat']) && isset($_POST['date_garanti']) && isset($_POST['conseil']) && isset($_POST['manuel']) && isset($_POST['ticket']) && isset($_POST['categorie'])){
+if(isset($_POST['nom']) && isset($_POST['reference']) && isset($_POST['prix']) && isset($_POST['date_achat']) && isset($_POST['date_garantie']) && isset($_POST['conseil']) && isset($_POST['manuel']) && isset($_POST['ticket']) && isset($_POST['categorie'])){
     echo add_product();
 }

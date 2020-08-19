@@ -330,7 +330,7 @@ function editProduct(id){
     formData.append('categorie', JSON.stringify(selectedCategorie));
     formData.append('id', JSON.stringify(product_id));
     fetch('back/update.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
-        console.log('new product added')
+        console.log('product edited')
     })
 }
 

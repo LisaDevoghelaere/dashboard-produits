@@ -159,7 +159,8 @@ function add_product(){
     $photo = $_POST['photo'];
 
     // Récupère l'id de la catégorie
-    $sql = 'SELECT id FROM categories WHERE categorie = :categorie';
+    $sql = "SELECT id FROM categories WHERE categorie = :categorie";
+    $req = $base->prepare("DELETE FROM `excursions` WHERE `excursions`.`ID` = :id");
     $req_categorie = $bdd -> prepare($sql);
 
     $req_categorie -> bindParam(':categorie', $categorie, PDO::PARAM_STR);
@@ -333,7 +334,7 @@ function update_product($id){
     $photo = $_POST['photo'];
 
     // Récupère l'id de la catégorie
-    $sql = 'SELECT id FROM categories WHERE categorie = :categorie';
+    $sql = 'SELECT id FROM categories WHERE categorie =:categorie';
     $req_categorie = $bdd -> prepare($sql);
 
     $req_categorie -> bindParam(':categorie', $categorie, PDO::PARAM_STR);
