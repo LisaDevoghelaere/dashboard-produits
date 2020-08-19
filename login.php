@@ -19,19 +19,18 @@
 </head>
 <body>
     <div class="container">
-        <form action="back/authentification.php" method="POST">
+        <form id="connect" action="back/authentification.php" method="POST">
             <h1 class="text-success">Dashboard Produits</h1>
             <div class="form-group">
               <label for="user"><span class="far fa-user"></span> Utilisateur :</label>
-              <input type="text" class="form-control" id="user" name="user" placeholder="Nom d'utilisateur">
-              <p id="msg1" class="text-warning">message d'avertissement !</p>
+              <input type="text" class="form-control" id="user" name="user" placeholder="Nom d'utilisateur (admin)">
             </div>
             <div class="form-group">
               <label for="password"><span class="fas fa-key"></span> Mot de passe :</label>
-              <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe">
-              <p id="msg2" class="text-warning">message d'avertissement !</p>
+              <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe (admin)">
+              <ul id="form-messages"class="text-warning"></ul>
             </div>
-            <button type="submit" class="btn btn-warning"><span class="fas fa-sign-in-alt"></span> Se connecter</button>
+            <button id="btn-submit" type="submit" class="btn btn-warning"><span class="fas fa-sign-in-alt"></span> Se connecter</button>
         </form>
     </div>
 
@@ -42,5 +41,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <!-- Fontawesome -->
 <script src="https://kit.fontawesome.com/eee80a1a35.js" crossorigin="anonymous"></script>
+<script src="js/login.js"></script>
 </body>
 </html>
