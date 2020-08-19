@@ -411,3 +411,16 @@ function update_product($id){
 
     return json_encode('Produit modifié : ' . $nom_produit);
 }
+
+// Ajout de catégorie ________________________________________________________________
+function add_categories($categorie){
+    require 'bdd.php';
+
+    $sql = 'INSERT INTO categories (categorie) VALUES (:categorie)';
+    $insert_categorie = $bdd -> prepare($sql);
+    $insert_categorie -> bindParam(':categorie', $categorie, PDO::PARAM_STR);
+    $insert_categorie -> execute();
+
+    $insert_categorie -> closeCursor();
+    return json_encode('Nouvelle catégorie : ' . $categorie);
+}
