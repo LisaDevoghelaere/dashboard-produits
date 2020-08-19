@@ -1,3 +1,5 @@
+const content = document.getElementById('content')
+
 const form = document.getElementById('product-form');
 const title =document.getElementById('title');
 const catList =document.getElementById('categorieList');
@@ -47,6 +49,23 @@ let fileUpload = null;
 title.addEventListener('click' , function(){
     catList.classList.toggle('hidden');
 })
+window.onload = loadProducts();
+
+function loadProducts(){
+    let search = "test";
+    const xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange  = function(){
+        if (this.readyState == 4 && this.status == 200){
+            content.innerHTML = xhr.responseText;
+        }
+    };
+
+    xhr.open('POST', 'load_products.php', true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    // xhr.send("search=" + search + "&page=" + page + "&maxBricks=" + maxBricks);
+    xhr.send("search=" + search );
+}
 
 function pictureFile(file){
     filePictureLabel.innerHTML = "<span class='far fa-image icon'></span>"+file[0].name;
@@ -321,6 +340,8 @@ function createProduct(){
     formData.append('categorie', selectedCategorie);
     fetch('back/ajout.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
         console.log('new product added')
+        modal.classList.remove('active');
+        loadProducts()
     })
 }
 function editProduct(id){
@@ -331,6 +352,8 @@ function editProduct(id){
     formData.append('id', JSON.stringify(product_id));
     fetch('back/update.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
         console.log('product edited')
+        modal.classList.remove('active');
+        loadProducts();
     })
 }
 
@@ -401,8 +424,8 @@ function deleteProduct(){
     deleteModal.classList.remove('active');
     const formData = new FormData();
     formData.append('delete', JSON.stringify(product_id));
-    fetch('back/delete.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
-        console.log('product deleted:'+product_id)
+    fetch('back/delete.php' , {method: "post" , body: formData}).then(data =>{
+        loadProducts();
     })
 }
 

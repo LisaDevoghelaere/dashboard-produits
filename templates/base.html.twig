@@ -75,32 +75,7 @@
     </div>
 
     <div id="content" class="container">
-      <div class="row">
-        {% for produit in produits_list %}
-        <div class="product-card col-sm-12 col-md-6">
-          <button type="button" class="btn btn-outline-danger" onclick='clickDelete({{ produit.id }})'><span class="fas fa-minus"></span></button>
-          <div class="product-card-in" onclick="loadModal({{ produit.id }})">
-            <div class="product-left">
-                <img src="images/product-main/placeholder.jpg" alt="">
-            </div>
-            <div class="product-card-text">
-                <div class="card-text-up">
-                  <div>
-                    <h2>{{ produit.nom }}</h2>
-                    <em class="text-secondary">Ref. {{ produit.reference }}</em>
-                    <p class="product-cat">{{ produit.categorie }}</p>
-                  </div>
-                  <div><p>{{ produit.prix }}€</p></div>
-                </div>
-                <div class="card-text-down">
-                  <p class="text-secondary">Date d'achat: <strong class="text-dark">{{ produit.date_achat }}</strong></p>
-                  <p class="text-secondary">Fin de garantie: <strong class="text-dark">{{ produit.date_fin_garantie }}</strong></p>
-                </div>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
+
     </div>
 
     <div id="product-modal">
