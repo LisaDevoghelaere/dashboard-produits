@@ -45,11 +45,39 @@ let type = 0;
 let product_id = 0;
 let mode = "";
 let fileUpload = null;
+let order = 'date_croissant';
+let categorie = '';
+let page = 1;
 
 title.addEventListener('click' , function(){
     catList.classList.toggle('hidden');
 })
 window.onload = loadProducts();
+window.onload = loadCategories();
+window.onload = loadPagination();
+
+function selectCategorie(button){
+    page=1;
+    const res = button.innerText;
+    const categorieTitle = document.getElementById('categorieTitle');
+
+    if(res==='Tout'){
+        categorie = '';
+        categorieTitle.innerText="Choisissez une categorie";
+    }else{
+        categorie = res;
+        categorieTitle.innerText=button.innerText;
+    }
+    catList.classList.add('hidden');
+    loadProducts();
+    loadPagination()
+}
+
+function selectOrder(classement){
+    order = classement;
+    loadProducts();
+    loadPagination()
+}
 
 function loadProducts(){
     let search = "test";
@@ -63,8 +91,56 @@ function loadProducts(){
 
     xhr.open('POST', 'load_products.php', true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    // xhr.send("search=" + search + "&page=" + page + "&maxBricks=" + maxBricks);
-    xhr.send("search=" + search );
+    xhr.send("search=" + search + "&page=" + page + "&categorie=" + categorie + "&order=" + order);
+}
+
+function loadCategories(){
+    const xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange  = function(){
+        if (this.readyState == 4 && this.status == 200){
+            catList.innerHTML = xhr.responseText;
+        }
+    };
+
+    xhr.open('POST', 'load_categories.php', true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.send();
+}
+
+function loadPagination(){
+    const paging = document.getElementById('paging');
+    const xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange  = function(){
+        if (this.readyState == 4 && this.status == 200){
+            paging.innerHTML = xhr.responseText;
+            activePaging();
+        }
+    };
+
+    xhr.open('POST', 'load_pagination.php', true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.send("page=" + page + "&categorie=" + categorie + "&order=" + order);
+}
+
+function changePage(num){
+    page = num;
+    loadProducts();
+    loadPagination();
+}
+
+function activePaging(){
+    const pageBtns = document.getElementsByClassName('pageBtn');
+    Array.from(pageBtns).forEach(function (element) { 
+        if (element.innerText == page){
+            element.classList.add('active');
+        }else{
+            element.classList.remove('active');
+        }
+    });
+
+
 }
 
 function pictureFile(file){
@@ -323,8 +399,6 @@ function modifActivate(){
 }
 
 function modifValidate(){
-    console.log("produit id = "+product_id)
-    console.log("mode = "+mode)
     if(mode==="create"){
         createProduct();
     }else{
@@ -335,25 +409,22 @@ function modifValidate(){
 
 function createProduct(){
     let selectedCategorie = prod_Categorie_input.options[prod_Categorie_input.selectedIndex].text
-    console.log(selectedCategorie);
     const formData = new FormData(form);
     formData.append('categorie', selectedCategorie);
     fetch('back/ajout.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
-        console.log('new product added')
         modal.classList.remove('active');
         loadProducts()
     })
 }
 function editProduct(id){
     let selectedCategorie = prod_Categorie_input.options[prod_Categorie_input.selectedIndex].text
-    console.log(selectedCategorie);
     const formData = new FormData(form);
     formData.append('categorie', selectedCategorie);
     formData.append('id', JSON.stringify(product_id));
     fetch('back/update.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
-        console.log('product edited')
         modal.classList.remove('active');
         loadProducts();
+        loadPagination()
     })
 }
 
@@ -409,7 +480,6 @@ const deleteNo = document.getElementById('delete-no');
 
 function clickDelete(id){
     product_id = id;
-    console.log("id produit ->" + product_id)
     catList.classList.add('hidden')
     deleteModal.classList.add('active')
 }
@@ -426,6 +496,7 @@ function deleteProduct(){
     formData.append('delete', JSON.stringify(product_id));
     fetch('back/delete.php' , {method: "post" , body: formData}).then(data =>{
         loadProducts();
+        loadPagination()
     })
 }
 
@@ -446,7 +517,6 @@ function uppicValidate(){
 
     fetch( 'back/upload_picture.php', { method : "post" , body : formData } )
         .then( res => res.json() ).then( data =>{
-            console.log("file uploaded")
             resetUploads();
             uppicModal.classList.remove('active');
         })
@@ -472,7 +542,6 @@ function upticketValidate(){
 
     fetch( 'back/upload_ticket.php', { method : "post" , body : formData } )
         .then( res => res.json() ).then( data =>{
-            console.log("file uploaded")
             resetUploads();
             upTicketModal.classList.remove('active');
         })
@@ -498,7 +567,6 @@ function upmanualValidate(){
 
     fetch( 'back/upload_manual.php', { method : "post" , body : formData } )
         .then( res => res.json() ).then( data =>{
-            console.log("file uploaded")
             resetUploads();
             upManualModal.classList.remove('active');
         })
@@ -523,9 +591,9 @@ function newcatClick(){
 
     fetch( 'back/add_categories.php', { method : "post" , body : formData } )
         .then( res => res.json() ).then( data =>{
-            console.log("file uploaded")
             resetUploads();
             newCatModal.classList.remove('active');
+            loadCategories()
         })
 }
 function newCategorieClick(index){

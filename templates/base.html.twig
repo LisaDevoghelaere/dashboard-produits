@@ -21,21 +21,14 @@
     {% block title %}
     <div id="title">
       <div class="container text-center text-secondary text-uppercase">
-        {% if categorieTitle ==  false %}
-          <h1 class="text-white">Choisissez une catégorie</h1>
-        {% else %}
-          <h1 class="text-white">{{ categorieTitle }}</h1>
-        {% endif %}
+          <h1 id="categorieTitle" class="text-white">Choisissez une catégorie</h1>
         <div><span class="fas fa-angle-down text-white"></span></div>
       </div>
     </div>
     {% endblock title%}
 
     <div id="categorieList" class="hidden">
-      <a href="?categorie="><p>Tout</p></a>
-      {% for categorie in categories %}
-        <a href="?categorie={{ categorie.categorie }}"><p>{{ categorie.categorie }}</p></a>
-      {% endfor %}
+      {# Liste des categories #}
     </div>
 
     <div id="menu" class="bg-secondary">
@@ -50,26 +43,15 @@
               Classer
             </button>
             <div class="dropdown-menu dropdown-menu-right">
-              <a href="?categorie={{ categorieTitle }}&order=date_croissant"><button class="dropdown-item" type="button">Date Croissante</button></a>
-              <a href="?categorie={{ categorieTitle }}&order=date_decroissant"><button class="dropdown-item" type="button">Date Décroissante</button></a>
-              <a href="?categorie={{ categorieTitle }}&order=prix_croissant"><button class="dropdown-item" type="button">Prix Croissant</button></a>
-              <a href="?categorie={{ categorieTitle }}&order=prix_decroissant"><button class="dropdown-item" type="button">Prix Décroissant</button></a>
+              <button class="dropdown-item" type="button" onclick="selectOrder('date_croissant')" >Date Croissante</button>
+              <button class="dropdown-item" type="button" onclick="selectOrder('date_decroissant')" >Date Décroissante</button>
+              <button class="dropdown-item" type="button" onclick="selectOrder('prix_croissant')" >Prix Croissant</button>
+              <button class="dropdown-item" type="button" onclick="selectOrder('prix_decroissant')" >Prix Décroissant</button>
             </div>
           </div>
           {# Pagination  #}
-          <nav aria-label="Page navigation">
-            <ul class="pagination mb-0">
-              {% if page_courante > nombre_page[0] %}
-                <li class="page-item"><a class="page-link" href="?categorie={{ categorieTitle }}&order={{ order }}&page={{ page_courante - 1 }}"><span class="fas fa-angle-left"></span></a></li>
-              {% endif %}
-              {% for page in nombre_page %}
-                <li class="page-item"><a href="?categorie={{ categorieTitle }}&order={{ order }}&page={{ page }}" class="page-link">{{ page }}</a></li>
-              {% endfor %}
-              {% if page_courante < nombre_page|last %}
-                <li class="page-item"><a class="page-link" href="?categorie={{ categorieTitle }}&order={{ order }}&page={{ page_courante + 1 }}"><span class="fas fa-angle-right"></span></a></li>
-              {% endif %}
+          <nav id="paging" aria-label="Page navigation">
 
-            </ul>
           </nav>
       </div>
     </div>
