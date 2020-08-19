@@ -159,17 +159,11 @@ function add_product(){
     $photo = $_POST['photo'];
 
     // Récupère l'id de la catégorie
-<<<<<<< HEAD
-    var_dump($categorie);
-    $sql = 'SELECT id FROM categories WHERE categorie = \'' . $categorie . '\'';
-    $req_categorie = $bdd -> query($sql);
-=======
     $sql = 'SELECT id FROM categories WHERE categorie = :categorie';
     $req_categorie = $bdd -> prepare($sql);
 
     $req_categorie -> bindParam(':categorie', $categorie, PDO::PARAM_STR);
     $req_categorie -> execute();
->>>>>>> back
 
     $id_categorie = $req_categorie -> fetchColumn();
     $req_categorie -> closeCursor();
