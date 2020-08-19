@@ -315,19 +315,19 @@ function modifValidate(){
 }
 
 function createProduct(){
-    const selectedCategorie = prod_Categorie_input.options[prod_Categorie_input.selectedIndex].text
+    let selectedCategorie = prod_Categorie_input.options[prod_Categorie_input.selectedIndex].text
     console.log(selectedCategorie);
     const formData = new FormData(form);
-    formData.append('categorie', JSON.stringify(selectedCategorie));
+    formData.append('categorie', selectedCategorie);
     fetch('back/ajout.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
         console.log('new product added')
     })
 }
 function editProduct(id){
-    const selectedCategorie = prod_Categorie_input.options[prod_Categorie_input.selectedIndex].text
+    let selectedCategorie = prod_Categorie_input.options[prod_Categorie_input.selectedIndex].text
     console.log(selectedCategorie);
     const formData = new FormData(form);
-    formData.append('categorie', JSON.stringify(selectedCategorie));
+    formData.append('categorie', selectedCategorie);
     formData.append('id', JSON.stringify(product_id));
     fetch('back/update.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
         console.log('product edited')
@@ -493,8 +493,17 @@ newCatClose.addEventListener('click' , function(){
     newCatModal.classList.remove('active');
 })
 
-function newcatClick(index){
-    newCatModal.classList.remove('active');
+function newcatClick(){
+    const newcatInput = document.getElementById("newcat-input");
+    const formData = new FormData();
+    formData.append('categorie', newcatInput.value);
+
+    fetch( 'back/add_categories.php', { method : "post" , body : formData } )
+        .then( res => res.json() ).then( data =>{
+            console.log("file uploaded")
+            resetUploads();
+            newCatModal.classList.remove('active');
+        })
 }
 function newCategorieClick(index){
     newCatModal.classList.add('active');
