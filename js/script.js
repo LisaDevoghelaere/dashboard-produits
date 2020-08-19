@@ -370,7 +370,7 @@ deleteNo.addEventListener('click' , function(){
 function deleteProduct(){
     deleteModal.classList.remove('active');
     const formData = new FormData(form);
-    formData.append('id', JSON.stringify(product_id));
+    formData.append('delete', JSON.stringify(product_id));
     fetch('back/delete.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
         console.log('product deleted:')
     })
