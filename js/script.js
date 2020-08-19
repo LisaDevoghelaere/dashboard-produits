@@ -33,13 +33,43 @@ const prod_Manual_btn = document.getElementById('prod_Manual_btn');
 const pictureHidden = document.getElementById('pictureHidden');
 const ticketHidden = document.getElementById('ticketHidden');
 const manualHidden = document.getElementById('manualHidden');
+const filePicture = document.getElementById('filePicture');
+const filePictureLabel = document.getElementById('filePictureLabel');
+const fileTicket = document.getElementById('fileTicket');
+const fileTicketLabel = document.getElementById('fileTicketLabel');
+const fileManual = document.getElementById('fileManual');
+const fileManualLabel = document.getElementById('fileManualLabel');
 let type = 0;
 let product_id = 0;
 let mode = "";
+let fileUpload = null;
 
 title.addEventListener('click' , function(){
     catList.classList.toggle('hidden');
 })
+
+function pictureFile(file){
+    filePictureLabel.innerHTML = "<span class='far fa-image icon'></span>"+file[0].name;
+    fileUpload = file[0];
+}
+function ticketFile(file){
+    fileTicketLabel.innerHTML = "<span class='far fa-image icon'></span>"+file[0].name;
+    fileUpload = file[0];
+}
+function manualFile(file){
+    fileManualLabel.innerHTML = "<span class='far fa-image icon'></span>"+file[0].name;
+    fileUpload = file[0];
+}
+
+function resetUploads(){
+    filePictureLabel.innerHTML = "<span class='far fa-image icon'></span>Parcourir";
+    fileTicketLabel.innerHTML = "<span class='far fa-image icon'></span>Parcourir";
+    fileManualLabel.innerHTML = "<span class='far fa-image icon'></span>Parcourir";
+    filePicture.value=""
+    fileTicket.value=""
+    fileManual.value=""
+    fileUpload = null;
+}
 
 function blankValues(){
     prod_Picture.setAttribute('src' , 'images/product-main/placeholder.jpg');
@@ -369,10 +399,10 @@ deleteNo.addEventListener('click' , function(){
 
 function deleteProduct(){
     deleteModal.classList.remove('active');
-    const formData = new FormData(form);
+    const formData = new FormData();
     formData.append('delete', JSON.stringify(product_id));
     fetch('back/delete.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
-        console.log('product deleted:')
+        console.log('product deleted:'+product_id)
     })
 }
 
@@ -386,8 +416,19 @@ modalUppicClose.addEventListener('click' , function(){
 })
 
 function uppicValidate(){
-    uppicModal.classList.remove('active');
+    filePictureLabel.innerHTML = "<span class='far fa-clock icon'></span>Chargement du fichier";
+    const formData = new FormData();
+    formData.append('id', product_id);
+    formData.append('file', fileUpload);
+
+    fetch( 'back/upload_picture.php', { method : "post" , body : formData } )
+        .then( res => res.json() ).then( data =>{
+            console.log("file uploaded")
+            resetUploads();
+            uppicModal.classList.remove('active');
+        })
 }
+
 function uploadPictureClick(){
     uppicModal.classList.add('active');
 }
@@ -401,7 +442,17 @@ modalUpTicketClose.addEventListener('click' , function(){
 })
 
 function upticketValidate(){
-    upTicketModal.classList.remove('active');
+    fileTicketLabel.innerHTML = "<span class='far fa-clock icon'></span>Chargement du fichier";
+    const formData = new FormData();
+    formData.append('id', product_id);
+    formData.append('file', fileUpload);
+
+    fetch( 'back/upload_ticket.php', { method : "post" , body : formData } )
+        .then( res => res.json() ).then( data =>{
+            console.log("file uploaded")
+            resetUploads();
+            upTicketModal.classList.remove('active');
+        })
 }
 function uploadTicketClick(){
     upTicketModal.classList.add('active');
@@ -416,10 +467,20 @@ modalUpManualClose.addEventListener('click' , function(){
     upManualModal.classList.remove('active');
 })
 
-function upmanualValidate(index){
-    upManualModal.classList.remove('active');
+function upmanualValidate(){
+    fileManualLabel.innerHTML = "<span class='far fa-clock icon'></span>Chargement du fichier";
+    const formData = new FormData();
+    formData.append('id', product_id);
+    formData.append('file', fileUpload);
+
+    fetch( 'back/upload_manual.php', { method : "post" , body : formData } )
+        .then( res => res.json() ).then( data =>{
+            console.log("file uploaded")
+            resetUploads();
+            upManualModal.classList.remove('active');
+        })
 }
-function uploadManualClick(index){
+function uploadManualClick(){
     upManualModal.classList.add('active');
 }
 
