@@ -3,7 +3,20 @@ session_start();
 
 require 'bdd.php';
 
-if(isset($_POST['user']) && isset($_POST['password'])){
+$ok = true;
+$messages = array();
+
+if (!isset($_POST['user']) || empty($_POST['user'])){
+    $ok = false;
+    $messages[] = "L'utilisateur ne peut pas être vide !";
+}
+
+if (!isset($_POST['password']) || empty($_POST['password'])){
+    $ok = false;
+    $messages[] = 'Le mot de passe ne peut pas être vide !';
+}
+
+if($ok){
     $login = $_POST['user'];
     $password = $_POST['password'];
 
@@ -12,18 +25,33 @@ if(isset($_POST['user']) && isset($_POST['password'])){
     $donnee = $check_login -> fetch();
 
     // Check hash password
-    if(password_verify($password, $donnee['password'])){
-        $_SESSION['admin'] = true;
-        $_SESSION['user'] = $donnee['user'];
-        header('Location: ../index.php');
-    }
-    else{
+    if($donnee){
+        if(password_verify($password, $donnee['password'])){
+            $_SESSION['admin'] = true;
+            $_SESSION['user'] = $donnee['user'];
+            $messages[] = 'Connecté';
+        }
+        else{
+            $_SESSION['admin'] = false;
+            $ok = false;
+            $messages[] = 'Mauvais utilisateur/mot de passe !';
+        }
+    }else{
         $_SESSION['admin'] = false;
-        header('Location: ../login.php');
+        $ok = false;
+        $messages[] = 'Mauvais utilisateur/mot de passe !';
     }
-    
-    $check_login -> closeCursor();  
+
+
+    $check_login -> closeCursor();
 }
 if(isset($_POST['log_out'])){
     session_destroy();
 }
+
+echo json_encode(
+    array(
+        'ok' => $ok,
+        'messages' => $messages
+    )
+    );
