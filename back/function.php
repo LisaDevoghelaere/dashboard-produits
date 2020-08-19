@@ -132,7 +132,7 @@ function add_product(){
     $reference_produit = $_POST['reference'];
     $prix_produit = $_POST['prix'];
     $date_achat_produit = $_POST['date_achat'];
-    $date_garantie_produit = $_POST['date_garanti'];
+    $date_garantie_produit = $_POST['date_garantie'];
     $conseil_produit = $_POST['conseil'];
     $manuel_utilisation_produit = $_POST['manuel'];
     $ticket_achat_produit = $_POST['ticket'];
@@ -159,8 +159,11 @@ function add_product(){
     $photo = $_POST['photo'];
 
     // Récupère l'id de la catégorie
-    $sql = 'SELECT id FROM categories WHERE categorie = ' . $categorie;
-    $req_categorie = $bdd -> query($sql);
+    $sql = 'SELECT id FROM categories WHERE categorie = :categorie';
+    $req_categorie = $bdd -> prepare($sql);
+
+    $req_categorie -> bindParam(':categorie', $categorie, PDO::PARAM_STR);
+    $req_categorie -> execute();
 
     $id_categorie = $req_categorie -> fetchColumn();
     $req_categorie -> closeCursor();
@@ -204,7 +207,7 @@ function add_product(){
 
     // Insertion table e-commerce ou vente direct selon id du lieu d'achat
     if($id_lieu_achat == 1){
-        $qsl = 'INSERT INTO ecommerce(id_lieu_achat, id_produit, url) VALUES(:id_lieu_achat, :id_produit, :url)';
+        $sql = 'INSERT INTO ecommerce(id_lieu_achat, id_produit, url) VALUES(:id_lieu_achat, :id_produit, :url)';
 
         $insert_ecommerce = $bdd->prepare($sql);
         
@@ -216,10 +219,9 @@ function add_product(){
         $insert_ecommerce->closeCursor();
 
     } elseif($id_lieu_achat == 2){
-        $qsl = 'INSERT INTO vente_direct(nom_vendeur, id_lieu_achat, id_produit, ville, code_postal, rue) VALUES(:nom_vendeur, :id_lieu_achat, :id_produit, :ville, :code_postal, :rue)';
+        $sql = 'INSERT INTO vente_direct(nom_vendeur, id_lieu_achat, id_produit, ville, code_postal, rue) VALUES(:nom_vendeur, :id_lieu_achat, :id_produit, :ville, :code_postal, :rue)';
 
         $insert_vente_direct = $bdd->prepare($sql);
-        
         $insert_vente_direct->bindParam(':nom_vendeur', $nom_vendeur, PDO::PARAM_STR);
         $insert_vente_direct->bindValue(':id_lieu_achat', $id_lieu_achat, PDO::PARAM_INT);
         $insert_vente_direct->bindValue(':id_produit', $id_produit, PDO::PARAM_INT);
@@ -254,8 +256,8 @@ function delete_product($id){
     $req = $bdd->prepare($sql);
     $req->bindValue(':id', $id, PDO::PARAM_INT);
     $req->execute();
-    $id_lieu_achat = $req -> fetch();
-
+    $id_lieu_achat = $req -> fetchColumn();
+    var_dump($id_lieu_achat);
     $req->closeCursor();
 
     // Suppression du produit dans table produits
@@ -276,15 +278,16 @@ function delete_product($id){
         $delete_ecommerce->closeCursor();
     } elseif($id_lieu_achat == 2){
         $sql = 'DELETE FROM vente_direct WHERE id_produit = :id_produit';
-    
+        
         $delete_vente_direct = $bdd->prepare($sql);
+        var_dump($delete_vente_direct);
         $delete_vente_direct->bindValue(':id_produit', $id, PDO::PARAM_INT);
         $delete_vente_direct->execute();
         $delete_vente_direct->closeCursor();
     }
 
     // Suppression des photos selon id du produit
-    $sql = 'DELETE FROM photos WHERE id_produit = :id';
+    $sql = 'DELETE FROM photos WHERE id_produit = :id_produit';
 
     $delete_photo = $bdd->prepare($sql);
     $delete_photo->bindValue(':id_produit', $id, PDO::PARAM_INT);
@@ -292,3 +295,117 @@ function delete_product($id){
     $delete_photo->closeCursor();
 }
 
+// Fonction modification de produits _____________________________________________________
+function update_product($id){
+    require 'bdd.php';
+
+    $id_produit = $id;
+    $nom_produit = $_POST['nom'];
+    $reference_produit = $_POST['reference'];
+    $prix_produit = $_POST['prix'];
+    $date_achat_produit = $_POST['date_achat'];
+    $date_garantie_produit = $_POST['date_garantie'];
+    $conseil_produit = $_POST['conseil'];
+    $manuel_utilisation_produit = $_POST['manuel'];
+    $ticket_achat_produit = $_POST['ticket'];
+
+    if(isset($_POST['url']) && !isset($_POST['vendeur']) && !isset($_POST['ville']) && !isset($_POST['code_postal']) && !isset($_POST['rue'])){
+        $url = $_POST['url'];
+        $nom_vendeur = '';
+        $ville = '';
+        $code_postal = '';
+        $rue = '';  
+    } elseif(!isset($_POST['url']) && isset($_POST['vendeur']) && isset($_POST['ville']) && isset($_POST['code_postal']) && isset($_POST['rue'])){
+        $url = '';
+        $nom_vendeur = $_POST['vendeur'];
+        $ville = $_POST['ville'];
+        $code_postal = $_POST['code_postal'];
+        $rue = $_POST['rue'];
+    }
+
+    $id_lieu_achat = '';
+    $id_categorie = '';
+
+    $categorie = $_POST['categorie'];
+
+    $photo = $_POST['photo'];
+
+    // Récupère l'id de la catégorie
+    $sql = 'SELECT id FROM categories WHERE categorie = :categorie';
+    $req_categorie = $bdd -> prepare($sql);
+
+    $req_categorie -> bindParam(':categorie', $categorie, PDO::PARAM_STR);
+    $req_categorie -> execute();
+    $id_categorie = $req_categorie -> fetchColumn();
+    $req_categorie -> closeCursor();
+
+    // Insère le nouveau produit
+    $sql = 'UPDATE produits SET nom = :nom, reference = :reference, prix = :prix, date_achat = :date_achat, date_fin_garantie = :date_fin_garantie, id_categorie = :id_categorie, conseil = :conseil, manuel_utilisation = :manuel_utilisation, ticket_achat = :ticket_achat, id_lieu_achat = :id_lieu_achat WHERE id = :id_produit';
+
+    // Change le lieu d'achat selon l'id
+    if($url !== '' && $ville == '' && $code_postal == '' && $nom_vendeur == '' && $rue == ''){
+        $id_lieu_achat = 1;
+
+        $insert_product = $bdd -> prepare($sql);
+        $insert_product -> bindValue('id_lieu_achat', $id_lieu_achat, PDO::PARAM_INT);
+    }elseif($url == '' && $ville !== '' && $code_postal !== '' && $nom_vendeur !== '' && $rue !== ''){
+        $id_lieu_achat = 2;
+
+        $insert_product = $bdd -> prepare($sql);
+        $insert_product -> bindValue('id_lieu_achat', $id_lieu_achat, PDO::PARAM_INT);
+    }
+
+    $insert_product -> bindParam('nom', $nom_produit, PDO::PARAM_STR);
+    $insert_product -> bindValue('reference', $reference_produit, PDO::PARAM_INT);
+    $insert_product -> bindValue('prix', $prix_produit, PDO::PARAM_STR);
+    $insert_product -> bindValue('date_achat', $date_achat_produit, PDO::PARAM_STR);
+    $insert_product -> bindValue('date_fin_garantie', $date_garantie_produit, PDO::PARAM_STR);
+    $insert_product -> bindValue('id_categorie', $id_categorie, PDO::PARAM_INT);
+    $insert_product -> bindParam('conseil', $conseil_produit, PDO::PARAM_STR);
+    $insert_product -> bindParam('manuel_utilisation', $manuel_utilisation_produit, PDO::PARAM_STR);
+    $insert_product -> bindParam('ticket_achat', $ticket_achat_produit, PDO::PARAM_STR);
+    $insert_product -> bindValue('id_produit', $id_produit, PDO::PARAM_INT);
+    $insert_product -> execute();
+
+    $insert_product -> closeCursor();
+
+    // Insertion table e-commerce ou vente direct selon id du lieu d'achat
+    if($id_lieu_achat == 1){
+        $sql = 'UPDATE ecommerce SET url = :url WHERE id_produit = :id_produit';
+
+        $insert_ecommerce = $bdd->prepare($sql);
+        
+        $insert_ecommerce->bindParam(':url', $url, PDO::PARAM_STR);
+        $insert_ecommerce->bindValue(':id_produit', $id_produit, PDO::PARAM_INT);
+        $insert_ecommerce->execute();
+
+        $insert_ecommerce->closeCursor();
+
+    } elseif($id_lieu_achat == 2){
+        $sql = 'UPDATE vente_direct SET nom_vendeur = :nom_vendeur, ville = :ville, code_postal = :code_postal, rue = :rue WHERE id_produit = :id_produit';
+
+        $insert_vente_direct = $bdd->prepare($sql);
+        
+        $insert_vente_direct->bindParam(':nom_vendeur', $nom_vendeur, PDO::PARAM_STR);
+        $insert_vente_direct->bindParam(':ville', $ville, PDO::PARAM_STR);
+        $insert_vente_direct->bindValue(':code_postal', $code_postal, PDO::PARAM_INT);
+        $insert_vente_direct->bindParam(':rue', $rue, PDO::PARAM_STR);
+        $insert_vente_direct->bindValue(':id_produit', $id_produit, PDO::PARAM_INT);
+        $insert_vente_direct->execute();
+
+        $insert_vente_direct->closeCursor();
+    }
+
+    // insertion des photos selon id du produit
+    $sql = 'UPDATE photos SET nom_photo = :nom_photo WHERE id_produit = :id_produit';
+
+    $insert_photo = $bdd->prepare($sql);
+
+    $insert_photo->bindParam(':nom_photo', $photo, PDO::PARAM_STR);
+    $insert_photo->bindValue(':id_produit', $id_produit, PDO::PARAM_INT);
+    $insert_photo->execute();
+
+    $insert_photo->closeCursor();
+
+    return json_encode('Produit modifié : ' . $nom_produit);
+}
