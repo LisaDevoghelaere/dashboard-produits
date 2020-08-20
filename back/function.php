@@ -431,7 +431,6 @@ function upload_images(){
     $files_tmp = $_FILES['file']['tmp_name'];
     $url = '..' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'product-main';
     move_uploaded_file($files_tmp, "$url" . DIRECTORY_SEPARATOR . "$files_name");
-<<<<<<< HEAD
 }
 
 // Fonction upload de manuel _____________________________________________________
@@ -454,7 +453,4 @@ function upload_ticket(){
     var_dump($url);
 
     move_uploaded_file($files_tmp, "$url" . DIRECTORY_SEPARATOR . "$files_name");
-=======
-    echo "$url" . DIRECTORY_SEPARATOR . "$files_name";
->>>>>>> dc33f74b3b0f08e27de64e4734feb1e176bcedc8
 }
