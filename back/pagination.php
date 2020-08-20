@@ -13,14 +13,22 @@ else{
     $current_page = $_POST['page'];
 }
 
+$search = '%%';
+    if(isset($_POST['search'])){
+        $search= str_replace('"', '',$_POST['search']);
+        $search = "%" . $search . "%";
+    }
 // Compte nombre d'élément pour pagination
 if(empty($select_categorie)){
-    $sql = 'SELECT COUNT(id) FROM produits';
-    $count = $bdd -> query($sql);
+    $sql = "SELECT COUNT(*) FROM `produits` WHERE upper(`nom`) LIKE upper(:search)";
+    $count = $bdd -> prepare($sql);
+    $count -> bindValue('search', $search, PDO::PARAM_STR);
+    $count -> execute();
 } else{
-    $sql = 'SELECT COUNT(p.id) FROM produits AS p INNER JOIN categories AS c ON p.id_categorie = c.id WHERE c.categorie = :categorie';
+    $sql = 'SELECT COUNT(p.id) FROM produits AS p INNER JOIN categories AS c ON p.id_categorie = c.id WHERE c.categorie = :categorie AND upper(p.nom) LIKE upper(:search)';
     $count = $bdd -> prepare($sql);
     $count -> bindValue('categorie', $select_categorie, PDO::PARAM_STR);
+    $count -> bindValue('search', $search, PDO::PARAM_STR);
     $count -> execute();
 }
 

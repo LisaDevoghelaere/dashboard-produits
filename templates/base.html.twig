@@ -36,7 +36,7 @@
           <!-- Bouton nouveau produit -->
           <button id="create-btn" type="button" class="btn btn-success m-static" onclick="createActivate()"><span class="fas fa-plus"></span></button>
           {# Recherche  #}
-          <input id="searchInput" type="text" class="form-control" placeholder="Rechercher">
+          <input id="searchInput" type="text" class="form-control" placeholder="Rechercher" onInput="searchLoad(this)">
           {# Classement  #}
           <div class="btn-group">
             <button id="btnOrder" type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
