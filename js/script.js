@@ -205,9 +205,9 @@ function blankValues(){
         prod_Tips_input.value = "";
 
     //links
-        pictureHidden.value = 'images/product-main/placeholder.jpg';
-        ticketHidden.value = 'images/product-ticket/placeholder.jpg';
-        manualHidden.value = "";
+        pictureHidden.value = 'placeholder.jpg';
+        ticketHidden.value = 'placeholder.jpg';
+        manualHidden.value = 'placeholder.pdf';
 
 
     //Categories
@@ -257,20 +257,20 @@ function loadModal(id){
             const photo = data[2].nom_photo;
             if(photo == undefined){
                 prod_Picture.setAttribute('src' , 'images/product-main/placeholder.jpg');
-                pictureHidden.value = 'images/product-main/placeholder.jpg';
+                pictureHidden.value = 'placeholder.jpg';
             }
             else{
-                prod_Picture.setAttribute('src' , photo);
+                prod_Picture.setAttribute('src' , 'images/product-main/'+photo);
                 pictureHidden.value = photo;
             }
 
             const phototicket = data[0].ticket_achat;
             if((phototicket == undefined) || (phototicket == "")){
                 prod_Ticket.setAttribute('src' , 'images/product-ticket/placeholder.jpg');
-                ticketHidden.value = 'images/product-ticket/placeholder.jpg';
+                ticketHidden.value = 'placeholder.jpg';
             }
             else{
-                prod_Ticket.setAttribute('src' , phototicket);
+                prod_Ticket.setAttribute('src' , 'images/product-ticket/'+phototicket);
                 ticketHidden.value = phototicket;
             }
 
@@ -350,8 +350,15 @@ function loadModal(id){
             prod_Tips_input.value = data[0].conseil;
 
         //Manuel
-            prod_Manual_btn.setAttribute('href', data[0].manuel_utilisation);
+        const fichierManuel = data[0].manuel_utilisation;
+        if((fichierManuel == undefined) || (fichierManuel == "")){
+            prod_Manual_btn.setAttribute('href', 'images/product-manual/placeholder.pdf');
+            manualHidden.value = 'placeholder.pdf';
+        }
+        else{
+            prod_Manual_btn.setAttribute('href', 'images/product-manual/'+data[0].manuel_utilisation);
             manualHidden.value = data[0].manuel_utilisation;
+        }
 
         vendorType();
         })
