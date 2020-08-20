@@ -36,7 +36,7 @@ function produits_list(){
     }
 
     if(empty($select_categorie)){
-        $sql = 'SELECT p.id, p.nom, p.reference, p.prix, p.date_achat, p.date_fin_garantie, c.categorie FROM produits AS p INNER JOIN categories AS c ON p.id_categorie = c.id INNER JOIN photos AS ph ON p.id = ph.id_produit WHERE upper(p.nom) LIKE upper(:search) ORDER BY ' . $order_req . ' LIMIT :debut, :limit';
+        $sql = 'SELECT p.id, p.nom, p.reference, p.prix, p.date_achat, p.date_fin_garantie, c.categorie, ph.nom_photo FROM produits AS p INNER JOIN categories AS c ON p.id_categorie = c.id INNER JOIN photos AS ph ON p.id = ph.id_produit WHERE upper(p.nom) LIKE upper(:search) ORDER BY ' . $order_req . ' LIMIT :debut, :limit';
 
         $req = $bdd -> prepare($sql);
 
