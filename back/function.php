@@ -435,3 +435,25 @@ function upload_images(){
 
     move_uploaded_file($files_tmp, "$url" . DIRECTORY_SEPARATOR . "$files_name");
 }
+
+// Fonction upload de manuel _____________________________________________________
+function upload_manual(){
+    $files_name = $_FILES['file']['name'];
+    $files_tmp = $_FILES['file']['tmp_name'];
+    $url = '..' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'product-manual';
+    var_dump($files_name);
+    var_dump($url);
+
+    move_uploaded_file($files_tmp, "$url" . DIRECTORY_SEPARATOR . "$files_name");
+}
+
+// Fonction upload de ticket _____________________________________________________
+function upload_ticket(){
+    $files_name = $_FILES['file']['name'];
+    $files_tmp = $_FILES['file']['tmp_name'];
+    $url = '..' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'product-ticket';
+    var_dump($files_name);
+    var_dump($url);
+
+    move_uploaded_file($files_tmp, "$url" . DIRECTORY_SEPARATOR . "$files_name");
+}
