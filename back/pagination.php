@@ -20,12 +20,12 @@ $search = '%%';
     }
 // Compte nombre d'élément pour pagination
 if(empty($select_categorie)){
-    $sql = "SELECT COUNT(*) FROM `produits` WHERE upper(`nom`) LIKE upper(:search)";
+    $sql = "SELECT COUNT(*) FROM produits AS p INNER JOIN photos AS ph ON p.id = ph.id_produit WHERE upper(`nom`) LIKE upper(:search) AND ph.nom_photo IS NOT NULL";
     $count = $bdd -> prepare($sql);
     $count -> bindValue('search', $search, PDO::PARAM_STR);
     $count -> execute();
 } else{
-    $sql = 'SELECT COUNT(p.id) FROM produits AS p INNER JOIN categories AS c ON p.id_categorie = c.id WHERE c.categorie = :categorie AND upper(p.nom) LIKE upper(:search)';
+    $sql = 'SELECT COUNT(p.id) FROM produits AS p INNER JOIN categories AS c ON p.id_categorie = c.id INNER JOIN photos AS ph ON p.id = ph.id_produit WHERE c.categorie = :categorie AND upper(p.nom) LIKE upper(:search) AND ph.nom_photo IS NOT NULL';
     $count = $bdd -> prepare($sql);
     $count -> bindValue('categorie', $select_categorie, PDO::PARAM_STR);
     $count -> bindValue('search', $search, PDO::PARAM_STR);

@@ -41,7 +41,7 @@ function produits_list(){
         $req = $bdd -> prepare($sql);
 
     } else{
-        $sql = 'SELECT p.id, p.nom, p.reference, p.prix, p.date_achat, p.date_fin_garantie, c.categorie, ph.nom_photo FROM produits AS p INNER JOIN categories AS c ON p.id_categorie = c.id WHERE c.categorie = :categorie AND upper(p.nom) LIKE upper(:search) INNER JOIN photos AS ph ON p.id = ph.id_produit ORDER BY ' . $order_req . ' LIMIT :debut, :limit';
+        $sql = 'SELECT p.id, p.nom, p.reference, p.prix, p.date_achat, p.date_fin_garantie, c.categorie, ph.nom_photo FROM produits AS p INNER JOIN categories AS c ON p.id_categorie = c.id INNER JOIN photos AS ph ON p.id = ph.id_produit WHERE c.categorie = :categorie AND upper(p.nom) LIKE upper(:search) ORDER BY ' . $order_req . ' LIMIT :debut, :limit';
 
         $req = $bdd -> prepare($sql);
         $req -> bindParam('categorie', $select_categorie, PDO::PARAM_STR);
