@@ -4,7 +4,9 @@
       <button type="button" class="btn btn-outline-danger" onclick='clickDelete({{ produit.id }})'><span class="fas fa-minus"></span></button>
       <div class="product-card-in" onclick="loadModal({{ produit.id }})">
         <div class="product-left">
-            <img src="images/product-main/placeholder.jpg" alt="">
+
+                <img src="images/product-main/{{produit.nom_photo}}" alt="">
+
         </div>
         <div class="product-card-text">
             <div class="card-text-up">
