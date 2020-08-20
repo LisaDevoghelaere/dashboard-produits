@@ -274,17 +274,17 @@ function delete_product($id){
     $delete_product->execute();
     $delete_product->closeCursor();
 
-    // Suppression du poduit dans la table du lieu d'achat correspondant 
+    // Suppression du poduit dans la table du lieu d'achat correspondant
     if($id_lieu_achat == 1){
         $sql = 'DELETE FROM ecommerce WHERE id_produit = :id_produit';
-    
+
         $delete_ecommerce = $bdd->prepare($sql);
         $delete_ecommerce->bindValue(':id_produit', $id, PDO::PARAM_INT);
         $delete_ecommerce->execute();
         $delete_ecommerce->closeCursor();
     } elseif($id_lieu_achat == 2){
         $sql = 'DELETE FROM vente_direct WHERE id_produit = :id_produit';
-        
+
         $delete_vente_direct = $bdd->prepare($sql);
         $delete_vente_direct->bindValue(':id_produit', $id, PDO::PARAM_INT);
         $delete_vente_direct->execute();
@@ -321,7 +321,7 @@ function update_product($id){
         $nom_vendeur = '';
         $ville = '';
         $code_postal = '';
-        $rue = '';  
+        $rue = '';
     } elseif(!isset($_POST['url']) && isset($_POST['vendeur']) && isset($_POST['ville']) && isset($_POST['code_postal']) && isset($_POST['rue'])){
         $url = '';
         $nom_vendeur = $_POST['vendeur'];
@@ -361,7 +361,7 @@ function update_product($id){
         $insert_product = $bdd -> prepare($sql);
         $insert_product -> bindValue('id_lieu_achat', $id_lieu_achat, PDO::PARAM_INT);
     }
-    
+
     $insert_product -> bindParam('nom', $nom_produit, PDO::PARAM_STR);
     $insert_product -> bindValue('reference', $reference_produit, PDO::PARAM_INT);
     $insert_product -> bindValue('prix', $prix_produit, PDO::PARAM_STR);
@@ -381,7 +381,7 @@ function update_product($id){
         $sql = 'UPDATE ecommerce SET url = :url WHERE id_produit = :id_produit';
 
         $insert_ecommerce = $bdd->prepare($sql);
-        
+
         $insert_ecommerce->bindParam(':url', $url, PDO::PARAM_STR);
         $insert_ecommerce->bindValue(':id_produit', $id_produit, PDO::PARAM_INT);
         $insert_ecommerce->execute();
@@ -392,7 +392,7 @@ function update_product($id){
         $sql = 'UPDATE vente_direct SET nom_vendeur = :nom_vendeur, ville = :ville, code_postal = :code_postal, rue = :rue WHERE id_produit = :id_produit';
 
         $insert_vente_direct = $bdd->prepare($sql);
-        
+
         $insert_vente_direct->bindParam(':nom_vendeur', $nom_vendeur, PDO::PARAM_STR);
         $insert_vente_direct->bindParam(':ville', $ville, PDO::PARAM_STR);
         $insert_vente_direct->bindValue(':code_postal', $code_postal, PDO::PARAM_INT);
@@ -436,6 +436,7 @@ function upload_images(){
     $files_tmp = $_FILES['file']['tmp_name'];
     $url = '..' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'product-main';
     move_uploaded_file($files_tmp, "$url" . DIRECTORY_SEPARATOR . "$files_name");
+    echo json_encode('file' . $files_name);
 }
 
 // Fonction upload de manuel _____________________________________________________
@@ -443,10 +444,8 @@ function upload_manual(){
     $files_name = $_FILES['file']['name'];
     $files_tmp = $_FILES['file']['tmp_name'];
     $url = '..' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'product-manual';
-    var_dump($files_name);
-    var_dump($url);
-
     move_uploaded_file($files_tmp, "$url" . DIRECTORY_SEPARATOR . "$files_name");
+    echo json_encode('file' . $files_name);
 }
 
 // Fonction upload de ticket _____________________________________________________
@@ -454,8 +453,6 @@ function upload_ticket(){
     $files_name = $_FILES['file']['name'];
     $files_tmp = $_FILES['file']['tmp_name'];
     $url = '..' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'product-ticket';
-    var_dump($files_name);
-    var_dump($url);
-
     move_uploaded_file($files_tmp, "$url" . DIRECTORY_SEPARATOR . "$files_name");
+    echo json_encode('file' . $files_name);
 }
