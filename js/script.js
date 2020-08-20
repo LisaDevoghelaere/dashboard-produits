@@ -397,6 +397,7 @@ function createActivate(){
     modalTitle.innerText='Ajouter un produit';
     showModif();
     loadModal();
+    type=0;
     vendorType();
 }
 
