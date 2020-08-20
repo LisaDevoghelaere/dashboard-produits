@@ -146,8 +146,6 @@ function activePaging(){
             element.classList.remove('active');
         }
     });
-
-
 }
 
 function pictureFile(file){
@@ -255,7 +253,7 @@ function loadModal(id){
         .then( res => res.json() ).then( data =>{
 
             const photo = data[2].nom_photo;
-            if(photo == undefined){
+            if((photo == undefined) || (photo == "")){
                 prod_Picture.setAttribute('src' , 'images/product-main/placeholder.jpg');
                 pictureHidden.value = 'placeholder.jpg';
             }
@@ -436,7 +434,8 @@ function editProduct(id){
     formData.append('categorie', selectedCategorie);
     formData.append('id', JSON.stringify(product_id));
     fetch('back/update.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
-        modal.classList.remove('active');
+        loadModal(id);
+        vendorType();
         loadProducts();
         loadPagination()
     })
@@ -531,6 +530,16 @@ function uppicValidate(){
 
     fetch( 'back/upload_picture.php', { method : "post" , body : formData } )
         .then( res => res.json() ).then( data =>{
+            console.log(data)
+            if((data == undefined) || (data == "")){
+                prod_Picture.setAttribute('src' , 'images/product-main/placeholder.jpg');
+                pictureHidden.value = 'placeholder.jpg';
+            }
+            else{
+                prod_Picture.setAttribute('src' , 'images/product-main/'+data);
+                pictureHidden.value = data;
+            }
+            editProduct(product_id);
             resetUploads();
             uppicModal.classList.remove('active');
         })
@@ -548,6 +557,7 @@ modalUpTicketClose.addEventListener('click' , function(){
     upTicketModal.classList.remove('active');
 })
 
+
 function upticketValidate(){
     fileTicketLabel.innerHTML = "<span class='far fa-clock icon'></span>Chargement du fichier";
     const formData = new FormData();
@@ -556,6 +566,15 @@ function upticketValidate(){
 
     fetch( 'back/upload_ticket.php', { method : "post" , body : formData } )
         .then( res => res.json() ).then( data =>{
+            if((data == undefined) || (data == "")){
+                prod_Ticket.setAttribute('src' , 'images/product-ticket/placeholder.jpg');
+                ticketHidden.value = 'placeholder.jpg';
+            }
+            else{
+                prod_Ticket.setAttribute('src' , 'images/product-ticket/'+data);
+                ticketHidden.value = data;
+            }
+            editProduct(product_id);
             resetUploads();
             upTicketModal.classList.remove('active');
         })
@@ -579,12 +598,22 @@ function upmanualValidate(){
     formData.append('id', product_id);
     formData.append('file', fileUpload);
 
-    fetch( 'back/upload_manual.php', { method : "post" , body : formData } )
+    fetch( 'back/upload_manuel.php', { method : "post" , body : formData } )
         .then( res => res.json() ).then( data =>{
+            if((data == undefined) || (data == "")){
+                prod_Manual_btn.setAttribute('href', 'images/product-manual/placeholder.pdf');
+                manualHidden.value = 'placeholder.pdf';
+            }
+            else{
+                prod_Manual_btn.setAttribute('href', 'images/product-manual/'+data);
+                manualHidden.value = data;
+            }
+            editProduct(product_id);
             resetUploads();
             upManualModal.classList.remove('active');
         })
 }
+
 function uploadManualClick(){
     upManualModal.classList.add('active');
 }

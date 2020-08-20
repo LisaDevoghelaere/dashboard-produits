@@ -436,7 +436,7 @@ function upload_images(){
     $files_tmp = $_FILES['file']['tmp_name'];
     $url = '..' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'product-main';
     move_uploaded_file($files_tmp, "$url" . DIRECTORY_SEPARATOR . "$files_name");
-    echo json_encode('file' . $files_name);
+    echo json_encode($files_name);
 }
 
 // Fonction upload de manuel _____________________________________________________
@@ -445,7 +445,7 @@ function upload_manual(){
     $files_tmp = $_FILES['file']['tmp_name'];
     $url = '..' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'product-manual';
     move_uploaded_file($files_tmp, "$url" . DIRECTORY_SEPARATOR . "$files_name");
-    echo json_encode('file' . $files_name);
+    echo json_encode($files_name);
 }
 
 // Fonction upload de ticket _____________________________________________________
@@ -454,5 +454,5 @@ function upload_ticket(){
     $files_tmp = $_FILES['file']['tmp_name'];
     $url = '..' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'product-ticket';
     move_uploaded_file($files_tmp, "$url" . DIRECTORY_SEPARATOR . "$files_name");
-    echo json_encode('file' . $files_name);
+    echo json_encode($files_name);
 }

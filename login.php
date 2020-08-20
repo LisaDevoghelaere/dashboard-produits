@@ -20,7 +20,7 @@
 <body>
     <div class="container">
         <form id="connect" action="back/authentification.php" method="POST">
-            <h1 class="text-success">Dashboard Produits</h1>
+            <img class="text-center" src="images/produck-logo.svg" alt="">
             <div class="form-group">
               <label for="user"><span class="far fa-user"></span> Utilisateur :</label>
               <input type="text" class="form-control" id="user" name="user" placeholder="Nom d'utilisateur (admin)">
