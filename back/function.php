@@ -29,13 +29,19 @@ function produits_list(){
         $order_req = 'p.prix DESC';
     }
 
+    $search = '%%';
+    if(isset($_POST['search'])){
+        $search= str_replace('"', '',$_POST['search']);
+        $search = "%" . $search . "%";
+    }
+
     if(empty($select_categorie)){
-        $sql = 'SELECT p.id, p.nom, p.reference, p.prix, p.date_achat, p.date_fin_garantie, c.categorie FROM produits AS p INNER JOIN categories AS c ON p.id_categorie = c.id ORDER BY ' . $order_req . ' LIMIT :debut, :limit';
+        $sql = 'SELECT p.id, p.nom, p.reference, p.prix, p.date_achat, p.date_fin_garantie, c.categorie FROM produits AS p INNER JOIN categories AS c ON p.id_categorie = c.id WHERE upper(p.nom) LIKE upper(:search) ORDER BY ' . $order_req . ' LIMIT :debut, :limit';
 
         $req = $bdd -> prepare($sql);
 
     } else{
-        $sql = 'SELECT p.id, p.nom, p.reference, p.prix, p.date_achat, p.date_fin_garantie, c.categorie FROM produits AS p INNER JOIN categories AS c ON p.id_categorie = c.id WHERE c.categorie = :categorie ORDER BY ' . $order_req . ' LIMIT :debut, :limit';
+        $sql = 'SELECT p.id, p.nom, p.reference, p.prix, p.date_achat, p.date_fin_garantie, c.categorie FROM produits AS p INNER JOIN categories AS c ON p.id_categorie = c.id WHERE c.categorie = :categorie AND upper(p.nom) LIKE upper(:search) ORDER BY ' . $order_req . ' LIMIT :debut, :limit';
 
         $req = $bdd -> prepare($sql);
         $req -> bindParam('categorie', $select_categorie, PDO::PARAM_STR);
@@ -43,6 +49,7 @@ function produits_list(){
 
     $req -> bindValue('debut', $debut, PDO::PARAM_INT);
     $req -> bindValue('limit', $limit, PDO::PARAM_INT);
+    $req -> bindValue('search', $search, PDO::PARAM_STR);
     $req -> execute();
 
     return $req;
@@ -257,7 +264,6 @@ function delete_product($id){
     $req->bindValue(':id', $id, PDO::PARAM_INT);
     $req->execute();
     $id_lieu_achat = $req -> fetchColumn();
-    var_dump($id_lieu_achat);
     $req->closeCursor();
 
     // Suppression du produit dans table produits
@@ -280,7 +286,6 @@ function delete_product($id){
         $sql = 'DELETE FROM vente_direct WHERE id_produit = :id_produit';
         
         $delete_vente_direct = $bdd->prepare($sql);
-        var_dump($delete_vente_direct);
         $delete_vente_direct->bindValue(':id_produit', $id, PDO::PARAM_INT);
         $delete_vente_direct->execute();
         $delete_vente_direct->closeCursor();

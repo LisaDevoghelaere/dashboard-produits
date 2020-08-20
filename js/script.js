@@ -48,6 +48,7 @@ let fileUpload = null;
 let order = 'date_croissant';
 let categorie = '';
 let page = 1;
+let search = '';
 
 title.addEventListener('click' , function(){
     catList.classList.toggle('hidden');
@@ -55,6 +56,13 @@ title.addEventListener('click' , function(){
 window.onload = loadProducts();
 window.onload = loadCategories();
 window.onload = loadPagination();
+
+function searchLoad(searchBar){
+    search = searchBar.value;
+    loadProducts();
+    loadPagination();
+    console.log(search);
+}
 
 function selectCategorie(button){
     page=1;
@@ -80,7 +88,6 @@ function selectOrder(classement){
 }
 
 function loadProducts(){
-    let search = "test";
     const xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange  = function(){
@@ -121,7 +128,7 @@ function loadPagination(){
 
     xhr.open('POST', 'load_pagination.php', true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.send("page=" + page + "&categorie=" + categorie + "&order=" + order);
+    xhr.send("search=" + search + "&page=" + page + "&categorie=" + categorie + "&order=" + order);
 }
 
 function changePage(num){
