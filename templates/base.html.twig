@@ -183,7 +183,8 @@
             <p class="title-mod"><span class="fas fa-upload icon"></span>Charger un image</p>
             <input id ="filePicture" type="file" name="filePicture" onchange="pictureFile(this.files)">
             <label id = "filePictureLabel" class="btn btn-success m-static labelbtn" for="filePicture"><span class="far fa-folder icon"></span>Parcourir</label>
-            <p class="text-center text-white-50 text-"><em>Formats : &nbsp; .jpg &nbsp; .jpeg &nbsp; .png &nbsp; .bmp &nbsp; .gif</em></p>
+            <p id="uppicAlert" class="text-center text-danger font-weight-bold" style="display:none;"><em>Format de fichier non valide !</em></p>
+            <p class="text-center text-white-50"><em>Formats : &nbsp; .jpg &nbsp; .jpeg &nbsp; .png &nbsp; .bmp &nbsp; .gif</em></p>
           </div>
       </div>
     </div>
@@ -198,7 +199,8 @@
             <p class="title-mod"><span class="fas fa-upload icon"></span>Charger une facture</p>
             <input id ="fileTicket" type="file" name="fileTicket" onchange="ticketFile(this.files)">
             <label id = "fileTicketLabel"class="btn btn-success m-static labelbtn" for="fileTicket"><span class="far fa-folder icon"></span>Parcourir</label>
-            <p class="text-center text-white-50 text-"><em>Formats : &nbsp; .jpg &nbsp; .jpeg &nbsp; .png &nbsp; .bmp &nbsp; .gif</em></p>
+            <p id="upTicketAlert" class="text-center text-danger font-weight-bold" style="display:none;"><em>Format de fichier non valide !</em></p>
+            <p class="text-center text-white-50"><em>Formats : &nbsp; .jpg &nbsp; .jpeg &nbsp; .png &nbsp; .bmp &nbsp; .gif</em></p>
           </div>
       </div>
     </div>
@@ -213,7 +215,8 @@
             <p class="title-mod"><span class="fas fa-upload icon"></span>Charger le manuel d'utilisation</p>
             <input id ="fileManual" type="file" name="fileManual" onchange="manualFile(this.files)">
             <label id = "fileManualLabel"class="btn btn-success m-static labelbtn" for="fileManual"><span class="far fa-folder icon"></span>Parcourir</label>
-            <p class="text-center text-white-50 text-"><em>Formats : &nbsp; .pdf &nbsp; .txt &nbsp; .jpg &nbsp; .jpeg &nbsp; .png &nbsp; .bmp &nbsp; .gif</em></p>
+            <p id="upManualAlert" class="text-center text-danger font-weight-bold" style="display:none;"><em>Format de fichier non valide !</em></p>
+            <p class="text-center text-white-50"><em>Formats : &nbsp; .pdf &nbsp; .txt &nbsp; .jpg &nbsp; .jpeg &nbsp; .png &nbsp; .bmp</em></p>
           </div>
       </div>
     </div>

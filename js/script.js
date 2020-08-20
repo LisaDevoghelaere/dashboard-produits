@@ -49,6 +49,7 @@ let order = 'date_croissant';
 let categorie = '';
 let page = 1;
 let search = '';
+let extension ='';
 
 title.addEventListener('click' , function(){
     catList.classList.toggle('hidden');
@@ -151,14 +152,38 @@ function activePaging(){
 function pictureFile(file){
     filePictureLabel.innerHTML = "<span class='far fa-image icon'></span>"+file[0].name;
     fileUpload = file[0];
+     extension = file[0].name.split('.').pop();
+     let alert = document.getElementById('uppicAlert')
+     if((extension === 'jpg')||(extension === 'jpeg')||(extension === 'png')||(extension === 'bmp')||(extension === 'gif')){
+         alert.style.display = 'none';
+     }else{
+         alert.style.display = 'block';
+         resetUploads()
+     }
 }
 function ticketFile(file){
     fileTicketLabel.innerHTML = "<span class='far fa-image icon'></span>"+file[0].name;
     fileUpload = file[0];
+    extension = file[0].name.split('.').pop();
+    let alert = document.getElementById('upTicketAlert')
+     if((extension === 'jpg')||(extension === 'jpeg')||(extension === 'png')||(extension === 'bmp')||(extension === 'gif')){
+         alert.style.display = 'none';
+     }else{
+         alert.style.display = 'block';
+         resetUploads()
+     }
 }
 function manualFile(file){
     fileManualLabel.innerHTML = "<span class='far fa-image icon'></span>"+file[0].name;
     fileUpload = file[0];
+    extension = file[0].name.split('.').pop();
+    let alert = document.getElementById('upManualAlert')
+     if((extension === 'pdf')||(extension === 'txt')||(extension === 'jpg')||(extension === 'jpeg')||(extension === 'png')||(extension === 'bmp')){
+         alert.style.display = 'none';
+     }else{
+         alert.style.display = 'block';
+         resetUploads()
+     }
 }
 
 function resetUploads(){
@@ -548,6 +573,8 @@ function uppicValidate(){
 
 function uploadPictureClick(){
     uppicModal.classList.add('active');
+    let alert = document.getElementById('uppicAlert');
+    alert.style.display = 'none';
 }
 
 //upload ticket modale
@@ -582,6 +609,8 @@ function upticketValidate(){
 }
 function uploadTicketClick(){
     upTicketModal.classList.add('active');
+    let alert = document.getElementById('upTicketAlert');
+    alert.style.display = 'none';
 }
 
 
@@ -617,6 +646,8 @@ function upmanualValidate(){
 
 function uploadManualClick(){
     upManualModal.classList.add('active');
+    let alert = document.getElementById('upManualAlert');
+    alert.style.display = 'none';
 }
 
 
