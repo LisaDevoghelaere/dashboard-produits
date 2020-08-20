@@ -79,7 +79,7 @@
             <h2 id="prod_Name" class="m-static">Nom du produit</h2>
             <div class="form-group m-modif">
               <label for="prod_Name_input">Nom du produit</label>
-              <input id="prod_Name_input" name="nom" class="form-control form-control-sm" type="text" placeholder="Entrez un nom">
+              <input id="prod_Name_input" name="nom" class="form-control form-control-sm" type="text" placeholder="Entrez un nom" required>
             </div>
             <em id="prod_Serial" class="m-static">Ref. 0564131</em>
             <div class="form-group m-modif">
@@ -183,7 +183,7 @@
             <p class="title-mod"><span class="fas fa-upload icon"></span>Charger un image</p>
             <input id ="filePicture" type="file" name="filePicture" onchange="pictureFile(this.files)">
             <label id = "filePictureLabel" class="btn btn-success m-static labelbtn" for="filePicture"><span class="far fa-folder icon"></span>Parcourir</label>
-            <p id="uppicAlert" class="text-center text-danger font-weight-bold" style="display:none;"><em>Format de fichier non valide !</em></p>
+            <p id="uppicAlert" class="text-center text-warning font-weight-bold" style="display:none;"><em>Format de fichier non valide !</em></p>
             <p class="text-center text-white-50"><em>Formats : &nbsp; .jpg &nbsp; .jpeg &nbsp; .png &nbsp; .bmp &nbsp; .gif</em></p>
           </div>
       </div>
@@ -199,7 +199,7 @@
             <p class="title-mod"><span class="fas fa-upload icon"></span>Charger une facture</p>
             <input id ="fileTicket" type="file" name="fileTicket" onchange="ticketFile(this.files)">
             <label id = "fileTicketLabel"class="btn btn-success m-static labelbtn" for="fileTicket"><span class="far fa-folder icon"></span>Parcourir</label>
-            <p id="upTicketAlert" class="text-center text-danger font-weight-bold" style="display:none;"><em>Format de fichier non valide !</em></p>
+            <p id="upTicketAlert" class="text-center text-warning font-weight-bold" style="display:none;"><em>Format de fichier non valide !</em></p>
             <p class="text-center text-white-50"><em>Formats : &nbsp; .jpg &nbsp; .jpeg &nbsp; .png &nbsp; .bmp &nbsp; .gif</em></p>
           </div>
       </div>
@@ -215,7 +215,7 @@
             <p class="title-mod"><span class="fas fa-upload icon"></span>Charger le manuel d'utilisation</p>
             <input id ="fileManual" type="file" name="fileManual" onchange="manualFile(this.files)">
             <label id = "fileManualLabel"class="btn btn-success m-static labelbtn" for="fileManual"><span class="far fa-folder icon"></span>Parcourir</label>
-            <p id="upManualAlert" class="text-center text-danger font-weight-bold" style="display:none;"><em>Format de fichier non valide !</em></p>
+            <p id="upManualAlert" class="text-center text-warning font-weight-bold" style="display:none;"><em>Format de fichier non valide !</em></p>
             <p class="text-center text-white-50"><em>Formats : &nbsp; .pdf &nbsp; .txt &nbsp; .jpg &nbsp; .jpeg &nbsp; .png &nbsp; .bmp</em></p>
           </div>
       </div>
@@ -228,11 +228,9 @@
       <div class="container">
           <div class="modal-in">
             <p class="title-mod"><span class="fas fa-boxes icon"></span>Créer une nouvelle catégorie</p>
-            <form id="newcat-form">
               <input id="newcat-input" name="newCategorie" class="form-control form-control-sm mb-2" type="text" placeholder="Entrez un nom de catégorie">
-              <p class="text-center text-warning mb-3"><em>Message d'avertissement !</em></p>
+              <p id="newCatAlert" class="text-center text-warning font-weight-bold" style="display:none;"><em>Cette catégorie existe déjà !</em></p>
               <button id="newcat-btn" type="button" class="btn btn-success m-static" onclick="newcatClick()"><span class="fas fa-plus icon"></span>Ajouter</button>
-            </form>
           </div>
       </div>
     </div>
