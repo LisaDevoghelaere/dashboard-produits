@@ -1,0 +1,11 @@
+<ul class="pagination mb-0">
+  {% if page_courante > nombre_page[0] %}
+    <li class="page-item" onclick="changePage({{ page_courante - 1 }})"><a class="page-link"><span class="fas fa-angle-left"></span></a></li>
+  {% endif %}
+  {% for page in nombre_page %}
+    <li class="page-item pageBtn" onclick="changePage({{ page }})"><a class="page-link">{{ page }}</a></li>
+  {% endfor %}
+  {% if page_courante < nombre_page|last %}
+    <li class="page-item" onclick="changePage({{ page_courante + 1 }})"><a class="page-link"><span class="fas fa-angle-right"></span></a class="page-link"></li>
+  {% endif %}
+</ul>

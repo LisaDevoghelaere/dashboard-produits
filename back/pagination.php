@@ -5,15 +5,15 @@ require 'bdd.php';
 require 'back/filtre.php';
 
 
-// Si $_GET['page'] n'existe pas vaut 1
-if(!isset($_GET['page']) || empty($_GET['page'])){
+// Si $_POST['page'] n'existe pas vaut 1
+if(!isset($_POST['page']) || empty($_POST['page'])){
     $current_page = 1;
 }
 else{
-    $current_page = $_GET['page'];
+    $current_page = $_POST['page'];
 }
 
-// Compte nombre d'élément pour pagination 
+// Compte nombre d'élément pour pagination
 if(empty($select_categorie)){
     $sql = 'SELECT COUNT(id) FROM produits';
     $count = $bdd -> query($sql);
@@ -27,7 +27,7 @@ if(empty($select_categorie)){
 $total = $count -> fetch();
 
 // Défini le début du compte des éléments dans excursion selon la page
-$limit = 10;
+$limit = 6;
 $debut = $current_page * $limit - $limit;
 
 $nombre_page = [];

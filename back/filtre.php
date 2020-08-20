@@ -1,24 +1,24 @@
 <?php
 
-// Si $_GET['categorie'] n'existe pas vaut toute catégorie
-if(!isset($_GET['categorie']) || empty($_GET['categorie'])){
+// Si $_POST['categorie'] n'existe pas vaut toute catégorie
+if(!isset($_POST['categorie']) || empty($_POST['categorie'])){
     $select_categorie = '';
 }
 else{
-    $select_categorie = $_GET['categorie'];
+    $select_categorie = $_POST['categorie'];
 }
 
 // Définie l'ordre d'affichage des produits
-if(isset($_GET['order']) || !empty($_GET['order'])){
-    if($_GET['order'] == 'date_croissant'){
+if(isset($_POST['order']) || !empty($_POST['order'])){
+    if($_POST['order'] == 'date_croissant'){
         $order = 'date_croissant';
-    }elseif($_GET['order'] == 'date_decroissant'){
+    }elseif($_POST['order'] == 'date_decroissant'){
         $order = 'date_decroissant';
-    }elseif($_GET['order'] == 'prix_croissant'){
+    }elseif($_POST['order'] == 'prix_croissant'){
         $order = 'prix_croissant';
-    }elseif($_GET['order'] == 'prix_decroissant'){
+    }elseif($_POST['order'] == 'prix_decroissant'){
         $order = 'prix_decroissant';
     }
 }else{
-    $order = '';
+    $order = 'date_croissant';
 }
