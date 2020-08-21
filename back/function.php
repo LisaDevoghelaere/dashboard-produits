@@ -1,4 +1,5 @@
 <?php
+use Respect\Validation\Validator as v;
 
 // Fonction liste des catégories _____________________________________________________
 function categories(){
@@ -56,12 +57,16 @@ function produits_list(){
 }
 
 // Fonction modal détail des produits _________________________________________________
-function detail_modal($id){
+function detail_modal(){
     require 'bdd.php';
+    require '../vendor/autoload.php';
 
     $array = array();
     if(isset($_POST['id'])){
         $id = $_POST['id'];
+        if(v::intVal()->positive()->validate($id) == false){
+            return 'Paramètre ID invalide';
+        }
     } else{
         $id = "";
     }
@@ -133,19 +138,51 @@ function detail_modal($id){
 // Fonction ajout de produits _____________________________________________________
 function add_product(){
     require 'bdd.php';
+    require '../vendor/autoload.php';
 
     $id_produit = '';
     $nom_produit = $_POST['nom'];
+    if(v::stringVal()->validate($nom_produit) == false){
+        return 'Nom de produit invalide';
+    }
     $reference_produit = $_POST['reference'];
+    if(v::intVal()->positive()->max(99999999999999999999)->validate($reference_produit) == false){
+        return 'Référence invalide';
+    }
     $prix_produit = $_POST['prix'];
+    if(v::number()->max(9999999999)->validate($prix_produit) == false){
+        return 'Prix invalide';
+    }
     $date_achat_produit = $_POST['date_achat'];
+    if(v::date()->validate($date_achat_produit) == false){
+        return 'Date d\'achat invalide';
+    }
     $date_garantie_produit = $_POST['date_garantie'];
+    if(v::date()->validate($date_achat_produit) == false){
+        return 'Date de fin de garantie invalide';
+    }
+    if($date_achat_produit > $date_garantie_produit){
+        return 'La date d\'achat ne peut pas être supérieur à la date de fin de garantie';
+    }
     $conseil_produit = $_POST['conseil'];
+    if(v::stringVal()->validate($conseil_produit) == false){
+        return 'Conseil d\'utlisation invalide';
+    }
+
     $manuel_utilisation_produit = $_POST['manuel'];
+    if(v::stringVal()->validate($manuel_utilisation_produit) == false){
+        return 'Url manuel invalide';
+    }
     $ticket_achat_produit = $_POST['ticket'];
+    if(v::stringVal()->validate($ticket_achat_produit) == false){
+        return 'Url ticket achat invalide';
+    }
 
     if(isset($_POST['url']) && !isset($_POST['vendeur']) && !isset($_POST['ville']) && !isset($_POST['code_postal']) && !isset($_POST['rue'])){
         $url = $_POST['url'];
+        if(v::url()->validate($url) == false){
+            return 'Url du vendeur invalide';
+        }    
         $nom_vendeur = '';
         $ville = '';
         $code_postal = '';
@@ -153,17 +190,36 @@ function add_product(){
     } elseif(!isset($_POST['url']) && isset($_POST['vendeur']) && isset($_POST['ville']) && isset($_POST['code_postal']) && isset($_POST['rue'])){
         $url = '';
         $nom_vendeur = $_POST['vendeur'];
+        if(v::stringVal()->validate($nom_vendeur) == false){
+            return 'Nom vendeur invalide';
+        }    
         $ville = $_POST['ville'];
+        if(v::stringVal()->validate($ville) == false){
+            return 'Nom de ville invalide';
+        }
         $code_postal = $_POST['code_postal'];
+        if(v::intVal()->positive()->validate($code_postal) == false){
+            return 'Code postal invalide';
+        }    
         $rue = $_POST['rue'];
+        if(v::stringVal()->validate($rue) == false){
+            return 'Nom de rue invalide';
+        }    
     }
 
     $id_lieu_achat = '';
     $id_categorie = '';
 
     $categorie = $_POST['categorie'];
+    if(v::stringVal()->validate($categorie) == false){
+        return 'Nom de catégorie invalide';
+    }
 
     $photo = $_POST['photo'];
+    if(v::stringVal()->validate($photo) == false){
+        return 'Url photo invalide';
+    }
+
 
     // Récupère l'id de la catégorie
     $sql = "SELECT id FROM categories WHERE categorie = :categorie";
@@ -305,19 +361,51 @@ function delete_product($id){
 // Fonction modification de produits _____________________________________________________
 function update_product($id){
     require 'bdd.php';
+    require '../vendor/autoload.php';
 
     $id_produit = $id;
     $nom_produit = $_POST['nom'];
+    if(v::stringVal()->validate($nom_produit) == false){
+        return 'Nom de produit invalide';
+    }
     $reference_produit = $_POST['reference'];
+    if(v::intVal()->positive()->max(99999999999999999999)->validate($reference_produit) == false){
+        return 'Référence invalide';
+    }
     $prix_produit = $_POST['prix'];
+    if(v::number()->max(9999999999)->validate($prix_produit) == false){
+        return 'Prix invalide';
+    }
     $date_achat_produit = $_POST['date_achat'];
+    if(v::date()->validate($date_achat_produit) == false){
+        return 'Date d\'achat invalide';
+    }
     $date_garantie_produit = $_POST['date_garantie'];
+    if(v::date()->validate($date_achat_produit) == false){
+        return 'Date de fin de garantie invalide';
+    }
+    if($date_achat_produit > $date_garantie_produit){
+        return 'La date d\'achat ne peut pas être supérieur à la date de fin de garantie';
+    }
     $conseil_produit = $_POST['conseil'];
+    if(v::stringVal()->validate($conseil_produit) == false){
+        return 'Conseil d\'utlisation invalide';
+    }
+
     $manuel_utilisation_produit = $_POST['manuel'];
+    if(v::stringVal()->validate($manuel_utilisation_produit) == false){
+        return 'Url manuel invalide';
+    }
     $ticket_achat_produit = $_POST['ticket'];
+    if(v::stringVal()->validate($ticket_achat_produit) == false){
+        return 'Url ticket achat invalide';
+    }
 
     if(isset($_POST['url']) && !isset($_POST['vendeur']) && !isset($_POST['ville']) && !isset($_POST['code_postal']) && !isset($_POST['rue'])){
         $url = $_POST['url'];
+        if(v::url()->validate($url) == false){
+            return 'Url du vendeur invalide';
+        }    
         $nom_vendeur = '';
         $ville = '';
         $code_postal = '';
@@ -325,17 +413,35 @@ function update_product($id){
     } elseif(!isset($_POST['url']) && isset($_POST['vendeur']) && isset($_POST['ville']) && isset($_POST['code_postal']) && isset($_POST['rue'])){
         $url = '';
         $nom_vendeur = $_POST['vendeur'];
+        if(v::stringVal()->validate($nom_vendeur) == false){
+            return 'Nom vendeur invalide';
+        }    
         $ville = $_POST['ville'];
+        if(v::stringVal()->validate($ville) == false){
+            return 'Nom de ville invalide';
+        }
         $code_postal = $_POST['code_postal'];
+        if(v::intVal()->positive()->validate($code_postal) == false){
+            return 'Code postal invalide';
+        }    
         $rue = $_POST['rue'];
+        if(v::stringVal()->validate($rue) == false){
+            return 'Nom de rue invalide';
+        }    
     }
 
     $id_lieu_achat = '';
     $id_categorie = '';
 
     $categorie = $_POST['categorie'];
+    if(v::stringVal()->validate($categorie) == false){
+        return 'Nom de catégorie invalide';
+    }
 
     $photo = $_POST['photo'];
+    if(v::stringVal()->validate($photo) == false){
+        return 'Url photo invalide';
+    }
 
     // Récupère l'id de la catégorie
     $sql = 'SELECT id FROM categories WHERE categorie = :categorie';
