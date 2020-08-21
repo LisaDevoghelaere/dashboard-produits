@@ -119,7 +119,7 @@ $green: rgb(0,188,140);
                 width: 100%;
                 div:nth-child(2){
                     color: $orange;
-                    font-size: 2.2rem;
+                    font-size: 1.8rem;
                     font-weight: 600;
                 }
             }
@@ -325,6 +325,11 @@ $green: rgb(0,188,140);
     width:100%;
 }
 .page-link{cursor:pointer;}
+
+#categorieTitle{
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+}
 
 
 // RESPONSIVE

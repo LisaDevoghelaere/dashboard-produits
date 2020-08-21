@@ -49,6 +49,7 @@ let order = 'date_croissant';
 let categorie = '';
 let page = 1;
 let search = '';
+let extension ='';
 
 title.addEventListener('click' , function(){
     catList.classList.toggle('hidden');
@@ -61,7 +62,6 @@ function searchLoad(searchBar){
     search = searchBar.value;
     loadProducts();
     loadPagination();
-    console.log(search);
 }
 
 function selectCategorie(button){
@@ -139,7 +139,7 @@ function changePage(num){
 
 function activePaging(){
     const pageBtns = document.getElementsByClassName('pageBtn');
-    Array.from(pageBtns).forEach(function (element) { 
+    Array.from(pageBtns).forEach(function (element) {
         if (element.innerText == page){
             element.classList.add('active');
         }else{
@@ -148,17 +148,76 @@ function activePaging(){
     });
 }
 
+function newcatClick(){
+    const newcatInput = document.getElementById("newcat-input");
+    checkCategories(newcatInput.value);
+}
+function newCategorieClick(index){
+    newCatModal.classList.add('active');
+    newCatAlert.style.display= 'none';
+}
+
+function checkCategories(newCategorie){
+    const catBTNS = document.getElementsByClassName('catBTN');
+    const newCatAlert = document.getElementById('newCatAlert');
+    let test = true;
+    Array.from(catBTNS).forEach(function (element) {
+        if (element.innerText.toUpperCase() == newCategorie.toUpperCase()){
+            test = false;
+        }
+    });
+    if(test){
+        newCatAlert.style.display= 'none';
+        const formData = new FormData();
+        formData.append('categorie', newCategorie);
+
+        fetch( 'back/add_categories.php', { method : "post" , body : formData } )
+        .then( res => res.json() ).then( data =>{
+            resetUploads();
+            newCatModal.classList.remove('active');
+            loadCategories();
+            loadModal(product_id);
+        })
+    }else{
+        newCatAlert.style.display= 'block';
+    }
+}
+
 function pictureFile(file){
     filePictureLabel.innerHTML = "<span class='far fa-image icon'></span>"+file[0].name;
     fileUpload = file[0];
+     extension = file[0].name.split('.').pop();
+     let alert = document.getElementById('uppicAlert')
+     if((extension === 'jpg')||(extension === 'jpeg')||(extension === 'png')||(extension === 'bmp')||(extension === 'gif')){
+         alert.style.display = 'none';
+     }else{
+         alert.style.display = 'block';
+         resetUploads()
+     }
 }
 function ticketFile(file){
     fileTicketLabel.innerHTML = "<span class='far fa-image icon'></span>"+file[0].name;
     fileUpload = file[0];
+    extension = file[0].name.split('.').pop();
+    let alert = document.getElementById('upTicketAlert')
+     if((extension === 'jpg')||(extension === 'jpeg')||(extension === 'png')||(extension === 'bmp')||(extension === 'gif')){
+         alert.style.display = 'none';
+     }else{
+         alert.style.display = 'block';
+         resetUploads()
+     }
 }
 function manualFile(file){
     fileManualLabel.innerHTML = "<span class='far fa-image icon'></span>"+file[0].name;
     fileUpload = file[0];
+    extension = file[0].name.split('.').pop();
+    let alert = document.getElementById('upManualAlert')
+     if((extension === 'pdf')||(extension === 'txt')||(extension === 'jpg')||(extension === 'jpeg')||(extension === 'png')||(extension === 'bmp')){
+         alert.style.display = 'none';
+     }else{
+         alert.style.display = 'block';
+         resetUploads()
+     }
 }
 
 function resetUploads(){
@@ -363,7 +422,9 @@ function loadModal(id){
 }
 
 modalClose.addEventListener('click' , function(){
-    modal.classList.remove('active');
+    if(mode!=="edit"){
+        modal.classList.remove('active');
+    }
     showStatic();
 })
 
@@ -397,6 +458,7 @@ function createActivate(){
     modalTitle.innerText='Ajouter un produit';
     showModif();
     loadModal();
+    type=0;
     vendorType();
 }
 
@@ -530,7 +592,6 @@ function uppicValidate(){
 
     fetch( 'back/upload_picture.php', { method : "post" , body : formData } )
         .then( res => res.json() ).then( data =>{
-            console.log(data)
             if((data == undefined) || (data == "")){
                 prod_Picture.setAttribute('src' , 'images/product-main/placeholder.jpg');
                 pictureHidden.value = 'placeholder.jpg';
@@ -547,6 +608,8 @@ function uppicValidate(){
 
 function uploadPictureClick(){
     uppicModal.classList.add('active');
+    let alert = document.getElementById('uppicAlert');
+    alert.style.display = 'none';
 }
 
 //upload ticket modale
@@ -581,6 +644,8 @@ function upticketValidate(){
 }
 function uploadTicketClick(){
     upTicketModal.classList.add('active');
+    let alert = document.getElementById('upTicketAlert');
+    alert.style.display = 'none';
 }
 
 
@@ -616,6 +681,8 @@ function upmanualValidate(){
 
 function uploadManualClick(){
     upManualModal.classList.add('active');
+    let alert = document.getElementById('upManualAlert');
+    alert.style.display = 'none';
 }
 
 
@@ -626,19 +693,3 @@ const newCatClose = document.getElementById('modal-newcat-close');
 newCatClose.addEventListener('click' , function(){
     newCatModal.classList.remove('active');
 })
-
-function newcatClick(){
-    const newcatInput = document.getElementById("newcat-input");
-    const formData = new FormData();
-    formData.append('categorie', newcatInput.value);
-
-    fetch( 'back/add_categories.php', { method : "post" , body : formData } )
-        .then( res => res.json() ).then( data =>{
-            resetUploads();
-            newCatModal.classList.remove('active');
-            loadCategories()
-        })
-}
-function newCategorieClick(index){
-    newCatModal.classList.add('active');
-}
