@@ -1,5 +1,4 @@
 const content = document.getElementById('content')
-
 const form = document.getElementById('product-form');
 const title =document.getElementById('title');
 const catList =document.getElementById('categorieList');
@@ -50,6 +49,7 @@ let categorie = '';
 let page = 1;
 let search = '';
 let extension ='';
+let valid = false;
 
 title.addEventListener('click' , function(){
     catList.classList.toggle('hidden');
@@ -57,6 +57,27 @@ title.addEventListener('click' , function(){
 window.onload = loadProducts();
 window.onload = loadCategories();
 window.onload = loadPagination();
+
+function Alert(look , msg){
+    const alertModal = document.getElementById('msg-modal');
+    const message = document.getElementById('alertMsg');
+    const icon = document.getElementById('alertIcon');
+    if(look==='good'){
+        alertModal.classList.add('bg-success');
+        alertModal.classList.remove('bg-danger');
+        icon.classList.add('fa-thumbs-up');
+        icon.classList.remove('fa-exclamation-triangle');
+        message.innerText=msg;
+    }else{
+        alertModal.classList.remove('bg-success');
+        alertModal.classList.add('bg-danger');
+        icon.classList.remove('fa-thumbs-up');
+        icon.classList.add('fa-exclamation-triangle');
+        message.innerText=msg;
+    }
+    alertModal.classList.add('alertshow');
+    setTimeout(function(){alertModal.classList.remove('alertshow'); }, 1500);
+}
 
 function searchLoad(searchBar){
     search = searchBar.value;
@@ -478,30 +499,129 @@ function modifValidate(){
     }else{
         editProduct(product_id);
     }
-    showStatic();
+    if(valid){
+        showStatic();
+    }
 }
 
 function createProduct(){
     let selectedCategorie = prod_Categorie_input.options[prod_Categorie_input.selectedIndex].text
-    const formData = new FormData(form);
-    formData.append('categorie', selectedCategorie);
-    fetch('back/ajout.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
-        modal.classList.remove('active');
-        loadProducts()
-    })
+    valid = true;
+    mcheckNom();
+    mcheckPrix();
+    mcheckDate();
+    if(type===1){
+        console.log(type)
+        mcheckURL();
+    }
+    // mcheckEmpty();
+    console.log('form validation= '+ valid)
+
+    if(valid){
+        const formData = new FormData(form);
+        formData.append('categorie', selectedCategorie);
+
+        fetch('back/ajout.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
+            modal.classList.remove('active');
+            loadProducts()
+            Alert('good' , 'Produit Ajouté')
+        })
+    }
+
 }
 function editProduct(id){
     let selectedCategorie = prod_Categorie_input.options[prod_Categorie_input.selectedIndex].text
-    const formData = new FormData(form);
-    formData.append('categorie', selectedCategorie);
-    formData.append('id', JSON.stringify(product_id));
-    fetch('back/update.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
-        loadModal(id);
-        vendorType();
-        loadProducts();
-        loadPagination()
-    })
+    valid = true;
+    mcheckNom();
+    mcheckPrix();
+    mcheckDate();
+    if(type===1){
+        mcheckURL();
+    }
+    // mcheckEmpty();
+    console.log('form validation= '+ valid)
+
+    if(valid){
+        const formData = new FormData(form);
+        formData.append('categorie', selectedCategorie);
+        formData.append('id', JSON.stringify(product_id));
+        fetch('back/update.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
+            loadModal(id);
+            vendorType();
+            loadProducts();
+            loadPagination()
+            Alert('good' , 'Produit Modifié')
+        })
+    }
 }
+
+function mcheckEmpty(){
+    if(prod_Vendor_Name_input.value == ''){
+        prod_Vendor_Name_input.value = ' '
+    }
+    if(prod_Vendor_Street_input.value == ''){
+        prod_Vendor_Street_input.value = ' '
+    }
+    if(prod_Vendor_Code_input.value == ''){
+        prod_Vendor_Code_input.value = ' '
+    }
+    if(prod_Vendor_City_input.value == ''){
+        prod_Vendor_City_input.value = ' '
+    }
+    if(prod_Vendor_URL_input.value == ''){
+        prod_Vendor_URL_input.value = ' '
+    }
+}
+
+function mcheckNom(){
+    let input = prod_Name_input;
+    let alert = document.getElementById('alert_nom');
+    if(input.value==''){
+        alert.style.display='block';
+        valid =  false;
+    }else{
+        alert.style.display='none';
+    }
+}
+function mcheckPrix(){
+    let input = prod_Price_input;
+    let alert = document.getElementById('alert_prix');
+    if((input.value=='')||(isNaN(input.value))){
+        alert.style.display='block';
+        valid =  false;
+    }else{
+        alert.style.display='none';
+    }
+}
+
+function mcheckDate(){
+    let inputA = prod_Date_input.value.split('-').join('')
+    let inputB = prod_Warranty_input.value.split('-').join('')
+    let alert = document.getElementById('alert_date');
+    if(inputA>inputB){
+        alert.style.display='block';
+        valid =  false;
+    }else{
+        alert.style.display='none';
+    }
+}
+
+function mcheckURL(){
+    let input = prod_Vendor_URL_input.value;
+    let res = isValidURL(input);
+    let alert = document.getElementById('alert_url');
+    if((input!=='')&&(!res)){
+        alert.style.display='block';
+        valid =  false;
+    }else{
+        alert.style.display='none';
+    }
+}
+
+function isValidURL(string) {
+    var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+    return (res !== null)
+  }
 
 //vendor type
 function vendorTypeChange(){
