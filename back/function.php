@@ -18,9 +18,7 @@ function produits_list(){
     // Récupère la valeur de $select_categorie et de $order
     require 'filtre.php';
 
-    if($order == NULL){
-        $order_req = 'p.id ASC';
-    }elseif($order == 'date_croissant'){
+    if($order == 'date_croissant'){
         $order_req = 'p.date_achat ASC';
     }elseif($order == 'date_decroissant'){
         $order_req = 'p.date_achat DESC';
