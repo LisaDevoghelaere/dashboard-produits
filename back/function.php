@@ -143,45 +143,45 @@ function add_product(){
     $id_produit = '';
     $nom_produit = $_POST['nom'];
     if(v::stringVal()->validate($nom_produit) == false){
-        return 'Nom de produit invalide';
+        return json_encode('Nom de produit invalide');
     }
     $reference_produit = $_POST['reference'];
     if(v::intVal()->positive()->max(99999999999999999999)->validate($reference_produit) == false){
-        return 'Référence invalide';
+        return json_encode('Référence invalide');
     }
     $prix_produit = $_POST['prix'];
     if(v::number()->max(9999999999)->validate($prix_produit) == false){
-        return 'Prix invalide';
+        return json_encode('Prix invalide');
     }
     $date_achat_produit = $_POST['date_achat'];
     if(v::date()->validate($date_achat_produit) == false){
-        return 'Date d\'achat invalide';
+        return json_encode('Date d\'achat invalide');
     }
     $date_garantie_produit = $_POST['date_garantie'];
     if(v::date()->validate($date_achat_produit) == false){
-        return 'Date de fin de garantie invalide';
+        return json_encode('Date de fin de garantie invalide');
     }
     if($date_achat_produit > $date_garantie_produit){
-        return 'La date d\'achat ne peut pas être supérieur à la date de fin de garantie';
+        return json_encode('La date d\'achat ne peut pas être supérieur à la date de fin de garantie');
     }
     $conseil_produit = $_POST['conseil'];
     if(v::stringVal()->validate($conseil_produit) == false){
-        return 'Conseil d\'utlisation invalide';
+        return json_encode('Conseil d\'utlisation invalide');
     }
 
     $manuel_utilisation_produit = $_POST['manuel'];
     if(v::stringVal()->validate($manuel_utilisation_produit) == false){
-        return 'Url manuel invalide';
+        return json_encode('Url manuel invalide');
     }
     $ticket_achat_produit = $_POST['ticket'];
     if(v::stringVal()->validate($ticket_achat_produit) == false){
-        return 'Url ticket achat invalide';
+        return json_encode('Url ticket achat invalide');
     }
 
     if(isset($_POST['url']) && !isset($_POST['vendeur']) && !isset($_POST['ville']) && !isset($_POST['code_postal']) && !isset($_POST['rue'])){
         $url = $_POST['url'];
         if(v::url()->validate($url) == false){
-            return 'Url du vendeur invalide';
+            return json_encode('Url du vendeur invalide');
         }    
         $nom_vendeur = '';
         $ville = '';
@@ -191,19 +191,19 @@ function add_product(){
         $url = '';
         $nom_vendeur = $_POST['vendeur'];
         if(v::stringVal()->validate($nom_vendeur) == false){
-            return 'Nom vendeur invalide';
+            return json_encode('Nom vendeur invalide');
         }    
         $ville = $_POST['ville'];
         if(v::stringVal()->validate($ville) == false){
-            return 'Nom de ville invalide';
+            return json_encode('Nom de ville invalide');
         }
         $code_postal = $_POST['code_postal'];
         if(v::intVal()->positive()->validate($code_postal) == false){
-            return 'Code postal invalide';
+            return json_encode('Code postal invalide');
         }    
         $rue = $_POST['rue'];
         if(v::stringVal()->validate($rue) == false){
-            return 'Nom de rue invalide';
+            return json_encode('Nom de rue invalide');
         }    
     }
 
@@ -212,12 +212,12 @@ function add_product(){
 
     $categorie = $_POST['categorie'];
     if(v::stringVal()->validate($categorie) == false){
-        return 'Nom de catégorie invalide';
+        return json_encode('Nom de catégorie invalide');
     }
 
     $photo = $_POST['photo'];
     if(v::stringVal()->validate($photo) == false){
-        return 'Url photo invalide';
+        return json_encode('Url photo invalide');
     }
 
 
@@ -307,7 +307,7 @@ function add_product(){
 
     $insert_photo->closeCursor();
 
-    return json_encode('Nouveau produit ajouté : ' . $nom_produit);
+    return json_encode('ok');
 }
 
 // Fonction suppression d'un produit _________________________________________________
@@ -355,7 +355,7 @@ function delete_product($id){
     $delete_photo->execute();
     $delete_photo->closeCursor();
 
-    return json_encode('Produit supprimer !');
+    return json_encode('ok');
 }
 
 // Fonction modification de produits _____________________________________________________
@@ -366,45 +366,45 @@ function update_product($id){
     $id_produit = $id;
     $nom_produit = $_POST['nom'];
     if(v::stringVal()->validate($nom_produit) == false){
-        return 'Nom de produit invalide';
+        return json_encode('Nom de produit invalide');
     }
     $reference_produit = $_POST['reference'];
     if(v::intVal()->positive()->max(99999999999999999999)->validate($reference_produit) == false){
-        return 'Référence invalide';
+        return json_encode('Référence invalide');
     }
     $prix_produit = $_POST['prix'];
     if(v::number()->max(9999999999)->validate($prix_produit) == false){
-        return 'Prix invalide';
+        return json_encode('Prix invalide');
     }
     $date_achat_produit = $_POST['date_achat'];
     if(v::date()->validate($date_achat_produit) == false){
-        return 'Date d\'achat invalide';
+        return json_encode('Date d\'achat invalide');
     }
     $date_garantie_produit = $_POST['date_garantie'];
     if(v::date()->validate($date_achat_produit) == false){
-        return 'Date de fin de garantie invalide';
+        return json_encode('Date de fin de garantie invalide');
     }
     if($date_achat_produit > $date_garantie_produit){
-        return 'La date d\'achat ne peut pas être supérieur à la date de fin de garantie';
+        return json_encode('La date d\'achat ne peut pas être supérieur à la date de fin de garantie');
     }
     $conseil_produit = $_POST['conseil'];
     if(v::stringVal()->validate($conseil_produit) == false){
-        return 'Conseil d\'utlisation invalide';
+        return json_encode('Conseil d\'utlisation invalide');
     }
 
     $manuel_utilisation_produit = $_POST['manuel'];
     if(v::stringVal()->validate($manuel_utilisation_produit) == false){
-        return 'Url manuel invalide';
+        return json_encode('Url manuel invalide');
     }
     $ticket_achat_produit = $_POST['ticket'];
     if(v::stringVal()->validate($ticket_achat_produit) == false){
-        return 'Url ticket achat invalide';
+        return json_encode('Url ticket achat invalide');
     }
 
     if(isset($_POST['url']) && !isset($_POST['vendeur']) && !isset($_POST['ville']) && !isset($_POST['code_postal']) && !isset($_POST['rue'])){
         $url = $_POST['url'];
         if(v::url()->validate($url) == false){
-            return 'Url du vendeur invalide';
+            return json_encode('Url du vendeur invalide');
         }    
         $nom_vendeur = '';
         $ville = '';
@@ -414,19 +414,19 @@ function update_product($id){
         $url = '';
         $nom_vendeur = $_POST['vendeur'];
         if(v::stringVal()->validate($nom_vendeur) == false){
-            return 'Nom vendeur invalide';
+            return json_encode('Nom vendeur invalide');
         }    
         $ville = $_POST['ville'];
         if(v::stringVal()->validate($ville) == false){
-            return 'Nom de ville invalide';
+            return json_encode('Nom de ville invalide');
         }
         $code_postal = $_POST['code_postal'];
         if(v::intVal()->positive()->validate($code_postal) == false){
-            return 'Code postal invalide';
+            return json_encode('Code postal invalide');
         }    
         $rue = $_POST['rue'];
         if(v::stringVal()->validate($rue) == false){
-            return 'Nom de rue invalide';
+            return json_encode('Nom de rue invalide');
         }    
     }
 
@@ -435,12 +435,12 @@ function update_product($id){
 
     $categorie = $_POST['categorie'];
     if(v::stringVal()->validate($categorie) == false){
-        return 'Nom de catégorie invalide';
+        return json_encode('Nom de catégorie invalide');
     }
 
     $photo = $_POST['photo'];
     if(v::stringVal()->validate($photo) == false){
-        return 'Url photo invalide';
+        return json_encode('Url photo invalide');
     }
 
     // Récupère l'id de la catégorie
@@ -520,7 +520,7 @@ function update_product($id){
 
     $insert_photo->closeCursor();
 
-    return json_encode('Produit modifié : ' . $nom_produit);
+    return json_encode('ok');
 }
 
 // Ajout de catégorie ________________________________________________________________
@@ -533,7 +533,7 @@ function add_categories($categorie){
     $insert_categorie -> execute();
 
     $insert_categorie -> closeCursor();
-    return json_encode('Nouvelle catégorie : ' . $categorie);
+    return json_encode('ok');
 }
 
 // Fonction upload d'images _____________________________________________________

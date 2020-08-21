@@ -58,7 +58,7 @@ window.onload = loadProducts();
 window.onload = loadCategories();
 window.onload = loadPagination();
 
-function Alert(look , msg){
+function Nalert(look , msg){
     const alertModal = document.getElementById('msg-modal');
     const message = document.getElementById('alertMsg');
     const icon = document.getElementById('alertIcon');
@@ -511,20 +511,22 @@ function createProduct(){
     mcheckPrix();
     mcheckDate();
     if(type===1){
-        console.log(type)
         mcheckURL();
     }
-    // mcheckEmpty();
-    console.log('form validation= '+ valid)
 
     if(valid){
         const formData = new FormData(form);
         formData.append('categorie', selectedCategorie);
 
         fetch('back/ajout.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
+            console.log(data)
             modal.classList.remove('active');
             loadProducts()
-            Alert('good' , 'Produit Ajouté')
+            if(data!=='ok'){
+                Nalert('bad',data)
+            }else{
+                Nalert('good' , 'Produit Ajouté !')
+            }
         })
     }
 
@@ -538,19 +540,22 @@ function editProduct(id){
     if(type===1){
         mcheckURL();
     }
-    // mcheckEmpty();
-    console.log('form validation= '+ valid)
 
     if(valid){
         const formData = new FormData(form);
         formData.append('categorie', selectedCategorie);
         formData.append('id', JSON.stringify(product_id));
         fetch('back/update.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
+            console.log(data)
             loadModal(id);
             vendorType();
             loadProducts();
             loadPagination()
-            Alert('good' , 'Produit Modifié')
+            if(data!=='ok'){
+                Nalert('bad',data)
+            }else{
+                Nalert('good' , 'Produit Modifié !')
+            }
         })
     }
 }
@@ -610,6 +615,13 @@ function mcheckURL(){
     let input = prod_Vendor_URL_input.value;
     let res = isValidURL(input);
     let alert = document.getElementById('alert_url');
+
+    var prefix = 'http://';
+        if (input.substr(0, prefix.length) !== prefix)
+            {
+                input = prefix + input;
+                prod_Vendor_URL_input.value = input;
+            }
     if((input!=='')&&(!res)){
         alert.style.display='block';
         valid =  false;
@@ -692,6 +704,7 @@ function deleteProduct(){
     fetch('back/delete.php' , {method: "post" , body: formData}).then(data =>{
         loadProducts();
         loadPagination()
+        Nalert('good','Produit supprimé !')
     })
 }
 
