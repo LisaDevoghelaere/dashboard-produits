@@ -331,6 +331,27 @@ $green: rgb(0,188,140);
     margin-bottom: 5px;
 }
 
+#msg-modal{
+    width: 300px;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 600;
+    position: fixed;
+    right:-400px;
+    top: 100px;
+    span{padding-right: 15px;padding-left: 5px;}
+    z-index: 9;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.37);
+    transition: ease-in-out 0.8s;
+
+}
+#msg-modal.alertshow{
+    position: fixed;
+    right:30px;
+    top: 100px;
+    transition: ease-in-out 0.4s;
+}
+
 
 // RESPONSIVE
 // XL___base_____________________________________________________________________________

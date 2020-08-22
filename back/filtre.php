@@ -7,7 +7,7 @@ if(!isset($_POST['categorie']) || empty($_POST['categorie'])){
 else{
     $select_categorie = $_POST['categorie'];
 }
-
+$order = 'date_decroissant';
 // Définie l'ordre d'affichage des produits
 if(isset($_POST['order']) || !empty($_POST['order'])){
     if($_POST['order'] == 'date_croissant'){
@@ -19,6 +19,4 @@ if(isset($_POST['order']) || !empty($_POST['order'])){
     }elseif($_POST['order'] == 'prix_decroissant'){
         $order = 'prix_decroissant';
     }
-}else{
-    $order = 'date_croissant';
 }

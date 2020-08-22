@@ -44,10 +44,10 @@
               Classer
             </button>
             <div class="dropdown-menu dropdown-menu-right">
-              <button class="dropdown-item" type="button" onclick="selectOrder('date_croissant')" >Date Croissante</button>
               <button class="dropdown-item" type="button" onclick="selectOrder('date_decroissant')" >Date Décroissante</button>
-              <button class="dropdown-item" type="button" onclick="selectOrder('prix_croissant')" >Prix Croissant</button>
+              <button class="dropdown-item" type="button" onclick="selectOrder('date_croissant')" >Date Croissante</button>
               <button class="dropdown-item" type="button" onclick="selectOrder('prix_decroissant')" >Prix Décroissant</button>
+              <button class="dropdown-item" type="button" onclick="selectOrder('prix_croissant')" >Prix Croissant</button>
             </div>
           </div>
           {# Pagination  #}
@@ -80,6 +80,7 @@
             <div class="form-group m-modif">
               <label for="prod_Name_input">Nom du produit</label>
               <input id="prod_Name_input" name="nom" class="form-control form-control-sm" type="text" placeholder="Entrez un nom" required>
+              <p id="alert_nom" class="text-center text-warning" style="display:none"><em>Le nom ne peut pas être vide !</em></p>
             </div>
             <em id="prod_Serial" class="m-static">Ref. 0564131</em>
             <div class="form-group m-modif">
@@ -100,6 +101,7 @@
             <div class="form-group m-modif">
               <label for="prod_Price_input">Prix</label>
               <input id="prod_Price_input" name="prix" class="form-control form-control-sm" type="number" step="0.1" placeholder="Entrez un prix">
+              <p id="alert_prix" class="text-center text-warning" style="display:none"><em>Le prix doit être un chiffre !</em></p>
             </div>
             <p class="m-static">Date d'achat: <strong id="prod_Date"  class="text-success">DATE</strong></p>
             <div class="form-group m-modif">
@@ -110,6 +112,7 @@
             <div class="form-group m-modif">
               <label for="prod_Warranty_input">Fin de garantie</label>
               <input id="prod_Warranty_input" name="date_garantie" class="form-control form-control-sm" type="date">
+              <p id="alert_date" class="text-center text-warning" style="display:none"><em>Doit être postérieure à l'achat !</em></p>
             </div>
             <p class="m-static">Facture d'achat:</p>
             <div class="form-group m-modif">
@@ -129,6 +132,7 @@
               </select>
               <label for="prod_Vendor_URL_input" class="vendor2 mt-2">Url</label>
               <input id="prod_Vendor_URL_input" name="url" class="vendor2 form-control form-control-sm" type="text" placeholder="Entrez une adresse web">
+              <p id="alert_url" class="text-center text-warning" style="display:none"><em>Ceci n'est pas une adresse internet valide !</em></p>
               <label for="prod_Vendor_Name_input" class="vendor1 mt-2">Nom</label>
               <input id="prod_Vendor_Name_input" name="vendeur" class="vendor1 form-control form-control-sm" type="text" placeholder="Entrez un nom de vendeur">
               <label for="prod_Vendor_Street_input" class="vendor1 mt-2">Rue</label>
@@ -234,6 +238,12 @@
           </div>
       </div>
     </div>
+
+    <div id="msg-modal" class="bg-success">
+      <p class="title-mod mb-0 p-5"><span id="alertIcon" class="fas fa-thumbs-up icon"></span><span id="alertMsg">Notification !</span></p>
+    </div>
+
+
 
 
 {% block script %}
