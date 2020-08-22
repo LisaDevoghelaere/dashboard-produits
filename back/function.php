@@ -452,6 +452,16 @@ function update_product($id){
     $id_categorie = $req_categorie -> fetchColumn();
     $req_categorie -> closeCursor();
 
+    // Récupère l'id du lieu d'achat du produit à modifier
+    $sql = 'SELECT id_lieu_achat FROM produits WHERE id = :id';
+    $req_lieu_achat = $bdd -> prepare($sql);
+
+    $req_lieu_achat -> bindValue(':id', $id_produit, PDO::PARAM_INT);
+    $req_lieu_achat -> execute();
+    $id_lieu_achat_temp = $req_lieu_achat -> fetchColumn();
+    $id_lieu_achat_temp = (int) $id_lieu_achat_temp;
+    $req_lieu_achat -> closeCursor();
+    
     // Insère le nouveau produit
     $sql = 'UPDATE produits SET nom = :nom, reference = :reference, prix = :prix, date_achat = :date_achat, date_fin_garantie = :date_fin_garantie, id_categorie = :id_categorie, conseil = :conseil, manuel_utilisation = :manuel_utilisation, ticket_achat = :ticket_achat, id_lieu_achat = :id_lieu_achat WHERE id = :id_produit';
 
@@ -481,32 +491,81 @@ function update_product($id){
     $insert_product -> execute();
 
     $insert_product -> closeCursor();
-
     // Insertion table e-commerce ou vente direct selon id du lieu d'achat
-    if($id_lieu_achat == 1){
-        $sql = 'UPDATE ecommerce SET url = :url WHERE id_produit = :id_produit';
+    if($id_lieu_achat_temp == 1){
+        if($id_lieu_achat_temp == $id_lieu_achat){
+            // Si update correspondant la valeur déjà existante
+            $sql = 'UPDATE ecommerce SET url = :url WHERE id_produit = :id_produit';
+    
+            $insert_ecommerce = $bdd->prepare($sql);
+    
+            $insert_ecommerce->bindParam(':url', $url, PDO::PARAM_STR);
+            $insert_ecommerce->bindValue(':id_produit', $id_produit, PDO::PARAM_INT);
+            $insert_ecommerce->execute();
+    
+            $insert_ecommerce->closeCursor();
+        } else{
+            // Suppression dans la table à remplacer
+            $sql = 'DELETE FROM ecommerce WHERE id_produit = :id_produit';
+            
+            $delete_last_lieu_achat = $bdd->prepare($sql);
+            $delete_last_lieu_achat->bindValue(':id_produit', $id_produit, PDO::PARAM_INT);
+            $delete_last_lieu_achat->execute();
 
-        $insert_ecommerce = $bdd->prepare($sql);
+            $delete_last_lieu_achat->closeCursor();
 
-        $insert_ecommerce->bindParam(':url', $url, PDO::PARAM_STR);
-        $insert_ecommerce->bindValue(':id_produit', $id_produit, PDO::PARAM_INT);
-        $insert_ecommerce->execute();
+            // Insertion dans la nouvelle table
+            $sql = 'INSERT INTO vente_direct (nom_vendeur, id_lieu_achat, id_produit, ville, code_postal, rue) VALUES(:nom_vendeur, :id_lieu_achat, :id_produit, :ville, :code_postal, :rue)';
+            $insert_new_lieu_achat = $bdd->prepare($sql);
 
-        $insert_ecommerce->closeCursor();
+            $insert_new_lieu_achat->bindParam(':nom_vendeur', $nom_vendeur, PDO::PARAM_STR);
+            $insert_new_lieu_achat->bindValue(':id_lieu_achat', $id_lieu_achat, PDO::PARAM_INT);
+            $insert_new_lieu_achat->bindParam(':ville', $ville, PDO::PARAM_STR);
+            $insert_new_lieu_achat->bindValue(':code_postal', $code_postal, PDO::PARAM_INT);
+            $insert_new_lieu_achat->bindParam(':rue', $rue, PDO::PARAM_STR);
+            $insert_new_lieu_achat->bindValue(':id_produit', $id_produit, PDO::PARAM_INT);
+            $insert_new_lieu_achat->execute();    
+            
+            $insert_new_lieu_achat->closeCursor();
+            
+        }
+        
+    } elseif($id_lieu_achat_temp == 2){
+        if($id_lieu_achat_temp == $id_lieu_achat){
+            $sql = 'UPDATE vente_direct SET nom_vendeur = :nom_vendeur, ville = :ville, code_postal = :code_postal, rue = :rue WHERE id_produit = :id_produit';
+    
+            $insert_vente_direct = $bdd->prepare($sql);
+            
+            $insert_vente_direct->bindParam(':nom_vendeur', $nom_vendeur, PDO::PARAM_STR);
+            $insert_vente_direct->bindParam(':ville', $ville, PDO::PARAM_STR);
+            $insert_vente_direct->bindValue(':code_postal', $code_postal, PDO::PARAM_INT);
+            $insert_vente_direct->bindParam(':rue', $rue, PDO::PARAM_STR);
+            $insert_vente_direct->bindValue(':id_produit', $id_produit, PDO::PARAM_INT);
+            $insert_vente_direct->execute();
+            
+            $insert_vente_direct->closeCursor();
+        } else{
+            // Suppression dans la table à remplacer
+            $sql = 'DELETE FROM vente_direct WHERE id_produit = :id_produit';
 
-    } elseif($id_lieu_achat == 2){
-        $sql = 'UPDATE vente_direct SET nom_vendeur = :nom_vendeur, ville = :ville, code_postal = :code_postal, rue = :rue WHERE id_produit = :id_produit';
+            $delete_last_lieu_achat = $bdd->prepare($sql);
+            $delete_last_lieu_achat->bindValue(':id_produit', $id_produit, PDO::PARAM_INT);
+            $delete_last_lieu_achat->execute();
 
-        $insert_vente_direct = $bdd->prepare($sql);
+            $delete_last_lieu_achat->closeCursor();
 
-        $insert_vente_direct->bindParam(':nom_vendeur', $nom_vendeur, PDO::PARAM_STR);
-        $insert_vente_direct->bindParam(':ville', $ville, PDO::PARAM_STR);
-        $insert_vente_direct->bindValue(':code_postal', $code_postal, PDO::PARAM_INT);
-        $insert_vente_direct->bindParam(':rue', $rue, PDO::PARAM_STR);
-        $insert_vente_direct->bindValue(':id_produit', $id_produit, PDO::PARAM_INT);
-        $insert_vente_direct->execute();
+            // Insertion dans la nouvelle table
+            $sql = 'INSERT INTO ecommerce (id_lieu_achat, id_produit, url) VALUES(:id_lieu_achat, :id_produit, :url)';
+            $insert_new_lieu_achat = $bdd->prepare($sql);
 
-        $insert_vente_direct->closeCursor();
+            $insert_new_lieu_achat->bindValue(':id_lieu_achat', $id_lieu_achat, PDO::PARAM_INT);
+            $insert_new_lieu_achat->bindValue(':id_produit', $id_produit, PDO::PARAM_INT);
+            $insert_new_lieu_achat->bindParam(':url', $url, PDO::PARAM_STR);
+            $insert_new_lieu_achat->execute();    
+
+            $insert_new_lieu_achat->closeCursor();
+
+        }
     }
 
     // insertion des photos selon id du produit
