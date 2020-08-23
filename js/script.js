@@ -177,6 +177,7 @@ function changePage(num){
     page = num;
     loadProducts();
     loadPagination();
+    window.scrollTo(0,0);
 }
 
 function activePaging(){
