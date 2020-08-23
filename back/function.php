@@ -590,6 +590,7 @@ function add_categories($categorie){
     $insert_categorie -> execute();
 
     $insert_categorie -> closeCursor();
+    
     return json_encode('ok');
 }
 

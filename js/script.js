@@ -302,17 +302,16 @@ function blankValues(){
     fetch( 'back/get_categories.php', { method : "post" , body : formData } )
         .then( res => res.json() ).then( data =>{
             prod_Categorie_input.innerHTML = '';
-            for (let i = 0 ; i<data[0].categories.length ; i++){
+            for (let i = 0 ; i<data[0].length ; i++){
                 let option = document.createElement('option');
-                option.innerText = data[0].categories[i];
-                option.setAttribute('value',i+1)
-                prod_Categorie_input.appendChild(option);
-                if(data[0].categorie === data[0].categories[i]){
-                    prod_Categorie_input.value=i+1;
+                option.innerText = data[0][i];
+                option.setAttribute('value',data[1][i])
+                if(i===0){
+                    option.setAttribute('selected','selected');
                 }
+                prod_Categorie_input.appendChild(option);
         }
         })
-    prod_Categorie_input.value=1;
 }
 
 
@@ -360,16 +359,22 @@ function loadModal(id){
             }
 
         //Categories
-        prod_Categorie_input.innerHTML = '';
-        for (let i = 0 ; i<data[3].categories.length ; i++){
-            let option = document.createElement('option');
-            option.innerText = data[3].categories[i];
-            option.setAttribute('value',i+1)
-            prod_Categorie_input.appendChild(option);
-            if(data[0].categorie === data[3].categories[i]){
-                prod_Categorie_input.value=i+1;
-            }
-        }
+            const formData2 = new FormData();
+            formData2.append('id', JSON.stringify(0));
+
+            fetch( 'back/get_categories.php', { method : "post" , body : formData2 } )
+                .then( res2 => res2.json() ).then( data2 =>{
+                    prod_Categorie_input.innerHTML = '';
+                    for (let i = 0 ; i<data2[0].length ; i++){
+                        let option = document.createElement('option');
+                        option.innerText = data2[0][i];
+                        option.setAttribute('value',data2[1][i])
+                        if(data[0].id_categorie===data2[1][i]){
+                            option.setAttribute('selected','selected');
+                        }
+                        prod_Categorie_input.appendChild(option);
+                }
+                })
 
 
         //nom produit
@@ -534,7 +539,6 @@ function createProduct(){
         formData.append('categorie', selectedCategorie);
 
         fetch('back/ajout.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
-            console.log(data)
             modal.classList.remove('active');
             loadProducts()
             if(data!=='ok'){
@@ -567,7 +571,6 @@ function editProduct(id){
         formData.append('categorie', selectedCategorie);
         formData.append('id', JSON.stringify(product_id));
         fetch('back/update.php' , {method: "post" , body: formData}).then(res =>res.json()).then(data => {
-            console.log(data)
             loadModal(id);
             vendorType();
             loadProducts();
@@ -755,7 +758,6 @@ function uppicValidate(){
                 prod_Picture.setAttribute('src' , 'images/product-main/'+data);
                 pictureHidden.value = data;
             }
-            editProduct(product_id);
             resetUploads();
             uppicModal.classList.remove('active');
         })
@@ -792,7 +794,6 @@ function upticketValidate(){
                 prod_Ticket.setAttribute('src' , 'images/product-ticket/'+data);
                 ticketHidden.value = data;
             }
-            editProduct(product_id);
             resetUploads();
             upTicketModal.classList.remove('active');
         })
@@ -828,7 +829,6 @@ function upmanualValidate(){
                 prod_Manual_btn.setAttribute('href', 'images/product-manual/'+data);
                 manualHidden.value = data;
             }
-            editProduct(product_id);
             resetUploads();
             upManualModal.classList.remove('active');
         })
