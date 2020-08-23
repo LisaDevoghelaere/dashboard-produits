@@ -15,7 +15,7 @@
     <nav class="navbar navbar-dark bg-dark justify-content-between">
       <div class="container-fluid">
         <a id="brand" class="navbar-brand p-0"><img src="images/produck-logo.svg" alt=""></a>
-        <a id="logout" class="btn btn-outline-success my-2 my-sm-0" href="login.php">{{ user }}<span class="ml-2 fas fa-sign-out-alt"></span></a>
+        <a id="logout" class="btn btn-outline-success my-2 my-sm-0" href="login.php"><span id="userN">{{ user }}</span><span class="ml-2 fas fa-sign-out-alt"></span></a>
       </div>
     </nav>
     {# Categorie  #}
@@ -34,26 +34,30 @@
 
     <div id="menu" class="bg-secondary">
       <div class="container-fluid">
-          <!-- Bouton nouveau produit -->
-          <button id="create-btn" type="button" class="btn btn-success m-static" onclick="createActivate()"><span class="fas fa-plus"></span></button>
-          {# Recherche  #}
-          <input id="searchInput" type="text" class="form-control" placeholder="Rechercher" onInput="searchLoad(this)">
-          {# Classement  #}
-          <div class="btn-group">
-            <button id="btnOrder" type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Classer
-            </button>
-            <div class="dropdown-menu dropdown-menu-right">
-              <button class="dropdown-item" type="button" onclick="selectOrder('date_decroissant')" >Date Décroissante</button>
-              <button class="dropdown-item" type="button" onclick="selectOrder('date_croissant')" >Date Croissante</button>
-              <button class="dropdown-item" type="button" onclick="selectOrder('prix_decroissant')" >Prix Décroissant</button>
-              <button class="dropdown-item" type="button" onclick="selectOrder('prix_croissant')" >Prix Croissant</button>
-            </div>
+          <div id="menu-left">
+            <!-- Bouton nouveau produit -->
+              <button id="create-btn" type="button" class="btn btn-success m-static" onclick="createActivate()"><span class="fas fa-plus"></span></button>
+              {# Recherche  #}
+              <input id="searchInput" type="text" class="form-control" placeholder="Rechercher" onInput="searchLoad(this)">
+            {# Classement  #}
           </div>
-          {# Pagination  #}
-          <nav id="paging" aria-label="Page navigation">
+          <div id="menu-right">
+            <div class="btn-group">
+              <button id="btnOrder" type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Classer
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                <button class="dropdown-item" type="button" onclick="selectOrder('date_decroissant')" >Date Décroissante</button>
+                <button class="dropdown-item" type="button" onclick="selectOrder('date_croissant')" >Date Croissante</button>
+                <button class="dropdown-item" type="button" onclick="selectOrder('prix_decroissant')" >Prix Décroissant</button>
+                <button class="dropdown-item" type="button" onclick="selectOrder('prix_croissant')" >Prix Croissant</button>
+              </div>
+            </div>
+            {# Pagination  #}
+            <nav id="paging" aria-label="Page navigation">
 
-          </nav>
+            </nav>
+          </div>
       </div>
     </div>
 
