@@ -67,7 +67,7 @@ function datesFR(){
 
     for (let element of dates){
         let arr = element.innerText.split('-');
-        element.innerText = arr[2]+' '+months[parseInt(arr[1])]+' '+arr[0]
+        element.innerText = arr[2]+' '+months[parseInt(arr[1])-1]+' '+arr[0]
     }
 }
 function datesFR2(){
@@ -77,7 +77,7 @@ function datesFR2(){
 
     for (let element of dates){
         let arr = element.innerText.split('-');
-        element.innerText = arr[2]+' '+months[parseInt(arr[1])]+' '+arr[0]
+        element.innerText = arr[2]+' '+months[parseInt(arr[1])-1]+' '+arr[0]
     }
 }
 
