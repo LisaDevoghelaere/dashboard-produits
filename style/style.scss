@@ -168,6 +168,7 @@ $green: rgb(0,188,140);
     transition: ease-in-out 0.5s;
 
     .modal-btns{
+        z-index:4;
         display: flex;
         justify-content: space-between;
         font-size: 2rem;
@@ -383,7 +384,18 @@ body{
 
 // M_____________________________________________________________________________________
 @media (max-width: 991.98px) {
-
+    #product-modal{
+        .container form{
+            padding: 11vh 6vw 0 6vw;
+            display: block;
+        }
+    }
+    #product-modal-left{
+        width: 100%;
+        background-color: black;
+        padding: 15px;
+    }
+    #product-modal-left img{width:100%;}
 }
 
 // S_____________________________________________________________________________________
