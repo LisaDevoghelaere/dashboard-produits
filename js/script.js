@@ -60,20 +60,9 @@ window.onload = loadProducts();
 window.onload = loadCategories();
 window.onload = loadPagination();
 
-function datesFR(){
-    console.log('dateFR')
+function datesFR(items){
     const months = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Decembre'];
-    let dates = document.querySelectorAll('.date')
-
-    for (let element of dates){
-        let arr = element.innerText.split('-');
-        element.innerText = arr[2]+' '+months[parseInt(arr[1])-1]+' '+arr[0]
-    }
-}
-function datesFR2(){
-    console.log('dateFR')
-    const months = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Decembre'];
-    let dates = document.querySelectorAll('.date2')
+    let dates = document.querySelectorAll(items)
 
     for (let element of dates){
         let arr = element.innerText.split('-');
@@ -145,7 +134,7 @@ function loadProducts(){
     xhr.onreadystatechange  = function(){
         if (this.readyState == 4 && this.status == 200){
             content.innerHTML = xhr.responseText;
-            datesFR();
+            datesFR('.date');
         }
     };
 
@@ -483,7 +472,7 @@ function loadModal(id){
         }
 
         vendorType();
-        datesFR2()
+        datesFR('.date2');
         })
 }
 
