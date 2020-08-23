@@ -435,7 +435,12 @@ function loadModal(id){
             prod_Vendor_City_input.value = "";
 
         //vendeur url
-            prod_Vendor_URLa.innerText = data[1].url;
+        const urlLength = 40;
+            if(data[1].url.length>urlLength){
+                prod_Vendor_URLa.innerText = data[1].url.substr(0, urlLength) +' ...';
+            }else{
+                prod_Vendor_URLa.innerText = data[1].url;
+            }
             prod_Vendor_URLa.setAttribute('href',data[1].url);
             prod_Vendor_URL_input.value = data[1].url;
             }
