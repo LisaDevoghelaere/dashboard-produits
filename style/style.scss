@@ -368,7 +368,10 @@ $green: rgb(0,188,140);
 }
 #menu-right{display:flex;}
 #menu-left{display:flex; width: 100%; flex: 0 , 100%; align-items: center;}
-
+body{
+    background-image: url("../images/background.jpg");
+    background-repeat: repeat;
+}
 // RESPONSIVE
 // XL___base_____________________________________________________________________________
 
