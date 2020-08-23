@@ -1,11 +1,11 @@
 <?php session_start();
-    // deconnection du dashboard lors du chargement
-    if(isset($_SESSION['admin'])){
-        unset($_SESSION['admin']);
-    }
-    if(isset($_SESSION['user'])){
-        unset($_SESSION['user']);
-    }
+// deconnection du dashboard lors du chargement
+if (isset($_SESSION['admin'])) {
+    unset($_SESSION['admin']);
+}
+if (isset($_SESSION['user'])) {
+    unset($_SESSION['user']);
+}
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +13,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Dashboard Produits</title>
+    <title>Login - Produck</title>
+    <link rel="icon" href="images/favicon.png" />
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/login.css">
 </head>

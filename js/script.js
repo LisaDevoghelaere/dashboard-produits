@@ -87,6 +87,7 @@ function Nalert(look , msg){
 }
 
 function searchLoad(searchBar){
+    page=1;
     search = searchBar.value;
     loadProducts();
     loadPagination();
