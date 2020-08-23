@@ -58,6 +58,13 @@ window.onload = loadProducts();
 window.onload = loadCategories();
 window.onload = loadPagination();
 
+function hideAlerts(){
+    let alerts = document.getElementsByClassName('MSGalert')
+    Array.from(alerts).forEach(function (element) {
+        element.style.display = 'none';
+    });
+}
+
 function Nalert(look , msg){
     const alertModal = document.getElementById('msg-modal');
     const message = document.getElementById('alertMsg');
@@ -462,6 +469,7 @@ function showModif(){
         modifElements[i].classList.remove('hide');
     }
     modalTitle.classList.remove('hideRight');
+    hideAlerts()
 }
 function showStatic(){
     mode=""
@@ -472,6 +480,7 @@ function showStatic(){
         modifElements[i].classList.add('hide');
     }
     modalTitle.classList.add('hideRight');
+    hideAlerts()
 }
 
 function createActivate(){
@@ -507,11 +516,17 @@ function modifValidate(){
 function createProduct(){
     let selectedCategorie = prod_Categorie_input.options[prod_Categorie_input.selectedIndex].text
     valid = true;
-    mcheckNom();
     mcheckPrix();
     mcheckDate();
     if(type===1){
+        mcheckEmpty(prod_Vendor_URL_input,'alert_vendor_url')
         mcheckURL();
+    }else{
+        mcheckEmpty(prod_Name_input,'alert_nom')
+        mcheckEmpty(prod_Vendor_Name_input,'alert_vendor_name')
+        mcheckEmpty(prod_Vendor_Street_input,'alert_vendor_street')
+        mcheckEmpty(prod_Vendor_Code_input,'alert_vendor_code')
+        mcheckEmpty(prod_Vendor_City_input,'alert_vendor_city')
     }
 
     if(valid){
@@ -534,11 +549,17 @@ function createProduct(){
 function editProduct(id){
     let selectedCategorie = prod_Categorie_input.options[prod_Categorie_input.selectedIndex].text
     valid = true;
-    mcheckNom();
     mcheckPrix();
     mcheckDate();
     if(type===1){
+        mcheckEmpty(prod_Vendor_URL_input,'alert_vendor_url')
         mcheckURL();
+    }else{
+        mcheckEmpty(prod_Name_input,'alert_nom')
+        mcheckEmpty(prod_Vendor_Name_input,'alert_vendor_name')
+        mcheckEmpty(prod_Vendor_Street_input,'alert_vendor_street')
+        mcheckEmpty(prod_Vendor_Code_input,'alert_vendor_code')
+        mcheckEmpty(prod_Vendor_City_input,'alert_vendor_city')
     }
 
     if(valid){
@@ -577,10 +598,9 @@ function mcheckEmpty(){
         prod_Vendor_URL_input.value = ' '
     }
 }
-
-function mcheckNom(){
-    let input = prod_Name_input;
-    let alert = document.getElementById('alert_nom');
+function mcheckEmpty(chInput , chMessage){
+    let input = chInput;
+    let alert = document.getElementById(chMessage);
     if(input.value==''){
         alert.style.display='block';
         valid =  false;
@@ -588,6 +608,7 @@ function mcheckNom(){
         alert.style.display='none';
     }
 }
+
 function mcheckPrix(){
     let input = prod_Price_input;
     let alert = document.getElementById('alert_prix');
@@ -639,6 +660,7 @@ function isValidURL(string) {
 function vendorTypeChange(){
     type=prod_Vendor_Type_input.selectedIndex;
     vendorType();
+    hideAlerts()
 }
 
 

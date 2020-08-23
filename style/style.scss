@@ -38,7 +38,7 @@ $green: rgb(0,188,140);
 
 #menu{
     padding: 20px 0px;
-    .container{
+    .container-fluid{
         display:flex;
         justify-content: space-between;
         align-items: center;
@@ -128,12 +128,22 @@ $green: rgb(0,188,140);
 }
 
 .product-cat{
+    display: block;
     margin-top: 5px;
-    background-color: $orange;
-    padding: 5px;
-    border-radius: 4px;
     font-weight: 600;
     color: white;
+    span{
+        background-color: $orange;
+        padding: 5px;
+    }
+}
+.product-cat-mod{
+    display: block;
+    margin-top: 5px;
+    font-weight: 600;
+    color: white;
+    background-color: $orange;
+        padding: 5px;
 }
 .price{
     color: $orange;
