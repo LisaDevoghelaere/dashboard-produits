@@ -17,8 +17,13 @@ $green: rgb(0,188,140);
     align-items: center;
     flex-wrap: wrap;
     padding: 20px 30px 5px 30px;
+    height:100%;
+    transition: ease-in-out 0.2s;
     &.hidden{
-        display: none;
+        height:0px;
+        overflow:hidden;
+        padding:0px;
+        transition: ease-in-out 0s;
     }
     a{text-decoration: none;}
     p{
