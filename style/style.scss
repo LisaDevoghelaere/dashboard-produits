@@ -42,6 +42,7 @@ $green: rgb(0,188,140);
 }
 
 #menu{
+    z-index: 2;
     padding: 20px 0px;
     .container-fluid{
         display:flex;
