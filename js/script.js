@@ -27,6 +27,7 @@ const prod_Vendor_Street_input = document.getElementById('prod_Vendor_Street_inp
 const prod_Vendor_Code_input = document.getElementById('prod_Vendor_Code_input');
 const prod_Vendor_City_input = document.getElementById('prod_Vendor_City_input');
 const prod_Vendor_URL = document.getElementById('prod_Vendor_URL');
+const prod_Vendor_URLa = document.getElementById('prod_Vendor_URLa');
 const prod_Vendor_URL_input = document.getElementById('prod_Vendor_URL_input');
 const prod_Tips = document.getElementById('prod_Tips');
 const prod_Tips_input = document.getElementById('prod_Tips_input');
@@ -40,6 +41,7 @@ const fileTicket = document.getElementById('fileTicket');
 const fileTicketLabel = document.getElementById('fileTicketLabel');
 const fileManual = document.getElementById('fileManual');
 const fileManualLabel = document.getElementById('fileManualLabel');
+console.log(prod_Vendor_URLa)
 let type = 0;
 let product_id = 0;
 let mode = "";
@@ -418,7 +420,8 @@ function loadModal(id){
 
 
         //vendeur url
-            prod_Vendor_URL.innerText = "";
+            prod_Vendor_URLa.innerText = "";
+            prod_Vendor_URLa.setAttribute('href','#');
             prod_Vendor_URL_input.value = "";
             }
             else{
@@ -432,7 +435,8 @@ function loadModal(id){
             prod_Vendor_City_input.value = "";
 
         //vendeur url
-            prod_Vendor_URL.innerText = data[1].url;
+            prod_Vendor_URLa.innerText = data[1].url;
+            prod_Vendor_URLa.setAttribute('href',data[1].url);
             prod_Vendor_URL_input.value = data[1].url;
             }
 
@@ -641,12 +645,20 @@ function mcheckURL(){
     let res = isValidURL(input);
     let alert = document.getElementById('alert_url');
 
-    var prefix = 'http://';
-        if (input.substr(0, prefix.length) !== prefix)
+    var prefixes = ['http://','https://','Http://','Https://','HTTP://','HTTPS://'];
+    var hasPrefix = false;
+    for(let i = 0 ; i<prefixes.length ; i++){
+        if (input.substr(0, prefixes[i].length) == prefixes[i])
             {
-                input = prefix + input;
-                prod_Vendor_URL_input.value = input;
+                hasPrefix=true;
+                break;
             }
+    }
+    if(!hasPrefix){
+        input = 'http://' + input;
+        prod_Vendor_URL_input.value = input;
+    }
+
     if((input!=='')&&(!res)){
         alert.style.display='block';
         valid =  false;
